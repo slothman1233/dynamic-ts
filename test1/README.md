@@ -1,5 +1,5 @@
-# ts动效库
-<!-- 
+# ts框架
+
 ### 使用方法
 ```
 npm install
@@ -25,4 +25,4 @@ npm run test 运行单元测试
 │── dist  生产文件夹
 ├── karma.conf.js   单元测试的配置文件
 └── rollup.config.js   rollup的配置文件
-``` -->
+```
