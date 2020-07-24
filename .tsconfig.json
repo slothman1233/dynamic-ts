@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "es2015",
+        "target": "es2017",
+        "declaration": true,
+        "allowSyntheticDefaultImports": true
+    },
+
+    "exclude": ["node_modules"],
+    "include": ["src/**/*"]
+}
