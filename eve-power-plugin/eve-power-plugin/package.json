@@ -1,0 +1,44 @@
+{
+  "name": "@stl/power-plugin",
+  "version": "0.1.17",
+  "description": "权限处理插件",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "power"
+  ],
+  "author": "EveChee",
+  "license": "MIT",
+  "repository": "",
+  "bugs": "",
+  "dependencies": {
+    "@stl/request": "^0.0.8",
+    "@types/blueimp-md5": "^2.7.0",
+    "@types/lodash": "^4.14.157",
+    "@types/nprogress": "^0.2.0",
+    "@types/qs": "^6.9.3",
+    "axios": "^0.19.2",
+    "blueimp-md5": "^2.16.0",
+    "element-ui": "^2.13.2",
+    "lodash": "^4.17.15",
+    "nprogress": "^0.2.0",
+    "qs": "^6.9.4",
+    "typescript": "^3.9.6",
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.6",
+    "webpack": "^4.43.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.3",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.6.0",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1",
+    "ts-jest": "^26.0.0",
+    "ts-loader": "^7.0.4",
+    "webpack-cli": "^3.3.12"
+  }
+}
