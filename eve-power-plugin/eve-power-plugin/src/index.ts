@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-07-14 17:11:05
+ * @LastEditTime: 2020-07-28 17:59:08
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -11,7 +11,7 @@ import HttpService from '@stl/request'
 import { Message } from 'element-ui'
 // 进度条
 import NProgress from 'nprogress' // progress bar
-import { login, logout, getPower,LoginParams } from './api'
+import { login, logout, getPower,LoginParams, getAdminInfo } from './api'
 export default class PowerPlugin {
     // 项目名称
     projectId: number
@@ -31,6 +31,8 @@ export default class PowerPlugin {
     // 请求体
     http: HttpService
     // 请求地址
+    userInfo: any
+    // 用户信息
     baseUrlList = new Map([
         ['dev', 'http://47.113.105.208:8089/'],
         ['test', ''],
@@ -111,6 +113,7 @@ export default class PowerPlugin {
             this.router.addRoutes(this.matchRoutes)
         }
         this.routerHooks()
+        this.getUserInfo()
     }
 
     private routerHooks() {
@@ -151,7 +154,7 @@ export default class PowerPlugin {
 
     async reqPowerData() {
         if (!this.token) return
-        const res = await getPower(this.http, this.token)
+        const res = await getPower(this.http, this.token, {productId: this.projectId})
         if (res) {
             // 更新到最新数据 匹配本地路由
             this.matchRoutes = this.checkMenuList(res.bodyMessage.menuList)
@@ -192,6 +195,12 @@ export default class PowerPlugin {
         this.token = null
         this.permissions = null
         this.router.replace(this.loginPath)
+    }
+    async getUserInfo(){
+        const res = await getAdminInfo(this.http, this.token || '', {productId: this.projectId})
+        if (res) {
+            this.userInfo = res.bodyMessage
+        }
     }
 
     HasBtn(key: string) {
