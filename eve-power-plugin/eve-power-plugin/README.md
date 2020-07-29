@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-27 16:37:23
- * @LastEditTime: 2020-07-29 10:35:50
+ * @LastEditTime: 2020-07-29 15:02:36
 -->
 
 # STL 后台管理权限集中处理插件
@@ -72,6 +72,14 @@
 
 ```
 当前登录的管理员信息
+```
+@Method: getUserInfo 获取管理员用户信息
+
+```
+无参数；
+@return:Promise<ResponseData>
+写入userInfo
+并返回请求结果
 ```
 
 @Decorator HasBtn 按钮鉴权
