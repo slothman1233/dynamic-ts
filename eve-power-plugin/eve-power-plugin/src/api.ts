@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-27 16:37:40
- * @LastEditTime: 2020-07-28 18:01:33
+ * @LastEditTime: 2020-07-29 10:47:54
  */
 import HttpService, { AxiosOptions } from '@stl/request'
 import md5 from 'blueimp-md5'
@@ -30,7 +30,7 @@ export function logout(http: HttpService, data: LogoutParams, opts?: AxiosOption
         }),
     )
 }
-export function getPower(http: HttpService, token: string, params: any) {
+export function getPower(http: HttpService, token: string, params: GetParams) {
     const sures = ['B600500']
     const err = ['00009']
     return http.get('/sso/user/getPermissionList', {
@@ -41,7 +41,7 @@ export function getPower(http: HttpService, token: string, params: any) {
         codes: { sures, err },
     })
 }
-export function getAdminInfo(http: HttpService, token: string, params: any) {
+export function getAdminInfo(http: HttpService, token: string, params: GetParams) {
     const sures = ['B600400']
     const err = ['B600401','B600402']
     return http.get('/sso/user/getCurrentUser', {
@@ -59,4 +59,7 @@ export type LoginParams = {
 }
 type LogoutParams = {
     token: string
+}
+interface GetParams{
+    projectId: number
 }
