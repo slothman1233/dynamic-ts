@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @Version: 0.1
+ * @Author: EveChee
+ * @Date: 2020-07-27 16:37:23
+ * @LastEditTime: 2020-07-29 10:35:50
+-->
+
 # STL 后台管理权限集中处理插件
 
 包含路由权限，按钮权限，和单点登录，登出的处理
@@ -6,16 +14,17 @@
 
 实例化参数(\*为必传)
 
-| 参数 | 类型 | 说明 | 默认值 |
-|:--:|:--:|:--:|:--:|
-|\* projectId|Number|项目 ID|none|
-|\* router|VueRouter|路由对象|none|
-|\* routes|Array<RouterConfig>|动态路由对照表|none|
-|  tokenKey|string|token 自定义 Key 暂无用| token|
-| loginPath|string|登录页地址|/login|
-|  whiteList|Array<string>|无需鉴权白名单|[loginPath]|
-|  staticRoutes|Array<RouterConfig>|与权限无关的路由|[]|
-| mode|string|dev,test,pre,prod|dev|
+|     参数     |        类型         |          说明           |   默认值    |
+| :----------: | :-----------------: | :---------------------: | :---------: |
+| \* projectId |       Number        |         项目 ID         |    none     |
+|  \* router   |      VueRouter      |        路由对象         |    none     |
+|  \* routes   | Array<RouterConfig> |     动态路由对照表      |    none     |
+|   tokenKey   |       string        | token 自定义 Key 暂无用 |    token    |
+|  loginPath   |       string        |       登录页地址        |   /login    |
+|  whiteList   |    Array<string>    |     无需鉴权白名单      | [loginPath] |
+| staticRoutes | Array<RouterConfig> |    与权限无关的路由     |     []      |
+|     mode     |       string        |    dev,test,pre,prod    |     dev     |
+|     baseUrl     |       string        |    请求权限的基础地质    |     ''     |
 
 ## 实例属性与方法说明
 
@@ -59,7 +68,14 @@
 项目所需的 token 存放
 ```
 
+@Prop: userInfo 管理员用户信息
+
+```
+当前登录的管理员信息
+```
+
 @Decorator HasBtn 按钮鉴权
+
 ```
 参数说明：
 @Param key:string

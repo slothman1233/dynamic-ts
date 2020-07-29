@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-07-28 17:59:08
+ * @LastEditTime: 2020-07-29 10:32:40
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -39,6 +39,8 @@ export default class PowerPlugin {
         ['pre', ''],
         ['prod', ''],
     ])
+    // 基础地址
+    baseUrl?:string = ''
     // 当前环境
     mode: string
     constructor(options: PowerOptions) {
@@ -59,7 +61,8 @@ export default class PowerPlugin {
         this.routes = options.routes
         this.staticRoutes = options.staticRoutes || []
         this.mode = options.mode || 'dev'
-        this.http = new HttpService(this.baseUrlList.get(this.mode) || '', {
+        this.baseUrl = options.baseUrl
+        this.http = new HttpService(this.baseUrl || this.baseUrlList.get(this.mode) || '', {
             msgUI: Message,
             logout: this.logout,
             getToken: () => this.token,
@@ -105,7 +108,7 @@ export default class PowerPlugin {
     }
 
     // 入口实例化之后 调用初始化 对router挂载
-    init() {
+    async init() {
         if (this.permissions) {
             // 先使用缓存
             this.matchRoutes = this.checkMenuList(this.permissions.menuList)
@@ -113,7 +116,6 @@ export default class PowerPlugin {
             this.router.addRoutes(this.matchRoutes)
         }
         this.routerHooks()
-        this.getUserInfo()
     }
 
     private routerHooks() {
@@ -142,7 +144,7 @@ export default class PowerPlugin {
                     throw new Error('获取权限失败,请重新登录尝试')
                     return
                 }
-                ;(this.router as any).matcher = (new VueRouter({
+                (this.router as any).matcher = (new VueRouter({
                     routes: this.staticRoutes,
                 }) as any).matcher
                 this.router.addRoutes(this.matchRoutes)
@@ -154,7 +156,7 @@ export default class PowerPlugin {
 
     async reqPowerData() {
         if (!this.token) return
-        const res = await getPower(this.http, this.token, {productId: this.projectId})
+        const res = await getPower(this.http, this.token, {projectId: this.projectId})
         if (res) {
             // 更新到最新数据 匹配本地路由
             this.matchRoutes = this.checkMenuList(res.bodyMessage.menuList)
@@ -187,6 +189,7 @@ export default class PowerPlugin {
         } else {
             this.token = res.bodyMessage.token
         }
+        await this.getUserInfo()
         return res
     }
 
@@ -197,10 +200,11 @@ export default class PowerPlugin {
         this.router.replace(this.loginPath)
     }
     async getUserInfo(){
-        const res = await getAdminInfo(this.http, this.token || '', {productId: this.projectId})
+        const res = await getAdminInfo(this.http, this.token || '', {projectId: this.projectId})
         if (res) {
             this.userInfo = res.bodyMessage
         }
+        return res
     }
 
     HasBtn(key: string) {
@@ -219,6 +223,7 @@ type PowerOptions = {
     router: VueRouter
     routes: RouteConfig[]
     staticRoutes?: RouteConfig[]
+    baseUrl?:string
 }
 type PowerInitOptions = {
     // 是否每次跳转都去获取最新权限
