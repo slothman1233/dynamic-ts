@@ -75,7 +75,6 @@ export default class Intercept {
           if (this.signHeaders) {
             let data = config.data || config.params
             data = config.queryType === 'forms'? qs.parse(data) : data
-            console.log(3311, data)
             config.headers = Object.assign(
               {},
               this.signHeaders(data),

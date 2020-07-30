@@ -822,10 +822,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@stl/request@^0.0.12":
-  version "0.0.12"
-  resolved "http://47.113.105.208:8088/@stl%2frequest/-/request-0.0.12.tgz#232864b0cbaaf1e9d88a95ccce9525fb58c76fc2"
-  integrity sha512-fGzNf3IwnSbwrwM/LRgpO+cH68TVTD32YHotLjpPWSmNfCEP5V46+2bK49matPR36CsN/brMCRolVZ7bXg9Big==
+"@stl/request@^0.0.14":
+  version "0.0.14"
+  resolved "http://47.113.105.208:8088/@stl%2frequest/-/request-0.0.14.tgz#5535eea3389d9de6510729c986456eb07fbd3205"
+  integrity sha512-jVCyGTDiIvecdnYM24HP0sENVdyHoCnw29oEzEUUl4HjZnhXuCww3wOiJ8/JovVOWrknHFXp6s57oCX6RaHdog==
   dependencies:
     "@types/chai" "^4.2.12"
     "@types/expect.js" "^0.3.29"
