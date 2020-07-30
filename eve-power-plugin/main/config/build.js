@@ -5,7 +5,12 @@ const paths = {
         lessfile: "index.css", //样式输出的文件 默认是在dist文件下
         format: "umd", //输出格式：立即执行函数表达式   which can be one of 'amd', 'cjs', 'system', 'esm', 'iife' or 'umd'
         name: "PowerPlugin", //umd or iife 下的方法的命名
-        uglify: false
+        uglify: true,
+        externals: ['vue-router', 'vue'],
+        global: {
+            'vue-router': 'VueRouter',
+            'vue': 'Vue'
+        },
     },
     index: {
         input: './src/index.ts', //入口未见
