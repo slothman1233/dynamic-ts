@@ -94,7 +94,7 @@ class HttpService {
       options.data = this.queryParse(data, queryType, queryOptions)
     }
     const opts: AxiosOptions = merge({}, { headers: HEADERS_MAP.get(queryType) }, options)
-    return this.axios.put(url, data, opts)
+    return this.axios.put(url,options.data, opts)
   }
 
   /**

@@ -3,12 +3,13 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-07-28 11:23:05
+ * @LastEditTime: 2020-07-30 15:33:56
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
 import { ResponseData, ReqBaseConfig } from '.'
 import merge from 'lodash/merge'
+import qs from 'qs'
 
 // const BASE_URL = ''
 // const BASE_URL = '/api'
@@ -72,9 +73,12 @@ export default class Intercept {
         try {
           config.msgPack && this.supportMsg && merge(config, this.msgPackAxiosOptions)
           if (this.signHeaders) {
+            let data = config.data || config.params
+            data = config.queryType === 'forms'? qs.parse(data) : data
+            console.log(3311, data)
             config.headers = Object.assign(
               {},
-              this.signHeaders(config.data || config.params),
+              this.signHeaders(data),
               config.headers
             )
           }
