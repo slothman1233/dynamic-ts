@@ -8,7 +8,8 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
 import { ResponseData, ReqBaseConfig } from '.'
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
+
 // const BASE_URL = ''
 // const BASE_URL = '/api'
 // const AUTO_ERROR = 'AUTO_ERROR' // Symbol('AUTO_ERROR')

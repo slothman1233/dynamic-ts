@@ -1,10 +1,3 @@
-<!--
- * @Description:
- * @Version: 0.1
- * @Author: EveChee
- * @Date: 2020-07-13 16:22:09
- * @LastEditTime: 2020-07-27 14:50:07
--->
 
 # STL 网络请求插件
 

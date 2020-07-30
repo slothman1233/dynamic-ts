@@ -822,6 +822,51 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
+"@stl/request@^0.0.12":
+  version "0.0.12"
+  resolved "http://47.113.105.208:8088/@stl%2frequest/-/request-0.0.12.tgz#232864b0cbaaf1e9d88a95ccce9525fb58c76fc2"
+  integrity sha512-fGzNf3IwnSbwrwM/LRgpO+cH68TVTD32YHotLjpPWSmNfCEP5V46+2bK49matPR36CsN/brMCRolVZ7bXg9Big==
+  dependencies:
+    "@types/chai" "^4.2.12"
+    "@types/expect.js" "^0.3.29"
+    "@types/lodash" "^4.14.158"
+    "@types/mocha" "^8.0.0"
+    "@types/qs" "^6.9.4"
+    autoprefixer "^9.8.5"
+    axios "^0.19.2"
+    chai "^4.2.0"
+    cssnano "^4.1.10"
+    del "^5.1.0"
+    gulp "^4.0.2"
+    karma "^5.1.1"
+    karma-chai "^0.1.0"
+    karma-chrome-launcher "^3.1.0"
+    karma-mocha "^2.0.1"
+    karma-typescript "^5.0.3"
+    karma-typescript-es6-transform "^5.0.3"
+    less "^3.12.2"
+    lodash "^4.17.19"
+    mocha "^8.0.1"
+    node-sass "^4.14.1"
+    postcss-nested "^4.2.3"
+    qs "^6.9.4"
+    rollup "^2.23.0"
+    rollup-plugin-babel "^4.4.0"
+    rollup-plugin-commonjs "^10.1.0"
+    rollup-plugin-json "^4.0.0"
+    rollup-plugin-node-resolve "^5.2.0"
+    rollup-plugin-postcss "^3.1.3"
+    rollup-plugin-replace "^2.2.0"
+    rollup-plugin-typescript2 "^0.27.1"
+    rollup-plugin-uglify "^6.0.4"
+    stylus "^0.54.8"
+    typescript "^3.9.7"
+
+"@types/blueimp-md5@^2.7.0":
+  version "2.7.0"
+  resolved "http://47.113.105.208:8088/@types%2fblueimp-md5/-/blueimp-md5-2.7.0.tgz#404222806800478ca2782e8ad46590aba7f14627"
+  integrity sha1-QEIigGgAR4yieC6K1GWQq6fxRic=
+
 "@types/chai@^4.2.12":
   version "4.2.12"
   resolved "http://47.113.105.208:8088/@types%2fchai/-/chai-4.2.12.tgz#6160ae454cd89dae05adc3bb97997f488b608201"
@@ -855,7 +900,7 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/lodash@^4.14.158":
+"@types/lodash@^4.14.157", "@types/lodash@^4.14.158":
   version "4.14.158"
   resolved "http://47.113.105.208:8088/@types%2flodash/-/lodash-4.14.158.tgz#b38ea8b6fe799acd076d7a8d7ab71c26ef77f785"
   integrity sha1-s46otv55ms0HbXqNerccJu9394U=
@@ -875,12 +920,17 @@
   resolved "http://47.113.105.208:8088/@types%2fnode/-/node-14.0.27.tgz#a151873af5a5e851b51b3b065c9e63390a9e0eb1"
   integrity sha1-oVGHOvWl6FG1GzsGXJ5jOQqeDrE=
 
+"@types/nprogress@^0.2.0":
+  version "0.2.0"
+  resolved "http://47.113.105.208:8088/@types%2fnprogress/-/nprogress-0.2.0.tgz#86c593682d4199212a0509cc3c4d562bbbd6e45f"
+  integrity sha1-hsWTaC1BmSEqBQnMPE1WK7vW5F8=
+
 "@types/q@^1.5.1":
   version "1.5.4"
   resolved "http://47.113.105.208:8088/@types%2fq/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
 
-"@types/qs@^6.9.4":
+"@types/qs@^6.9.3", "@types/qs@^6.9.4":
   version "6.9.4"
   resolved "http://47.113.105.208:8088/@types%2fqs/-/qs-6.9.4.tgz#a59e851c1ba16c0513ea123830dd639a0a15cb6a"
   integrity sha1-pZ6FHBuhbAUT6hI4MN1jmgoVy2o=
@@ -1231,6 +1281,13 @@ async-settle@^1.0.0:
   dependencies:
     async-done "^1.2.2"
 
+async-validator@~1.8.1:
+  version "1.8.5"
+  resolved "http://47.113.105.208:8088/async-validator/-/async-validator-1.8.5.tgz#dc3e08ec1fd0dddb67e60842f02c0cd1cec6d7f0"
+  integrity sha1-3D4I7B/Q3dtn5ghC8CwM0c7G1/A=
+  dependencies:
+    babel-runtime "6.x"
+
 async@^3.0.1:
   version "3.2.0"
   resolved "http://47.113.105.208:8088/async/-/async-3.2.0.tgz#b3a2685c5ebb641d3de02d161002c60fc9f85720"
@@ -1283,12 +1340,25 @@ axios@^0.19.2:
   dependencies:
     follow-redirects "1.5.10"
 
+babel-helper-vue-jsx-merge-props@^2.0.0:
+  version "2.0.3"
+  resolved "http://47.113.105.208:8088/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-2.0.3.tgz#22aebd3b33902328e513293a8e4992b384f9f1b6"
+  integrity sha1-Iq69OzOQIyjlEyk6jkmSs4T58bY=
+
 babel-plugin-dynamic-import-node@^2.3.3:
   version "2.3.3"
   resolved "http://47.113.105.208:8088/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.3.tgz#84fda19c976ec5c6defef57f9427b3def66e17a3"
   integrity sha1-hP2hnJduxcbe/vV/lCez3vZuF6M=
   dependencies:
     object.assign "^4.1.0"
+
+babel-runtime@6.x:
+  version "6.26.0"
+  resolved "http://47.113.105.208:8088/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
+  integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.11.0"
 
 bach@^1.0.0:
   version "1.2.0"
@@ -1390,6 +1460,11 @@ block-stream@*:
   integrity sha1-E+v+d4oDIFz+A3UUgeu0szAMEmo=
   dependencies:
     inherits "~2.0.0"
+
+blueimp-md5@^2.16.0:
+  version "2.17.0"
+  resolved "http://47.113.105.208:8088/blueimp-md5/-/blueimp-md5-2.17.0.tgz#f4fcac088b115f7b4045f19f5da59e9d01b1bb96"
+  integrity sha1-9PysCIsRX3tARfGfXaWenQGxu5Y=
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.4.0:
   version "4.11.9"
@@ -2052,6 +2127,11 @@ core-js-compat@^3.6.2:
     browserslist "^4.8.5"
     semver "7.0.0"
 
+core-js@^2.4.0:
+  version "2.6.11"
+  resolved "http://47.113.105.208:8088/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
+  integrity sha1-OIMUafmSK97Y7iHJ3EaYXgOZMIw=
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "http://47.113.105.208:8088/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -2371,6 +2451,11 @@ deep-eql@^3.0.1:
   dependencies:
     type-detect "^4.0.0"
 
+deepmerge@^1.2.0:
+  version "1.5.2"
+  resolved "http://47.113.105.208:8088/deepmerge/-/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
+  integrity sha1-EEmdhohEza1P7ghC34x/bwyVp1M=
+
 default-compare@^1.0.0:
   version "1.0.0"
   resolved "http://47.113.105.208:8088/default-compare/-/default-compare-1.0.0.tgz#cb61131844ad84d84788fb68fd01681ca7781a2f"
@@ -2570,6 +2655,18 @@ electron-to-chromium@^1.3.488:
   version "1.3.513"
   resolved "http://47.113.105.208:8088/electron-to-chromium/-/electron-to-chromium-1.3.513.tgz#d556da1e7d3142d209e2950bab4bf1c9b5fd75c9"
   integrity sha1-1VbaHn0xQtIJ4pULq0vxybX9dck=
+
+element-ui@^2.13.2:
+  version "2.13.2"
+  resolved "http://47.113.105.208:8088/element-ui/-/element-ui-2.13.2.tgz#582bf47aaaaaafe23ea1958fae217a687ad06447"
+  integrity sha1-WCv0eqqqr+I+oZWPriF6aHrQZEc=
+  dependencies:
+    async-validator "~1.8.1"
+    babel-helper-vue-jsx-merge-props "^2.0.0"
+    deepmerge "^1.2.0"
+    normalize-wheel "^1.0.1"
+    resize-observer-polyfill "^1.5.0"
+    throttle-debounce "^1.0.1"
 
 elliptic@^6.0.0, elliptic@^6.5.2:
   version "6.5.3"
@@ -4926,6 +5023,11 @@ normalize-url@^3.0.0:
   resolved "http://47.113.105.208:8088/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha1-suHE3E98bVd0PfczpPWXjRhlBVk=
 
+normalize-wheel@^1.0.1:
+  version "1.0.1"
+  resolved "http://47.113.105.208:8088/normalize-wheel/-/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
+  integrity sha1-rsiGr/2wRQcNhWRH32Ls+GFG7EU=
+
 now-and-later@^2.0.0:
   version "2.0.1"
   resolved "http://47.113.105.208:8088/now-and-later/-/now-and-later-2.0.1.tgz#8e579c8685764a7cc02cb680380e94f43ccb1f7c"
@@ -4942,6 +5044,11 @@ now-and-later@^2.0.0:
     console-control-strings "~1.1.0"
     gauge "~2.7.3"
     set-blocking "~2.0.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "http://47.113.105.208:8088/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
+  integrity sha1-y480xTIT2JVyP8urkH6UIq28r7E=
 
 nth-check@^1.0.2:
   version "1.0.2"
@@ -5983,6 +6090,11 @@ regenerate@^1.4.0:
   resolved "http://47.113.105.208:8088/regenerate/-/regenerate-1.4.1.tgz#cad92ad8e6b591773485fbe05a485caf4f457e6f"
   integrity sha1-ytkq2Oa1kXc0hfvgWkhcr09Ffm8=
 
+regenerator-runtime@^0.11.0:
+  version "0.11.1"
+  resolved "http://47.113.105.208:8088/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+  integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
+
 regenerator-runtime@^0.13.4:
   version "0.13.7"
   resolved "http://47.113.105.208:8088/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
@@ -6125,6 +6237,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "http://47.113.105.208:8088/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+resize-observer-polyfill@^1.5.0:
+  version "1.5.1"
+  resolved "http://47.113.105.208:8088/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha1-DpAg3T0hAkRY1OvSfiPkAmmBBGQ=
 
 resolve-dir@^1.0.0, resolve-dir@^1.0.1:
   version "1.0.1"
@@ -6931,6 +7048,11 @@ tar@^2.0.0:
     fstream "^1.0.12"
     inherits "2"
 
+throttle-debounce@^1.0.1:
+  version "1.1.0"
+  resolved "http://47.113.105.208:8088/throttle-debounce/-/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
+  integrity sha1-UYU9o3vmihVctugns1FKPEIuic0=
+
 through2-filter@^3.0.0:
   version "3.0.0"
   resolved "http://47.113.105.208:8088/through2-filter/-/through2-filter-3.0.0.tgz#700e786df2367c2c88cd8aa5be4cf9c1e7831254"
@@ -7387,6 +7509,16 @@ void-elements@^2.0.0:
   version "2.0.1"
   resolved "http://47.113.105.208:8088/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
+
+vue-router@^3.1.6:
+  version "3.3.4"
+  resolved "http://47.113.105.208:8088/vue-router/-/vue-router-3.3.4.tgz#4e38abc34a11c41b6c3d8244449a2e363ba6250b"
+  integrity sha1-Tjirw0oRxBtsPYJERJouNjumJQs=
+
+vue@^2.6.11:
+  version "2.6.11"
+  resolved "http://47.113.105.208:8088/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
+  integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
 
 wcwidth@^1.0.1:
   version "1.0.1"

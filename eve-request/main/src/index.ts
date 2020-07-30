@@ -7,7 +7,8 @@
  */
 import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { merge, toPairs } from 'lodash'
+import merge from 'lodash/merge'
+import toPairs from 'lodash/toPairs'
 import Intercept from './AxiosInstance'
 import qs from 'qs'
 const HEADERS_MAP = new Map([
