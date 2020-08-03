@@ -66,6 +66,7 @@ export default class PowerPlugin {
             msgUI: Message,
             logout: this.logout,
             getToken: () => this.token,
+            tokenHeaderKey:this.tokenKey
         })
     }
     get token() {
@@ -156,7 +157,7 @@ export default class PowerPlugin {
 
     async reqPowerData() {
         if (!this.token) return
-        const res = await getPower(this.http, this.token, {projectId: this.projectId})
+        const res = await getPower(this.http, {projectId: this.projectId})
         if (res) {
             // 更新到最新数据 匹配本地路由
             this.matchRoutes = this.checkMenuList(res.bodyMessage.menuList)
@@ -200,7 +201,7 @@ export default class PowerPlugin {
         this.router.replace(this.loginPath)
     }
     async getUserInfo(){
-        const res = await getAdminInfo(this.http, this.token || '', {projectId: this.projectId})
+        const res = await getAdminInfo(this.http, {projectId: this.projectId})
         if (res) {
             this.userInfo = res.bodyMessage
         }
