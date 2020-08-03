@@ -62,7 +62,7 @@ const config = () => {
                         exclude: 'node_modules/**', // 排除node_modules 下的文件
                         ENV: JSON.stringify(env || 'development'),
                     }),
-                    (env === 'production' && uglify({
+                    (env === 'production' && obj.uglify && uglify({
                         compress: {
                             drop_debugger: true,
                             drop_console: true,

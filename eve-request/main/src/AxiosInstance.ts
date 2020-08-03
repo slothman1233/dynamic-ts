@@ -3,13 +3,13 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-07-30 15:33:56
+ * @LastEditTime: 2020-08-03 11:11:44
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
 import { ResponseData, ReqBaseConfig } from '.'
-import merge from 'lodash/merge'
-import qs from 'qs'
+import merge from './merge'
+import { parse } from 'qs'
 
 // const BASE_URL = ''
 // const BASE_URL = '/api'
@@ -26,8 +26,9 @@ export default class Intercept {
   MsgUI?: any
   // 默认超时 12秒
   timeout: number
-  token: Function
-  logout: Function
+  token?: Function
+  tokenHeaderKey: string
+  logout?: Function
   signHeaders?: Function
   requestSet?: Function
   responseSet?: Function
@@ -43,8 +44,9 @@ export default class Intercept {
     this.signHeaders = options?.signHeaders
     this.requestSet = options?.requestSet
     this.responseSet = options?.responseSet
-    this.token = () => options?.getToken() || ''
-    this.logout = () => options?.logout()
+    this.token = (options && options.getToken) || undefined
+    this.logout = (options && options.logout) || undefined
+    this.tokenHeaderKey = options?.tokenHeaderKey || 'Authorization'
     this.instance = axios.create({ timeout: this.timeout, baseURL })
     // 初始化拦截器
     this.initInterceptors()
@@ -71,18 +73,22 @@ export default class Intercept {
       // 请求成功
       (config: any) => {
         try {
-          config.msgPack && this.supportMsg && merge(config, this.msgPackAxiosOptions)
+          config.msgPack &&
+            this.supportMsg &&
+            merge(config, this.msgPackAxiosOptions)
           if (this.signHeaders) {
             let data = config.data || config.params
-            data = config.queryType === 'forms'? qs.parse(data) : data
-            config.headers = Object.assign(
-              {},
-              this.signHeaders(data),
-              config.headers
-            )
+            if (config.queryType === 'forms') {
+              data = parse(data)
+            } else if (typeof data === 'string') {
+              data = JSON.parse(data)
+            }
+            config.headers = merge({}, this.signHeaders(data), config.headers)
           }
           this.requestSet && this.requestSet(config)
-          config.headers['Authorization'] = 'Bearer ' + this.token()
+          if (this.token) {
+            config.headers[this.tokenHeaderKey] = this.token()
+          }
         } catch (e) {
           console.log(e)
         }
@@ -104,10 +110,14 @@ export default class Intercept {
         error: { response: any }
       ) => {
         const { response } = error
-        console.log(error)
         if (response) {
-          response.status === 401 && this.MsgUI?.error('未登录或登录过期!') && this.logout()
-          return response
+          response.status === 401 &&
+            this.MsgUI?.error('未登录或登录过期!') &&
+            this.logout &&
+            this.logout()()
+
+          Promise.reject(error)
+          return
         }
         this.MsgUI?.error('请求异常,请稍后再试!')
       }
@@ -124,22 +134,30 @@ export default class Intercept {
     if (!data) return
     const codes = config?.codes || {}
     // 兼容后端code不规范
-    data.code = +data.code
-    if (data.code !== 0 || (codes.sures && !this.codeEqual(codes.sures, data.subCode))) {
+    if (data.code) {
+      data.code = +data.code
+    }
+    if (
+      data.code !== 0 ||
+      (codes.sures && !this.codeEqual(codes.sures, data.subCode))
+    ) {
       // 失败 并且不在自行处理code里面的
-      this.codeEqual(codes.err, data.subCode) ? this.MsgUI?.error(data.message) : data
+      this.codeEqual(codes.err, data.subCode)
+        ? this.MsgUI?.error(data.message)
+        : data
       return
     }
     // 成功
     try {
       data.bodyMessage = data.bodyMessage ? JSON.parse(data.bodyMessage) : null
     } catch (e) {
-      console.log('bodyMessage not a JSON Data!')
+      console.error('bodyMessage not a JSON Data!')
     }
     return data
   }
 
-  codeEqual = (arr: any[], subCode: string) => arr && arr.find(code => subCode.indexOf(code) !== -1)
+  codeEqual = (arr: any[], subCode: string) =>
+    arr && arr.find((code) => subCode.indexOf(code) !== -1)
 
   checkStatus = (response: AxiosResponse) => {
     // loading

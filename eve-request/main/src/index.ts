@@ -7,10 +7,9 @@
  */
 import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import merge from 'lodash/merge'
-import toPairs from 'lodash/toPairs'
 import Intercept from './AxiosInstance'
-import qs from 'qs'
+import { stringify, IStringifyOptions } from 'qs'
+import merge from './merge'
 const HEADERS_MAP = new Map([
   [
     'text',
@@ -44,14 +43,22 @@ class HttpService {
     this.axios = new Intercept(baseURL, options).getInterceptors()
   }
 
-  public get(url: string, options: AxiosOptions = {}): Promise<ResponseData | undefined> {
+  public get(
+    url: string,
+    options: AxiosOptions = {}
+  ): Promise<ResponseData | undefined> {
     const { queryType = 'text', data, params, queryOptions } = options
     if (queryType === 'text') {
       options.params = params || data
     } else {
-      options.paramsSerializer = params => this.queryParse(params || data, queryType, queryOptions)
+      options.paramsSerializer = (params) =>
+        HttpService.queryParse(params || data, queryType, queryOptions)
     }
-    const opts: AxiosOptions = merge({}, { headers: HEADERS_MAP.get(queryType) }, options)
+    const opts: AxiosOptions = merge(
+      {},
+      { headers: HEADERS_MAP.get(queryType) },
+      options
+    )
     return this.axios.get(url, opts)
   }
 
@@ -70,9 +77,13 @@ class HttpService {
     if (queryType === 'text') {
       options.params = params || data
     } else {
-      options.data = this.queryParse(data, queryType, queryOptions)
+      options.data = HttpService.queryParse(data, queryType, queryOptions)
     }
-    const opts: AxiosOptions = merge({}, { headers: HEADERS_MAP.get(queryType) }, options)
+    const opts: AxiosOptions = merge(
+      {},
+      { headers: HEADERS_MAP.get(queryType) },
+      options
+    )
     return this.axios.post(url, data, opts)
   }
 
@@ -91,10 +102,14 @@ class HttpService {
     if (queryType === 'text') {
       options.params = data
     } else {
-      options.data = this.queryParse(data, queryType, queryOptions)
+      options.data = HttpService.queryParse(data, queryType, queryOptions)
     }
-    const opts: AxiosOptions = merge({}, { headers: HEADERS_MAP.get(queryType) }, options)
-    return this.axios.put(url,options.data, opts)
+    const opts: AxiosOptions = merge(
+      {},
+      { headers: HEADERS_MAP.get(queryType) },
+      options
+    )
+    return this.axios.put(url, options.data, opts)
   }
 
   /**
@@ -103,24 +118,37 @@ class HttpService {
    * @return: Promise<AxiosResponse<any>>
    * @author: EveChee
    */
-  public delete(url: string, options: AxiosOptions = {}): Promise<ResponseData | undefined> {
+  public delete(
+    url: string,
+    options: AxiosOptions = {}
+  ): Promise<ResponseData | undefined> {
     const { queryType = 'text', data, queryOptions } = options
     options.params = data
-    options.paramsSerializer = params => this.queryParse(params, queryType, queryOptions)
-    const opts: AxiosOptions = merge({}, { headers: HEADERS_MAP.get(queryType) }, options)
+    options.paramsSerializer = (params) =>
+      HttpService.queryParse(params, queryType, queryOptions)
+    const opts: AxiosOptions = merge(
+      {},
+      { headers: HEADERS_MAP.get(queryType) },
+      options
+    )
     return this.axios.delete(url, opts)
   }
 
   // 参数格式转化
-  private queryParse(data: any, type?: string, options?: qs.IStringifyOptions) {
+  public static queryParse(
+    data: any,
+    type?: string,
+    options?: IStringifyOptions
+  ) {
     let dataOpts: any
     if (type === 'formd' && data) {
       const form = new FormData()
-      toPairs(data).forEach(([key, val]: any) => {
+      for (let key in data) {
+        const val = data[key]
         !Array.isArray(val)
           ? form.append(key, val)
-          : val.forEach(item => form.append(`${key}[]`, item))
-      })
+          : val.forEach((item) => form.append(`${key}[]`, item))
+      }
       dataOpts = form
     } else if (type === 'json') {
       /*
@@ -130,7 +158,7 @@ class HttpService {
       dataOpts = JSON.stringify(data)
     } else if (type === 'forms') {
       // 兼容json数组
-      dataOpts = qs.stringify(data, options)
+      dataOpts = stringify(data, options)
     } else {
       dataOpts = data
     }
@@ -150,7 +178,7 @@ export interface AxiosOptions extends DataOptions, AxiosRequestConfig {
   headers?: any
   codes?: Codes
   queryType?: 'text' | 'json' | 'formd' | 'forms'
-  queryOptions?: qs.IStringifyOptions
+  queryOptions?: IStringifyOptions
   msgPack?: boolean
   oth?: AxiosRequestConfig
 }
@@ -171,11 +199,13 @@ export type ReqBaseConfig = {
   // UI插件
   msgUI?: any
   // 登出方法
-  logout: Function
+  logout?: Function
   // 默认超时时间
   timeout?: number
   // 凭证获取
-  getToken: Function
+  getToken?: Function
+  // 默认请求头tokenKey
+  tokenHeaderKey?: string
   // 签名方法 返回头部
   signHeaders?: Function
   // 请求拦截方法
