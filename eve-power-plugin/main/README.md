@@ -12,19 +12,24 @@
 
 ## 内置导出 PowerPlugin 类
 
+(安装说明:
+如果已标签的形式加载
+前置的[@stl/request](http://47.113.105.208:8088/-/web/detail/@stl/request)是需要自己引入的)
+
 实例化参数(\*为必传)
 
-|     参数     |        类型         |          说明           |   默认值    |
-| :----------: | :-----------------: | :---------------------: | :---------: |
-| \* projectId |       Number        |         项目 ID         |    none     |
-|  \* router   |      VueRouter      |        路由对象         |    none     |
-|  \* routes   | Array<RouterConfig> |     动态路由对照表      |    none     |
-|   tokenKey   |       string        | token 自定义 Key 暂无用 |    token    |
-|  loginPath   |       string        |       登录页地址        |   /login    |
-|  whiteList   |    Array<string>    |     无需鉴权白名单      | [loginPath] |
-| staticRoutes | Array<RouterConfig> |    与权限无关的路由     |     []      |
-|     mode     |       string        |    dev,test,pre,prod    |     dev     |
-|     baseUrl     |       string        |    请求权限的基础地质    |     ''     |
+|     参数     |        类型         |          说明           |           默认值           |
+| :----------: | :-----------------: | :---------------------: | :------------------------: |
+| \* projectId |       Number        |         项目 ID         |            none            |
+|  \* router   |      VueRouter      |        路由对象         |            none            |
+|  \* routes   | Array<RouterConfig> |     动态路由对照表      |            none            |
+|   tokenKey   |       string        | token 自定义 Key 暂无用 |           token            |
+| userInfoKey  |       string        |   用户信息自定义 Key    | \_\_{projectId}\_\_user\_info |
+|  loginPath   |       string        |       登录页地址        |           /login           |
+|  whiteList   |    Array<string>    |     无需鉴权白名单      |        [loginPath]         |
+| staticRoutes | Array<RouterConfig> |    与权限无关的路由     |             []             |
+|     mode     |       string        |    dev,test,pre,prod    |            dev             |
+|   baseUrl    |       string        |   请求权限的基础地质    |             ''             |
 
 ## 实例属性与方法说明
 
@@ -45,7 +50,8 @@
 @Param pwd:string 密码
 @Return ResponseData | undefined
 (ResponseData .d.ts 有定义)
-行为：直接存好 token
+行为1:直接存好 token
+行为2:会请求一次用户信息
 ```
 
 @Method: logout 注销
@@ -60,6 +66,7 @@
 
 ```
 包含了权限的所有原始数据
+初始化后会检测本地是否已有 如没有会在路由跳转的时候获取
 ```
 
 @Prop: token 凭证
@@ -73,6 +80,7 @@
 ```
 当前登录的管理员信息
 ```
+
 @Method: getUserInfo 获取管理员用户信息
 
 ```
