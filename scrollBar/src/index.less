@@ -1,0 +1,37 @@
+.stl_yscroll_box,.stl_xscroll_box{
+    position: absolute;
+    background:#f7f7f7;
+    //display: none;
+    div{
+        background:#eaeaea;
+        position: absolute;
+    }
+    .stl_scroll_move_box{
+        background:#cccccc;
+    }
+}
+.stl_xscroll_box{
+    width:100%;
+    bottom:0;
+    left:0;
+    div{
+        left:0;top:0;
+        height:100%;
+    }
+}
+.stl_yscroll_box{
+    height:100%;
+    right:0;
+    top:0;
+    div{
+        width:100%;
+        right:0;
+        top:0;
+    }
+}
+.stl_scroll_unselect{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
