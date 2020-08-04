@@ -6,10 +6,12 @@ const paths = {
         format: "umd", //输出格式：立即执行函数表达式   which can be one of 'amd', 'cjs', 'system', 'esm', 'iife' or 'umd'
         name: "PowerPlugin", //umd or iife 下的方法的命名
         uglify: true,
-        externals: ['vue-router', 'vue'],
+        externals: ['vue-router', 'vue', 'element-ui', '@stl/request', '@babel/polyfill'],
         global: {
             'vue-router': 'VueRouter',
-            'vue': 'Vue'
+            'vue': 'Vue',
+            'element-ui': 'ElementUI',
+            '@stl/request': 'HttpService',
         },
     },
     index: {
