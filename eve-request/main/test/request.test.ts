@@ -1,10 +1,20 @@
+/*
+ * @Description:
+ * @Version: 0.1
+ * @Author: EveChee
+ * @Date: 2020-08-03 14:16:10
+ * @LastEditTime: 2020-08-04 09:37:02
+ */
 /// <reference path="../node_modules/@types/mocha/index.d.ts" />
 /// <reference path="../node_modules/@types/expect.js/index.d.ts" />
 /// <reference path="../node_modules/@types/sinon/index.d.ts" />
-// import sinon from 'sinon/pkg/sinon-esm.js'
 import HttpService from '../src/index'
 import { responseData } from './server'
-const http = new HttpService()
+import sinon from 'sinon'
+const logout = sinon.fake()
+const http = new HttpService('', {
+  logout
+})
 
 describe('请求测试', () => {
   it('Get', async () => {
@@ -30,4 +40,16 @@ describe('请求测试', () => {
       .catch((e) => console.log(e))
     expect(JSON.stringify(del)).to.be.equal(responseData)
   })
+})
+
+describe('401测试', () => {
+
+  it('Post401', async () => {
+    const post = await http
+      .post('/post/401', { abc: 1 })
+      .catch((e) => console.log(e))
+    expect(post).to.be(undefined)
+    sinon.assert.called(logout);
+  })
+
 })

@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-08-03 11:11:44
+ * @LastEditTime: 2020-08-04 09:36:24
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
@@ -110,12 +110,9 @@ export default class Intercept {
         error: { response: any }
       ) => {
         const { response } = error
-        if (response) {
-          response.status === 401 &&
-            this.MsgUI?.error('未登录或登录过期!') &&
-            this.logout &&
-            this.logout()()
-
+        if (response && response.status === 401) {
+          this.logout && this.logout()
+          this.MsgUI?.error('未登录或登录过期!')
           Promise.reject(error)
           return
         }

@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Version: 0.1
+ * @Author: EveChee
+ * @Date: 2020-08-03 16:54:27
+ * @LastEditTime: 2020-08-04 09:13:56
+ */
 import sinon from 'sinon'
 
 const bodyMessage = '{ test: 1 }'
@@ -13,6 +20,14 @@ server.respondWith('GET', '/test/api', [
   responseData,
 ])
 server.respondWith('POST', /\/post\/(\d+)/, function (xhr) {
+  if(xhr.url === '/post/401'){
+    xhr.respond(
+      401,
+      { 'Content-Type': 'application/json' },
+      JSON.stringify({ bodyMessage: '登录失败检测', code: 0 })
+    )
+    return
+  }
   if (xhr.requestHeaders.sign) {
     xhr.respond(
       200,
