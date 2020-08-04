@@ -30,10 +30,9 @@ gulp.task('clean:dist', function(cb) {
         'dist/**/*'
     ], cb);
 });
-
 gulp.task('clean:test', function(cb) {
     return del([
-        'config/karma/**/*'
+        'config/karma/coverage/**/*'
     ], cb);
 });
 

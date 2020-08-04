@@ -5,6 +5,11 @@ const paths = {
         lessfile: "index.css", //样式输出的文件 默认是在dist文件下
         format: "umd", //输出格式：立即执行函数表达式   which can be one of 'amd', 'cjs', 'system', 'esm', 'iife' or 'umd'
         name: "HttpService", //umd or iife 下的方法的命名
+        externals: ['@babel/polyfill'],
+        global: {
+            '@babel/polyfill': 'polyfill',
+        },
+        uglify:true
     },
     index: {
         input: './src/index.ts', //入口未见
@@ -16,8 +21,9 @@ const paths = {
         global: {
             'axios': 'axios',
             'qs': 'qs',
-            '@babel/polyfill':'polyfill',
-        }
+            '@babel/polyfill': 'polyfill',
+        },
+        uglify:true
     }
 }
 

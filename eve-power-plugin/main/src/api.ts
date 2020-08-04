@@ -23,32 +23,23 @@ export function logout(http: HttpService, data: LogoutParams, opts?: AxiosOption
         '/sso/cas/logout',
         data,
         Object.assign({}, opts, {
-            codes: { sures, err },
-            headers: {
-                token: data.token,
-            },
+            codes: { sures, err }
         }),
     )
 }
-export function getPower(http: HttpService, token: string, params: GetParams) {
+export function getPower(http: HttpService ,params: GetParams) {
     const sures = ['B600500']
     const err = ['00009']
     return http.get('/sso/user/getPermissionList', {
         params,
-        headers: {
-            token,
-        },
         codes: { sures, err },
     })
 }
-export function getAdminInfo(http: HttpService, token: string, params: GetParams) {
+export function getAdminInfo(http: HttpService, params: GetParams) {
     const sures = ['B600400']
     const err = ['B600401','B600402']
     return http.get('/sso/user/getCurrentUser', {
         params,
-        headers: {
-            token,
-        },
         codes: { sures, err },
     })
 }

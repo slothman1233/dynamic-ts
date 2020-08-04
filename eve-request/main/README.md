@@ -1,4 +1,3 @@
-
 # STL 网络请求插件
 
 包含 get,post,put,delete 四个封装方法
@@ -15,15 +14,16 @@
 
 下面是 ReqBaseConfig 的说明 如果传了 options 则下方\*必传
 
-|    参数     |   类型   |              说明              |   默认值   |
-| :---------: | :------: | :----------------------------: | :--------: |
-|    msgUI    |   any    |          提示 UI 插件          |    none    |
-|  \* logout  | Function |            登出方法            |    none    |
-|   timeout   |  Number  |          默认超时时间          | 1000 \* 12 |
-| \* getToken | Function |          获取凭证方法          |    none    |
-| signHeaders | Function |  签名方法(返回需要设置的头部)  |    none    |
-| requestSet  | Function |       请求拦截执行的方法       |    none    |
-| responseSet | Function | 响应拦截执行的方法(基本用不到) |    none    |
+|      参数      |   类型   |                         说明                         |     默认值      |
+| :------------: | :------: | :--------------------------------------------------: | :-------------: |
+|     msgUI      |   any    |                     提示 UI 插件                     |      none       |
+|     logout     | Function |                       登出方法                       |      none       |
+|    timeout     |  Number  |                     默认超时时间                     |   1000 \* 12    |
+|    getToken    | Function |                     获取凭证方法                     |      none       |
+|  signHeaders   | Function |             签名方法(返回需要设置的头部)             |      none       |
+|   requestSet   | Function |                  请求拦截执行的方法                  |      none       |
+|  responseSet   | Function |            响应拦截执行的方法(基本用不到)            |      none       |
+| tokenHeaderKey |  String  | token 在请求头的字段 key(只在 getToken 方法有时生效) | 'Authorization' |
 
 ```js
 import HttpService from '@stl/request'

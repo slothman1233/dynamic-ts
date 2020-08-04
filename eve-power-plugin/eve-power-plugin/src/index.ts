@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-07-29 10:32:40
+ * @LastEditTime: 2020-08-03 17:52:58
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -66,6 +66,7 @@ export default class PowerPlugin {
             msgUI: Message,
             logout: this.logout,
             getToken: () => this.token,
+            tokenHeaderKey:this.tokenKey
         })
     }
     get token() {
