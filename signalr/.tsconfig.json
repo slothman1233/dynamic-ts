@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+     
+        "noImplicitAny": true,
+        "module": "es2015",
+        "target": "es5",
+        "declaration": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true
+    },
+
+    "exclude": ["node_modules"],
+    "include": ["src/**/*"]
+}

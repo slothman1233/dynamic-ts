@@ -3,4 +3,4 @@ node_modules
 .babelrc.js
 .tsconfig.json.js
 aa.html
-test
+dist
