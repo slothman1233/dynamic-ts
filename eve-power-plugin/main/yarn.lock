@@ -866,10 +866,10 @@
   resolved "http://47.113.105.208:8088/@sinonjs%2ftext-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha1-jaXGUwkVZT86Hzj9XxAdjD+AecU=
 
-"@stl/request@^1.0.2":
-  version "1.0.2"
-  resolved "http://47.113.105.208:8088/@stl%2frequest/-/request-1.0.2.tgz#80982114df6e1ee7e93e971c95afc402f0a98d20"
-  integrity sha512-m1u43ta3y0nF+Qlm5frsM6nW0k0raYbzWEQG6f//wF8KmsdNjRQ8NaAMKjw4zJbIt99KXkTBlM7EkPO+t0fLkA==
+"@stl/request@^1.0.3":
+  version "1.0.3"
+  resolved "http://47.113.105.208:8088/@stl%2frequest/-/request-1.0.3.tgz#f19d34e10a379ca5b217d502609de2123e843e10"
+  integrity sha512-3ijk/0cKrmxdN6/Pp0mew2RoGcakRWsL6SALMB0hTg8A2BeHH+QZeqFrZ7UHG0GgPB27+ZLqr6HOmOb2+r874Q==
   dependencies:
     "@babel/polyfill" "^7.10.4"
     "@types/chai" "^4.2.12"
