@@ -5,7 +5,7 @@
  * @Date: 2020-05-08 14:40:09
  * @LastEditTime: 2020-07-27 14:50:20
  */
-import '@babel/polyfill'
+// import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Intercept from './AxiosInstance'
 import { stringify, IStringifyOptions } from 'qs'
