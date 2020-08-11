@@ -2,6 +2,8 @@
 
 ### 使用方法
 ```
+npm install @stl/signalr
+
 import { stlSignalr } from "@stl/signalr"
 
 let obj ={ 
