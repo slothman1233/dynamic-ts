@@ -2,7 +2,9 @@
 
 ### 使用方法
 ```
-import { http } from "@stl/http-request"
+npm install @stl/httprequset
+
+import { http } from "@stl/httprequest"
 
 http.get(
     {
