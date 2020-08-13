@@ -1,6 +1,6 @@
 export function signalrOnline():any{//通过加载图片的方式判断当前网络是否连接
     let img = new Image();
-    img.src = 'https://www.fx110.com//images/Annbgline.jpg?' + (new Date());
+    img.src = '//js.wbp5.com/Images/AnnBgline.jpg?' + (new Date());
     return new Promise((resolve:()=>void,reject:()=>void)=>{
         img.onload = resolve;
         img.onerror = reject;
