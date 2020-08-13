@@ -116,6 +116,7 @@ export default class Intercept {
           Promise.reject(error)
           return
         }
+        if(response && response.config.unErrorMsg) return
         this.MsgUI?.error('请求异常,请稍后再试!')
       }
     )
