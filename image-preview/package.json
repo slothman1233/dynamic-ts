@@ -1,7 +1,7 @@
 {
-  "name": "@stl/httprequest",
-  "version": "1.0.2",
-  "description": "兼容性较高的简易http请求封装",
+  "name": "@stl/image-preview",
+  "version": "1.0.1",
+  "description": "图片，视频预览插件",
   "main": "dist/index.js",
   "scripts": {
     "dev": "gulp clean:dist && rollup -c --environment NODE_ENV:development",
@@ -10,13 +10,14 @@
     "test": "gulp clean:test && karma start"
   },
   "keywords": [
-    "http",
-    "request"
+    "image",
+    "video",
+    "preview"
   ],
   "author": "denghao",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^0.1.9",
+    "@stl/tool-ts": "^0.2.4",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -49,13 +50,12 @@
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
   },
-  "devDependencies": {
-    "@babel/register": "^7.10.5",
-    "@types/sinon": "^9.0.4",
-    "karma-sinon": "^1.0.5",
-    "sinon": "^9.0.2"
-  },
   "directories": {
     "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   }
 }
