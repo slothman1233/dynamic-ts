@@ -1,6 +1,6 @@
 {
   "name": "@stl/power-plugin",
-  "version": "0.1.33",
+  "version": "0.2.0",
   "description": "权限处理插件",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,11 @@
     "test": "gulp clean:test && karma start"
   },
   "keywords": [
-    "power"
+    "power",
+    "vue-admin-power",
+    "react-admin-power",
+    "hooks",
+    "login"
   ],
   "author": "EveChee",
   "license": "MIT",
@@ -22,6 +26,9 @@
     "@types/mocha": "^8.0.0",
     "@types/nprogress": "^0.2.0",
     "@types/qs": "^6.9.3",
+    "@types/react": "^16.9.46",
+    "@types/react-router": "^5.1.8",
+    "@types/react-router-dom": "^5.1.5",
     "autoprefixer": "^9.8.5",
     "axios": "^0.19.2",
     "blueimp-md5": "^2.16.0",
@@ -43,6 +50,9 @@
     "nprogress": "^0.2.0",
     "postcss-nested": "^4.2.3",
     "qs": "^6.9.4",
+    "react": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "rollup": "^2.23.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",

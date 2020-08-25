@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-07-30 10:18:45
+ * @LastEditTime: 2020-08-25 15:32:16
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -11,7 +11,9 @@ import HttpService from '@stl/request'
 import { Message } from 'element-ui'
 // 进度条
 import NProgress from 'nprogress' // progress bar
-import { login, logout, getPower, LoginParams, getAdminInfo } from './api'
+import { login, logout, LoginParams, getAdminInfo } from './api'
+import { setCacheAddTime, getCacheCheckTime } from './utils'
+import { Permissions, Menu } from './data'
 export default class PowerPlugin {
   // 项目名称
   projectId: number
@@ -83,39 +85,32 @@ export default class PowerPlugin {
       localStorage.removeItem(this.authKey)
     }
   }
-  get userInfo() {
+  get userInfo(): any {
     return getCacheCheckTime(this.userInfoKey)
   }
   set userInfo(val) {
     setCacheAddTime(this.userInfoKey, val)
   }
   // 用户信息
-
-  get powerKey() {
-    return `__${this.projectId}__permissions`
-  }
   get authKey() {
     return `__${this.projectId}__${this.tokenKey}`
   }
 
-  get permissions(): any {
-    return getCacheCheckTime(this.powerKey)
-  }
-  set permissions(val) {
-    setCacheAddTime(this.powerKey, val)
-  }
-
   // 入口实例化之后 调用初始化 对router挂载
   async init() {
-    if (this.permissions) {
+    if (this.userInfo) {
       // 先使用缓存
-      this.matchRoutes = this.checkMenuList(this.permissions.menuList)
-      ;(this.router as any).matcher = (new VueRouter({
-        routes: this.staticRoutes,
-      }) as any).matcher
-      this.router.addRoutes(this.matchRoutes)
+      this.routerUpdate()
     }
     this.routerHooks()
+  }
+
+  routerUpdate() {
+    this.matchRoutes = this.checkMenuList(this.userInfo.menuList)
+    ;(this.router as any).matcher = (new VueRouter({
+      routes: this.staticRoutes,
+    }) as any).matcher
+    this.router.addRoutes(this.matchRoutes)
   }
 
   private routerHooks() {
@@ -133,9 +128,9 @@ export default class PowerPlugin {
         NProgress.done()
         return
       }
-      if (!this.permissions) {
+      if (!this.userInfo) {
         // 更新最新权限
-        const res = await this.reqPowerData()
+        const res = await this.getUserInfo()
         if (!res) {
           // 404
           next({ path: this.loginPath })
@@ -144,25 +139,10 @@ export default class PowerPlugin {
           throw new Error('获取权限失败,请重新登录尝试')
           return
         }
-        ;(this.router as any).matcher = (new VueRouter({
-          routes: this.staticRoutes,
-        }) as any).matcher
-        this.router.addRoutes(this.matchRoutes)
       }
       next()
       NProgress.done()
     })
-  }
-
-  async reqPowerData() {
-    if (!this.token) return
-    const res = await getPower(this.http, { projectId: this.projectId })
-    if (res) {
-      // 更新到最新数据 匹配本地路由
-      this.matchRoutes = this.checkMenuList(res.bodyMessage.menuList)
-      this.permissions = res.bodyMessage
-    }
-    return res
   }
 
   checkMenuList(
@@ -173,12 +153,14 @@ export default class PowerPlugin {
     const _routes: RouteConfig[] = []
     list.forEach((item) => {
       routes.forEach((route) => {
-        if (item.id === route.meta.id) {
+        if (route.meta && item.id === route.meta.id) {
           let children
           if (route.children) {
             children = this.checkMenuList(item.children, route.children)
           }
-          _routes.push(Object.assign({}, route, { children }))
+          _routes.push(
+            Object.assign({}, route, children ? { children } : undefined)
+          )
         }
       })
     })
@@ -189,60 +171,32 @@ export default class PowerPlugin {
     const res = await login(this.http, data).catch((e: Error) =>
       console.log('登录失败', e)
     )
-    if (!res) {
-      return
-    } else {
-      this.token = res.bodyMessage.token
-    }
+    if (!res) return
+    this.token = res.bodyMessage.token
     await this.getUserInfo()
     return res
   }
 
   async logout() {
-    await logout(this.http, { token: this.token || '' }).catch((e: Error) =>
-      console.log('登录失败', e)
-    )
+    await logout(this.http, { token: this.token || '' })
     this.token = null
-    this.permissions = null
+    this.userInfo = null
     this.router.replace(this.loginPath)
   }
   async getUserInfo() {
     const res = await getAdminInfo(this.http, { projectId: this.projectId })
     if (res) {
       this.userInfo = res.bodyMessage
+      this.routerUpdate()
     }
     return res
   }
 
   HasBtn(key: string) {
     return (target: any, propName: string) => {
-      target[propName] = this.permissions?.permissionList.includes(key)
+      if (!this.userInfo) return
+      target[propName] = this.userInfo?.permissionList.includes(key)
     }
-  }
-}
-
-export function getCacheCheckTime(key: string, expires:number = 30 * 60 * 1000) {
-  let res = localStorage.getItem(key)
-  if (!res) return null
-  const cache = res.split('__time__')
-  const time = +cache[1]
-  if (new Date().getTime() - time >= expires) {
-    // 缓存30m过期
-    res = null
-    localStorage.removeItem(key)
-  } else {
-    res = JSON.parse(cache[0])
-  }
-  return res
-}
-export function setCacheAddTime(key: string, val: any) {
-  if (val) {
-    localStorage.setItem(
-      key,
-      `${JSON.stringify(val)}__time__${new Date().getTime()}`
-    )
-  } else {
-    localStorage.removeItem(key)
   }
 }
 
@@ -261,35 +215,4 @@ type PowerOptions = {
 type PowerInitOptions = {
   // 是否每次跳转都去获取最新权限
   each?: boolean
-}
-
-type Permissions = {
-  id: number
-  username: string
-  realName: string
-  avatar: string
-  phone: string
-  email: string
-  userStatus: number
-  menuList: Menu[]
-}
-
-type Menu = {
-  id: number
-  parentId: number
-  menuIdx: number
-  menuName: string
-  menuIcon: string
-  permission: string
-  type: number
-  routePath: string
-  componentName: string
-  componentPath: string
-  remark: any
-  outside: number
-  show: number
-  cached: number
-  createTime: string
-  children: Menu[]
-  authorized: boolean
 }

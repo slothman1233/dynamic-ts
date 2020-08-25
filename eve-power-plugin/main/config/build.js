@@ -33,13 +33,31 @@ const paths = {
             // '@babel/polyfill': 'polyfill'
         },
         uglify: true
+    },
+    "react-index": {
+        input: './src/react-index.ts', //入口未见
+        jsfile: "./dist/react-index.js", //js输出文件
+        format: "umd", //输出格式：立即执行函数表达式   which can be one of 'amd', 'cjs', 'system', 'esm', 'iife' or 'umd'
+        name: "PowerPlugin", //umd or iife 下的方法的命名
+        externals: [ 'react','react-router-dom','lodash', 'qs', 'axios', 'element-ui', 'nprogress', 'blueimp-md5', 'vue', '@stl/request', '@babel/polyfill'],
+        global: {
+            'axios': 'axios',
+            'qs': 'qs',
+            'vue': 'Vue',
+            'react': 'Vue',
+            'blueimp-md5': 'md5',
+            '@stl/request': 'HttpService',
+            // '@babel/polyfill': 'polyfill'
+        },
+        uglify: true
     }
 }
 
 // 需要生成的文件
 const jspages = [
     "index",
-    "jsall"
+    "jsall",
+    "react-index",
 ]
 
 
