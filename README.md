@@ -39,3 +39,15 @@
 ### 文件说明请移步到npm私服插件
 ### 链接地址 [@stl/signalr](http://47.113.105.208:8088/-/web/detail/@stl/signalr)
 
+***
+
+# 图片，视频预览插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/image-preview](http://47.113.105.208:8088/-/web/detail/@stl/image-preview)
+
+***
+
+# 图片裁剪插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/image-cropper](http://47.113.105.208:8088/-/web/detail/@stl/image-cropper)
+
