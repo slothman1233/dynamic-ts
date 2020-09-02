@@ -4,15 +4,23 @@
 ```
 npm install @stl/image-preview
 
-import { imgPreview } from ""@stl/image-preview"
+html:
+    <div id="imgBox">
+        <img src="图片地址" data-viewer="预览图片地址" title="描述" />
+    </div>
+    *备注： 1：预览框展示的图片为data-viewer属性的值，如果没有data-viewer属性则展示src属性的值
+            2：预览框中图片描述为title属性的值 如果没有则不显示图片描述
 
-imgPreview({
-    parentEle:document.getElementById("img_list"),
-    clickCallback:function(dom,ev){
-        console.log(dom,ev);
-        return true;
-    }
-})
+ts:
+    import { imgPreview } from ""@stl/image-preview"
+
+    imgPreview({
+        parentEle:document.getElementById("imgBox"),
+        clickCallback:function(dom,ev){
+            console.log(dom,ev);
+            return true;
+        }
+    })
 ```
 
 ### 参数说明
