@@ -112,6 +112,7 @@ AxiosOptions 说明 除说明的部分以外 同 Axios 原配置
 | :----------: | :-----: | :------------------------------------------------------------------------: | :----: |
 |    codes     |  Codes  |                         对应的 subCode 值放置对象                          |  none  |
 |  queryType   | string  | json&#124;formd(FormData)&#124;forms(qs 模式)&#124;text(get,put 默认 text) |  none  |
+|  unErrorMsg  | boolean |             在网络层返回请求失败时是否不自动弹出请求异常的提示             | false  |
 |   msgPack    | boolean |                      若支持 msgPack 是否以此形式发送                       |  none  |
 | queryOptions | object  |                          同 qs 模块序列化设置一致                          |  none  |
 

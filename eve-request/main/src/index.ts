@@ -177,6 +177,7 @@ interface DataOptions {
 export interface AxiosOptions extends DataOptions, AxiosRequestConfig {
   headers?: any
   codes?: Codes
+  unErrorMsg?: boolean
   queryType?: 'text' | 'json' | 'formd' | 'forms'
   queryOptions?: IStringifyOptions
   msgPack?: boolean

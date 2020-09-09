@@ -1,7 +1,14 @@
+/*
+ * @Description:
+ * @Version: 0.1
+ * @Author: EveChee
+ * @Date: 2020-08-04 10:55:53
+ * @LastEditTime: 2020-08-25 14:39:15
+ */
 /// <reference path="../node_modules/@types/mocha/index.d.ts" />
 /// <reference path="../node_modules/@types/expect.js/index.d.ts" />
 /// <reference path="../node_modules/@types/sinon/index.d.ts" />
-import { getCacheCheckTime, setCacheAddTime } from '../src'
+import { getCacheCheckTime, setCacheAddTime } from '../src/utils'
 import sinon from 'sinon'
 const key = 'test_key'
 describe('存储过期检测', () => {
