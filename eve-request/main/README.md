@@ -24,6 +24,7 @@
 |   requestSet   | Function |                  请求拦截执行的方法                  |      none       |
 |  responseSet   | Function |            响应拦截执行的方法(基本用不到)            |      none       |
 | tokenHeaderKey |  String  | token 在请求头的字段 key(只在 getToken 方法有时生效) | 'Authorization' |
+|    errorFn     | function |                       错误回调                       |      none       |
 
 ```js
 import HttpService from '@stl/request'
@@ -108,13 +109,14 @@ export function sendDelete(params: Params) {
 
 AxiosOptions 说明 除说明的部分以外 同 Axios 原配置
 
-|     属性     |  类型   |                                    说明                                    | 默认值 |
-| :----------: | :-----: | :------------------------------------------------------------------------: | :----: |
-|    codes     |  Codes  |                         对应的 subCode 值放置对象                          |  none  |
-|  queryType   | string  | json&#124;formd(FormData)&#124;forms(qs 模式)&#124;text(get,put 默认 text) |  none  |
-|  unErrorMsg  | boolean |             在网络层返回请求失败时是否不自动弹出请求异常的提示             | false  |
-|   msgPack    | boolean |                      若支持 msgPack 是否以此形式发送                       |  none  |
-| queryOptions | object  |                          同 qs 模块序列化设置一致                          |  none  |
+|     属性     |   类型   |                                    说明                                    | 默认值 |
+| :----------: | :------: | :------------------------------------------------------------------------: | :----: |
+|    codes     |  Codes   |                         对应的 subCode 值放置对象                          |  none  |
+|  queryType   |  string  | json&#124;formd(FormData)&#124;forms(qs 模式)&#124;text(get,put 默认 text) |  none  |
+|  unErrorMsg  | boolean  |             在网络层返回请求失败时是否不自动弹出请求异常的提示             | false  |
+|   errorFn    | function |                 错误回调（调用时优先于初始化时的错误回调）                 |  none  |
+|   msgPack    | boolean  |                      若支持 msgPack 是否以此形式发送                       |  none  |
+| queryOptions |  object  |                          同 qs 模块序列化设置一致                          |  none  |
 
 Codes 说明
 
