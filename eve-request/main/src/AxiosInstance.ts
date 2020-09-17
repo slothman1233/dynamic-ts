@@ -109,10 +109,11 @@ export default class Intercept {
       },
       (
         // 请求失败
-        error: { response: any }
+        error: any
       ) => {
-        const { response } = error
-        const errorFn = response.config.errorFn || this.errorFn
+        const { response, config } = error
+        const errorFn =
+          response?.config?.errorFn || config?.errorFn || this.errorFn
         errorFn && errorFn(error)
         if (response && response.status === 401) {
           this.logout && this.logout()
