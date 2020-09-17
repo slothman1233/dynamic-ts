@@ -1,7 +1,7 @@
 {
-  "name": "@stl/image-preview",
-  "version": "1.0.4",
-  "description": "图片，视频预览插件",
+  "name": "@stl/dragsort",
+  "version": "1.0.0",
+  "description": "元素拖拽的插件",
   "main": "dist/index.js",
   "scripts": {
     "dev": "gulp clean:dist && rollup -c --environment NODE_ENV:development",
@@ -9,12 +9,7 @@
     "watch": "rollup -c --watch --environment NODE_ENV:development",
     "test": "gulp clean:test && karma start"
   },
-  "keywords": [
-    "image",
-    "video",
-    "preview"
-  ],
-  "author": "denghao",
+  "author": "dh",
   "license": "ISC",
   "dependencies": {
     "@stl/tool-ts": "^0.2.4",
@@ -35,7 +30,7 @@
     "karma-typescript": "^5.0.3",
     "karma-typescript-es6-transform": "^5.0.3",
     "less": "^3.12.2",
-    "mocha": "^8.1.1",
+    "mocha": "^8.0.1",
     "node-sass": "^4.14.1",
     "postcss-nested": "^4.2.3",
     "rollup": "^2.23.0",
@@ -50,12 +45,15 @@
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
   },
-  "directories": {
-    "test": "test"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
-  }
+  },
+  "keywords": [
+    "dragsort"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {}
 }

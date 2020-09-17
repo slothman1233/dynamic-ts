@@ -223,7 +223,6 @@ class imgMagnificationFn{
                 SET_IMAGE_PREVIEW_OBG.previewEvents.remove(closeClick);
                 SET_IMAGE_PREVIEW_OBG.previewEvents.remove(imgResize);
                 SET_IMAGE_PREVIEW_OBG.previewEvents.remove(imgZoomFn);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(imgZoomFn);
                 SET_IMAGE_PREVIEW_OBG.previewEvents.remove(mouseDown);
                 SET_IMAGE_PREVIEW_OBG.previewEvents.listen(prevClick, function () {
                     that.prevClick.call(that)
@@ -293,33 +292,35 @@ class imgMagnificationFn{
     }
     getImgFn(dom:any,ev:any){
         let that:any = this;
-        that._allIndex = that.settings.parentEle.querySelectorAll("img[data-viewer]").length;//图片的长度
+        // that._allIndex = that.settings.parentEle.querySelectorAll("img[data-viewer]").length;//图片的长度
         let e:any = ev || event;
         let ele: HTMLElement = e.target || e.srcElement;
+        let eleItem:string = ele.getAttribute("data-item");
+        that._allIndex = eleItem?that.settings.parentEle.querySelectorAll("img[data-item='"+eleItem+"']").length:that.settings.parentEle.querySelectorAll("img[data-viewer]").length;//图片的长度
         if (!ele.getAttribute("data-viewer") && ele.querySelectorAll("[data-viewer]").length <= 0) { return false }
 
         if (e && e.preventDefault) { ev.preventDefault() } else { window.event.returnValue = false };
         if (ele.nodeName === "INPUT") { return false }
 
         var imgMaxUrl = ele.getAttribute("href") || ele.getAttribute("data-viewer") || ele.getAttribute("src");
-        that.index = index(ele);
+        // that.index = index(ele);
         SET_IMAGE_PREVIEW_OBG.imgPreviewWidth = that.$win.innerWidth;
         SET_IMAGE_PREVIEW_OBG.imgPreviewHeight = that.$win.innerHeight;
-        that.getImgOrTitle();
+        that.getImgOrTitle(eleItem);
         that.index = that.ImgIndex[ele.getAttribute('data-imgindex')];
         that.imgClick(imgMaxUrl);
     }
-    getImgOrTitle() {// 获取图片大图地址及图片标题，并提前缓存图片
-        let that:any = this;
-        let i:number = 0;
+    getImgOrTitle(item:any) {// 获取图片大图地址及图片标题，并提前缓存图片
+        let that:any = this,i:number = 0;
         that.imgUrlArray = [];
         that.imgTitleArray = [];
         that.ImgIndex = {};
         each(NodeListToArray(that.parentEle.querySelectorAll('img')), function (value:any, index:any) {
             if ((<HTMLElement>value).getAttribute("data-viewer")) {
-                let $this:HTMLElement = <HTMLElement>value, imgMax = [],
+                if(!item||(<HTMLElement>value).getAttribute("data-item")===item){
+                    let $this:HTMLElement = <HTMLElement>value, imgMax = [],
                     _title_text:string = $this.getAttribute("title") || "",
-                    _realIndex:number = parseInt(index) + 1,
+                    _realIndex:number = i+1,
                     _title_content = _title_text?` <p style="margin: 5px;"><span style="word-break:break-all">${_title_text}</span></p>`:"",
                     _title_style = _title_text?"position:absolute;margin:0;top:0;left:0":"margin:5px auto;text-align:center;",
                     _title = `<div style="position:relative;${that.settings.titleUp&&_title_text?"padding:0 40px 0 70px;":_title_text?"padding-left:70px;":that.settings.titleUp?"padding-right:40px":""}">
@@ -332,17 +333,20 @@ class imgMagnificationFn{
                             </div>`,
 
                     imgurl = $this.getAttribute("data-viewer") || $this.getAttribute("src");
-                $this.setAttribute('data-imgindex', index);
-
-                imgMax[index] = new Image();
-                imgMax[index].src = imgurl;
-                that.ImgIndex[index] = i;
-                i++;
-                that.imgUrlArray.push(imgurl);
-                that.imgTitleArray.push(_title);
+                    $this.setAttribute('data-imgindex', i+"");
+                    imgMax[i] = new Image();
+                    imgMax[i].src = imgurl;
+                    that.ImgIndex[i] = i;
+                    i++;
+                    that.imgUrlArray.push(imgurl);
+                    that.imgTitleArray.push(_title);
+                }
             }
         })
     }
+
+
+
     imgClick(imgUrl:string) {// 显示图片事件
         var that = this;
         var $imgID = <HTMLElement>that.domList.$imgID;

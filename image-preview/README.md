@@ -6,10 +6,12 @@ npm install @stl/image-preview
 
 html:
     <div id="imgBox">
-        <img src="图片地址" data-viewer="预览图片地址" title="描述" />
+        <img src="图片地址" data-viewer="预览图片地址" title="描述" data-item="0" />
     </div>
-    *备注： 1：预览框展示的图片为data-viewer属性的值，如果没有data-viewer属性则展示src属性的值
+    *备注： 1：预览框展示的图片为data-viewer属性的值
             2：预览框中图片描述为title属性的值 如果没有则不显示图片描述
+            3：data-item作为分组使用的属性  data-item值相同的打开预览框可左右切换
+               如果没有data-item属性则都视为同一组
 
 ts:
     import { imgPreview } from ""@stl/image-preview"
