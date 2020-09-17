@@ -43,10 +43,10 @@ class HttpService {
     this.axios = new Intercept(baseURL, options).getInterceptors()
   }
 
-  public get(
+  public get<T>(
     url: string,
     options: AxiosOptions = {}
-  ): Promise<ResponseData | undefined> {
+  ): Promise<ResponseData<T> | undefined> {
     const { queryType = 'text', data, params, queryOptions } = options
     if (queryType === 'text') {
       options.params = params || data
@@ -68,11 +68,11 @@ class HttpService {
    * @return: Promise<ResponseData | undefined>
    * @author: EveChee
    */
-  public post(
+  public post<T>(
     url: string,
     data?: any,
     options: AxiosOptions = {}
-  ): Promise<ResponseData | undefined> {
+  ): Promise<ResponseData<T> | undefined> {
     const { queryType = 'json', params, queryOptions } = options
     if (queryType === 'text') {
       options.params = params || data
@@ -93,11 +93,11 @@ class HttpService {
    * @return: Promise<ResponseData | undefined>
    * @author: EveChee
    */
-  public put(
+  public put<T>(
     url: string,
     data?: any,
     options: AxiosOptions = {}
-  ): Promise<ResponseData | undefined> {
+  ): Promise<ResponseData<T> | undefined> {
     const { queryType = 'json', queryOptions } = options
     if (queryType === 'text') {
       options.params = data
@@ -118,10 +118,10 @@ class HttpService {
    * @return: Promise<AxiosResponse<any>>
    * @author: EveChee
    */
-  public delete(
+  public delete<T>(
     url: string,
     options: AxiosOptions = {}
-  ): Promise<ResponseData | undefined> {
+  ): Promise<ResponseData<T> | undefined> {
     const { queryType = 'text', data, queryOptions } = options
     options.params = data
     options.paramsSerializer = (params) =>
@@ -190,10 +190,10 @@ interface Codes {
   err?: Array<string>
 }
 
-export interface ResponseData {
+export interface ResponseData<T> {
   code: number | string
   subCode: string
-  bodyMessage: any
+  bodyMessage: T
 }
 
 export type ReqBaseConfig = {
@@ -213,4 +213,6 @@ export type ReqBaseConfig = {
   requestSet?: Function
   // 响应拦截方法
   responseSet?: Function
+  // 错误回调
+  errorFn?:Function
 }

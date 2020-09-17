@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./index.css" rel="stylesheet" />
+    <style>
+        html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {margin: 0;padding: 0;}
+        html, body {min-height: 100%;}
+        body {font-family: "Microsoft YaHei";font-size:14px;color:#333;}
+        h1, h2, h3, h4, h5, h6{font-weight:normal;}
+        ul,ol {list-style: none;}
+        img {border: none;vertical-align: middle;}
+        a {text-decoration: none;color: #232323;}
+        table {border-collapse: collapse;table-layout: fixed;}
+        input, textarea {outline: none;border: none;}
+        textarea {resize: none;overflow: auto;}
+        .clearfix {zoom: 1;}
+        .clearfix:after {content: ".";width: 0;height: 0;visibility: hidden;display: block;clear: both;overflow:hidden;}
+        .slider_parent{width:540px;height:330px;border:1px solid #ddd;margin:50px auto 0;overflow: hidden;font-size:0;position: relative;}
+        .slider_box{white-space:nowrap; position: relative;}
+        .slider_box li{width:540px;height:330px;position: relative;display: inline-block;}
+        .slider_box li p{position: absolute;left:0;top:0;background:red;color:#fff;width:20px;height:20px;font-size:14px;}
+        .slider_box li img{width:540px;display: block;}
+        .scroll_parent{width:500px;height:40px;border:1px solid #ddd;margin:50px 100px 0;overflow: hidden;display:inline-block;position: relative;}
+        .scroll_box{white-space:nowrap; position: relative;}
+        .scroll_box li{width:500px;line-height:40px;font-size:16px;color:#000;display: inline-block;}
+        .scroll_boxs li{display: block;}
+
+        /* .slider_parents .slider_box{left:-1620px;}
+        .slider_parents .slider_box li{display: inline-block;}
+        .slider_parents,.slider_parenta{display: inline-block;margin:50px 100px 0;} */
+
+        .slider_parents .slider_box{top:-990px;}
+        .slider_parents .slider_box li{display: block;}
+        .slider_parents,.slider_parenta{display: inline-block;margin:50px 100px 0;}
+    </style>
+</head>
+<body>
+  <div id="slider_parent" class="slider_parent">
+      <ul class="slider_box" id="slider_dom">
+        <li class="slider_list"><p>1</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104531910.jpg?x-oss-process=image/resize,w_360"/></li>
+        <li class="slider_list"><p>2</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"/></li>
+        <li class="slider_list"><p>3</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104459378.jpg?x-oss-process=image/resize,w_360"/></li>
+        <li class="slider_list"><p>4</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104420347.jpg?x-oss-process=image/resize,w_360"/></li>        
+      </ul>
+  </div>
+  <div id="scroll_parent" class="scroll_parent">
+      <ul class="scroll_box" id="scroll_dom">
+          <li>1.第一条第一条第一条第一条第一条第一条</li>
+          <li>2.第二条第二条第二条第二条第二条第二条第二条第二条</li>
+          <li>3.第三条第三条第三条第三条</li>
+          <li>4.第四条第四条第四条第四条第四条第四条第四条第四条第四条第四条</li>
+          <li>5.第五条第五条第五条第五条第五条第五条第五条第五条第五条</li>
+      </ul>
+  </div>
+  <div id="scroll_parents" class="scroll_parent scroll_parents">
+    <ul class="scroll_box scroll_boxs" id="scroll_doms">
+        <li>1.第一条第一条第一条第一条第一条第一条</li>
+        <li>2.第二条第二条第二条第二条第二条第二条第二条第二条</li>
+        <li>3.第三条第三条第三条第三条</li>
+        <li>4.第四条第四条第四条第四条第四条第四条第四条第四条第四条第四条</li>
+        <li>5.第五条第五条第五条第五条第五条第五条第五条第五条第五条</li>
+    </ul>
+</div>
+  <div id="slider_parents" class="slider_parent slider_parents">
+    <ul class="slider_box slider_boxs" id="slider_doms">
+      <li class="slider_list"><p>1</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104531910.jpg?x-oss-process=image/resize,w_360"/></li>
+      <li class="slider_list"><p>2</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"/></li>
+      <li class="slider_list"><p>3</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104459378.jpg?x-oss-process=image/resize,w_360"/></li>
+      <li class="slider_list"><p>4</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104420347.jpg?x-oss-process=image/resize,w_360"/></li>        
+    </ul>
+</div>
+<div id="slider_parenta" class="slider_parent slider_parenta">
+    <ul class="slider_box slider_boxa" id="slider_doma">
+      <li class="slider_list"><p>1</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104531910.jpg?x-oss-process=image/resize,w_360"/></li>
+      <li class="slider_list"><p>2</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"/></li>
+      <li class="slider_list"><p>3</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104459378.jpg?x-oss-process=image/resize,w_360"/></li>
+      <li class="slider_list"><p>4</p><img src="https://img.wbp5.com/upload/images/2018/12/10/20181210104420347.jpg?x-oss-process=image/resize,w_360"/></li>        
+    </ul>
+</div>
+</body>
+<script>
+    // var fileBox=document.getElementById("file_img");
+    // fileBox.addEventListener("input",function(e){
+    //     document.getElementById("imga").src=e.target.value;
+    // })
+</script>
+<script src="./index.js?v=50c9761d31"></script>
+</html>
