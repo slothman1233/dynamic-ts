@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-08-04 09:36:24
+ * @LastEditTime: 2020-09-17 17:18:51
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
@@ -32,6 +32,7 @@ export default class Intercept {
   signHeaders?: Function
   requestSet?: Function
   responseSet?: Function
+  errorFn?: Function
   constructor(baseURL: string = '', options?: ReqBaseConfig) {
     try {
       this.supportMsg = new Uint8Array([])
@@ -44,6 +45,7 @@ export default class Intercept {
     this.signHeaders = options?.signHeaders
     this.requestSet = options?.requestSet
     this.responseSet = options?.responseSet
+    this.errorFn = options?.errorFn
     this.token = (options && options.getToken) || undefined
     this.logout = (options && options.logout) || undefined
     this.tokenHeaderKey = options?.tokenHeaderKey || 'Authorization'
@@ -110,19 +112,21 @@ export default class Intercept {
         error: { response: any }
       ) => {
         const { response } = error
+        const errorFn = response.config.errorFn || this.errorFn
+        errorFn && errorFn(error)
         if (response && response.status === 401) {
           this.logout && this.logout()
           this.MsgUI?.error('未登录或登录过期!')
           Promise.reject(error)
           return
         }
-        if(response && response.config.unErrorMsg) return
+        if (response && response.config.unErrorMsg) return
         this.MsgUI?.error('请求异常,请稍后再试!')
       }
     )
   }
 
-  checkCode = (res: any): ResponseData | undefined => {
+  checkCode = (res: any): ResponseData<any> | undefined => {
     // 如果code异常(这里已经包括网络错误，服务器错误，后端抛出的错误)，可以弹出一个错误提示，告诉用户
     const { data, status, msg, config } = res
     if (status === -404) {
@@ -135,10 +139,9 @@ export default class Intercept {
     if (data.code) {
       data.code = +data.code
     }
-    if (
-      data.code !== 0 ||
-      (codes.sures && !this.codeEqual(codes.sures, data.subCode))
-    ) {
+
+    const sure = codes.sures && !this.codeEqual(codes.sures, data.subCode)
+    if (data.code !== 0 || sure) {
       // 失败 并且不在自行处理code里面的
       this.codeEqual(codes.err, data.subCode)
         ? this.MsgUI?.error(data.message)
@@ -147,9 +150,12 @@ export default class Intercept {
     }
     // 成功
     try {
-      data.bodyMessage = data.bodyMessage ? JSON.parse(data.bodyMessage) : null
+      const { bodyMessage } = data
+      if (bodyMessage && typeof bodyMessage === 'string') {
+        data.bodyMessage = JSON.parse(data.bodyMessage)
+      }
     } catch (e) {
-      console.error('bodyMessage not a JSON Data!')
+      console.error('bodyMessage not a JSON String!')
     }
     return data
   }
