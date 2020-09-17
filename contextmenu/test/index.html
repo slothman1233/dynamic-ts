@@ -1,0 +1,33 @@
+<!DOCType html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Page Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {margin: 0;padding: 0;}
+            html, body {width:100%;min-height: 100%;}
+            body {font-family: "Microsoft YaHei";font-size:14px;color:#333;}
+            h1, h2, h3, h4, h5, h6{font-weight:normal;}
+            ul,ol {list-style: none;}
+            img {border: none;vertical-align: middle;}
+            #contextmenu{width:100px;height:100px;border:1px solid black;position: relative;}
+            #contextmeun_parent{border:1px solid black;border-radius: 5px;}
+            #contextmeun_parent>ul>li{width:200px;line-height:50px;text-align: center;font-size:16px;cursor: pointer;position: relative;}
+            #contextmeun_parent>ul>li:hover{background:aquamarine;}
+            #contextmeun_parent>ul>li:hover>ul{display: block;}
+            #contextmeun_parent>ul>li>ul{position:absolute;right:-202px;top:0;border:1px solid #606060;display: none;}
+            #contextmeun_parent>ul>li>ul>li{width:200px;line-height:40px;font-size:14px;text-align: center;cursor: pointer;}
+            #contextmeun_parent>ul>li>ul>li:hover{background:aquamarine;}
+            /* .content{width:300px;height:300px;border:1px solid red;position: absolute;right:50px;top:50px;display: none;}
+            .content li{width:300px;height:100px;font-size:20px;line-height:100px;} */
+        </style>
+    </head>
+    <body>
+        <div id="contextmenu" class="contextmenu">
+           
+        </div>
+        <script src="./index.js"></script>
+    </body>
+</html>
