@@ -1,6 +1,6 @@
 {
   "name": "@stl/image-preview",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "图片，视频预览插件",
   "main": "dist/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "karma-typescript": "^5.0.3",
     "karma-typescript-es6-transform": "^5.0.3",
     "less": "^3.12.2",
-    "mocha": "^8.0.1",
+    "mocha": "^8.1.1",
     "node-sass": "^4.14.1",
     "postcss-nested": "^4.2.3",
     "rollup": "^2.23.0",

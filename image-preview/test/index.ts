@@ -27,3 +27,11 @@ imgPreview({
     key:"video",
     videoWdith:900,
 })
+
+setTimeout(function(){
+    let img:any = document.createElement("img");
+    img.src = "https://img.wbp5.com/upload/images/firstnews/2020/07/06/110109700.jpg";
+    img.setAttribute("data-viewer","https://img.wbp5.com/upload/images/firstnews/2020/07/06/110109700.jpg");
+    img.setAttribute("data-item","1");
+    document.getElementById("img_list").appendChild(img);
+},10000)
