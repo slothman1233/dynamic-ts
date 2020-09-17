@@ -7,9 +7,10 @@
  */
 // import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import Intercept from './AxiosInstance'
+import Intercept from './lib/AxiosInstance'
+import QueryParse from './lib/QueryParse'
 import { stringify, IStringifyOptions } from 'qs'
-import merge from './merge'
+import merge from './lib/merge'
 const HEADERS_MAP = new Map([
   [
     'text',
@@ -36,6 +37,7 @@ const HEADERS_MAP = new Map([
     },
   ],
 ])
+
 class HttpService {
   private axios: AxiosInstance
 
@@ -133,41 +135,18 @@ class HttpService {
     )
     return this.axios.delete(url, opts)
   }
-
   // 参数格式转化
   public static queryParse(
     data: any,
     type?: string,
     options?: IStringifyOptions
   ) {
-    let dataOpts: any
-    if (type === 'formd' && data) {
-      const form = new FormData()
-      for (let key in data) {
-        const val = data[key]
-        !Array.isArray(val)
-          ? form.append(key, val)
-          : val.forEach((item) => form.append(`${key}[]`, item))
-      }
-      dataOpts = form
-    } else if (type === 'json') {
-      /*
-        axios 未解决的 数组变键值对BUG 起因是 util.deepMerge函数错误
-        issue: https://github.com/axios/axios/issues/2813
-        */
-      dataOpts = JSON.stringify(data)
-    } else if (type === 'forms') {
-      // 兼容json数组
-      dataOpts = stringify(data, options)
-    } else {
-      dataOpts = data
-    }
-    return dataOpts
+    const fn = type && QueryParse.queryMap.get(type)
+    return fn ? fn(data, options) : data
   }
 }
 
 export default HttpService
-
 interface DataOptions {
   params?: any
   data?: any
@@ -214,5 +193,5 @@ export type ReqBaseConfig = {
   // 响应拦截方法
   responseSet?: Function
   // 错误回调
-  errorFn?:Function
+  errorFn?: Function
 }

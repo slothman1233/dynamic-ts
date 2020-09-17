@@ -7,7 +7,7 @@
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
-import { ResponseData, ReqBaseConfig } from '.'
+import { ResponseData, ReqBaseConfig } from '..'
 import merge from './merge'
 import { parse } from 'qs'
 
@@ -68,6 +68,19 @@ export default class Intercept {
     responseType: 'arraybuffer',
   }
 
+  mergeSignHeaders(config:any){
+    // 合并且生成签名到请求头 调用signHeaders方法
+    if (this.signHeaders) {
+      let data = config.data || config.params
+      if (config.queryType === 'forms') {
+        data = parse(data)
+      } else if (typeof data === 'string') {
+        data = JSON.parse(data)
+      }
+      config.headers = merge({}, this.signHeaders(data), config.headers)
+    }
+  }
+
   // 拦截设置
   initInterceptors = () => {
     // 请求拦截器
@@ -78,15 +91,7 @@ export default class Intercept {
           config.msgPack &&
             this.supportMsg &&
             merge(config, this.msgPackAxiosOptions)
-          if (this.signHeaders) {
-            let data = config.data || config.params
-            if (config.queryType === 'forms') {
-              data = parse(data)
-            } else if (typeof data === 'string') {
-              data = JSON.parse(data)
-            }
-            config.headers = merge({}, this.signHeaders(data), config.headers)
-          }
+          this.mergeSignHeaders(config)
           this.requestSet && this.requestSet(config)
           if (this.token) {
             config.headers[this.tokenHeaderKey] = this.token()
