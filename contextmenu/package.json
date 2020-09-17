@@ -1,6 +1,6 @@
 {
   "name": "@stl/contextmenu",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "右键操作插件",
   "main": "dist/index.js",
   "scripts": {
