@@ -8,9 +8,10 @@
 // import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Intercept from './lib/AxiosInstance'
-import QueryParse from './lib/QueryParse'
+import QueryParse,{FILENAME} from './lib/QueryParse'
 import { stringify, IStringifyOptions } from 'qs'
 import merge from './lib/merge'
+export const SYMBOL_FILENAME = FILENAME
 const HEADERS_MAP = new Map([
   [
     'text',
@@ -40,7 +41,6 @@ const HEADERS_MAP = new Map([
 
 class HttpService {
   private axios: AxiosInstance
-
   constructor(baseURL: string = '', options?: ReqBaseConfig) {
     this.axios = new Intercept(baseURL, options).getInterceptors()
   }
@@ -76,17 +76,26 @@ class HttpService {
     options: AxiosOptions = {}
   ): Promise<ResponseData<T> | undefined> {
     const { queryType = 'json', params, queryOptions } = options
+    let endData = data
     if (queryType === 'text') {
       options.params = params || data
     } else {
-      options.data = HttpService.queryParse(data, queryType, queryOptions)
+      endData = HttpService.queryParse(data, queryType, queryOptions)
+      options.data = endData
+    }
+    const isUpload = data[FILENAME]
+    let defaultConfig:any = { headers: HEADERS_MAP.get(queryType) }
+    if(isUpload){
+      defaultConfig = {}
+      delete options.data
+      // 利用axios原生处理
     }
     const opts: AxiosOptions = merge(
       {},
-      { headers: HEADERS_MAP.get(queryType) },
+      defaultConfig,
       options
     )
-    return this.axios.post(url, data, opts)
+    return this.axios.post(url, isUpload?endData:data, opts)
   }
 
   /**
