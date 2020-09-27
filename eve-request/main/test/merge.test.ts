@@ -1,7 +1,7 @@
 /// <reference path="../node_modules/@types/mocha/index.d.ts" />
 /// <reference path="../node_modules/@types/expect.js/index.d.ts" />
 
-import merge from '../src/merge'
+import merge from '../src/lib/merge'
 
 describe('数据深度合并测试', () => {
   it('对象合并', () => {

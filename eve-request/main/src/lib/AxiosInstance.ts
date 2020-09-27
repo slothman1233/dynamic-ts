@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-09-17 17:18:51
+ * @LastEditTime: 2020-09-23 15:16:45
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
@@ -68,7 +68,7 @@ export default class Intercept {
     responseType: 'arraybuffer',
   }
 
-  mergeSignHeaders(config:any){
+  mergeSignHeaders(config: any) {
     // 合并且生成签名到请求头 调用signHeaders方法
     if (this.signHeaders) {
       let data = config.data || config.params
