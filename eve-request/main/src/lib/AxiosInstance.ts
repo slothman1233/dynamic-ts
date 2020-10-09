@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-09-23 15:16:45
+ * @LastEditTime: 2020-10-09 08:38:06
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
@@ -146,13 +146,15 @@ export default class Intercept {
       data.code = +data.code
     }
 
-    const sure = codes.sures && !this.codeEqual(codes.sures, data.subCode)
-    if (data.code !== 0 || sure) {
-      // 失败 并且不在自行处理code里面的
-      this.codeEqual(codes.err, data.subCode)
-        ? this.MsgUI?.error(data.message)
-        : data
-      return
+    const notSure = codes.sures && !this.codeEqual(codes.sures, data.subCode)
+    if (data.code !== 0 || notSure) {
+      // 失败 在自行处理错误subCode里面的
+      const isAutoError = this.codeEqual(codes.err, data.subCode)
+      if(isAutoError){
+        this.MsgUI?.error(data.message)
+        return
+      }
+      Promise.reject(data)
     }
     // 成功
     try {
