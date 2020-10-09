@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-09-09 10:21:33
+ * @LastEditTime: 2020-10-09 08:57:18
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -18,20 +18,20 @@ import { Permissions, Menu } from './data'
 const isInMFE = (<any>window).__SINGLE_SPA_MFE__
 export default class PowerPlugin {
   // 项目名称
-  projectId: number | string
+  projectId!: number | string
   // token键
-  tokenKey: string
+  tokenKey!: string
   // 用户信息存储键
-  userInfoKey: string
+  userInfoKey!: string
   // 登录页路径
-  loginPath: string
+  loginPath!: string
   // 无需鉴权白名单
   whiteList?: string[]
-  router: VueRouter
+  router!: VueRouter
   // 无需匹配就存在的路由
   staticRoutes?: RouteConfig[]
   // 需要匹配的路由
-  routes: RouteConfig[]
+  routes!: RouteConfig[]
   // 匹配好的路由
   matchRoutes: RouteConfig[] = []
   // 请求体
@@ -46,7 +46,7 @@ export default class PowerPlugin {
   // 基础地址
   baseUrl?: string = ''
   // 当前环境
-  mode: string
+  mode!: string
   // 单例模式
   private static instance:PowerPlugin | null = null
   public static getInstance(options: PowerOptions){
