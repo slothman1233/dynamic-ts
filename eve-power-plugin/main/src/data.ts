@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Version: 0.1
+ * @Author: EveChee
+ * @Date: 2020-08-24 20:34:42
+ * @LastEditTime: 2020-10-09 09:03:31
+ */
 export type Permissions = {
   id: number
   username: string

@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-10-09 08:57:18
+ * @LastEditTime: 2020-10-12 16:08:06
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -81,7 +81,7 @@ export default class PowerPlugin {
       this.baseUrl || this.baseUrlList.get(this.mode) || '',
       {
         msgUI: Message,
-        logout: this.logout,
+        logout: () => this.logout(),
         getToken: () => this.token,
         tokenHeaderKey: this.tokenKey,
       }
@@ -200,10 +200,11 @@ export default class PowerPlugin {
   }
 
   async logout() {
-    await logout(PowerPlugin.http, { token: this.token || '' })
+    const nowIsLogin = this.router?.currentRoute.fullPath === this.loginPath
+    this.token && !nowIsLogin && await logout(PowerPlugin.http, { token: this.token })
     this.token = null
     this.userInfo = null
-    this.router.replace(this.loginPath)
+    !nowIsLogin && this.router.replace(this.loginPath)
   }
   async getUserInfo() {
     const res = await getAdminInfo(PowerPlugin.http, { projectId: this.projectId })
