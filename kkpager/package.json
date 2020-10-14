@@ -1,6 +1,6 @@
 {
   "name": "@stl/kkpager",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "分页器插件",
   "main": "dist/index.js",
   "scripts": {

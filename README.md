@@ -62,3 +62,21 @@
 # 轮播图（无缝滚动）插件
 ### 文件说明请移步到npm私服插件
 ### 链接地址 [@stl/image-slider](http://47.113.105.208:8088/-/web/detail/@stl/image-slider)
+
+***
+
+# 右键操作插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/contextmenu](http://47.113.105.208:8088/-/web/detail/@stl/contextmenu)
+
+***
+
+# 元素拖拽插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/dragsort](http://47.113.105.208:8088/-/web/detail/@stl/dragsort)
+
+***
+
+# 单行拖拽插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/line-dragsort](http://47.113.105.208:8088/-/web/detail/@stl/line-dragsort)

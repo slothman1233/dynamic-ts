@@ -429,16 +429,3 @@ export let kkpagerNews = {
 
 
 export const kkpager = kkpagerNews.initialize.bind(kkpagerNews); 
-
-
-let kkpage = kkpager({
-  pagerid:"kkpage",
-  total:20,
-  totalRecords:200,
-  pno:1,
-  isShowTotalPage:true,
-  isShowCurrPage:true,
-  isShowTotalRecords:true,
-  isGoPage:true,
-   mode:"click",
-})
