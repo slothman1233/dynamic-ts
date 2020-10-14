@@ -4,7 +4,7 @@
 ```
 npm intall @stl/image-slider
 
-css:import "@stl/image-slider/dist/index.css"  //默认样式   如果需要自定义样式可以不引用
+css:@import "/node_modules/@stl/image-slider/dist/index.css"  //默认样式   如果需要自定义样式可以不引用
 
 html:
     //overflow：hidden和position:relative为必须设置的样式

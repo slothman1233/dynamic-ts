@@ -5,7 +5,7 @@
 npm install @stl/image-cropper
 
 //如果“addStyle”参数传入的是false，需要用此方式加载css;如果不传“addStyle”参数则默认通过js方式加载css
-css:  @import "@stl/image-cropper/dist/index.css";
+css:  @import "/node_modules/@stl/image-cropper/dist/index.css";
 
 html:
 <input type="file" id="input_box" />//上传图片框
