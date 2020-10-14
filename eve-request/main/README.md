@@ -41,6 +41,18 @@ const http2 = new HttpService('baseUrl')
 就是Axios的原始实例化对象
 ```
 
+@Prop: SYMBOL_FILENAME 全局唯一文件名key
+```
+2.0新增字段
+场景在于使用FormData类型的数据
+配合Content-Type: multipart/form-data
+想要达到以上的配合使用
+需要queryType:formd,且包含SYMBOL_FILENAME为key的文件名
+检测到含有SYMBOL_FILENAME字段的数据会自动以multipart/form-data形式发送
+例：要传的数据本身为{file:xxx}
+需要加上{file:xxx, [SYMBOL_FILENAME]:filename}
+并且不需要手动指定请求头  如有特殊需要可以设置
+```
 @Method: get get 请求
 
 ```

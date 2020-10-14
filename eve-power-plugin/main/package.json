@@ -1,6 +1,6 @@
 {
   "name": "@stl/power-plugin",
-  "version": "0.2.0",
+  "version": "1.0.0-beta.4",
   "description": "权限处理插件",
   "main": "dist/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "author": "EveChee",
   "license": "MIT",
   "dependencies": {
-    "@stl/request": "^1.0.4",
+    "@stl/request": "1.2.0",
     "@types/blueimp-md5": "^2.7.0",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",

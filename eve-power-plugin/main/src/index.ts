@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-08-25 15:32:16
+ * @LastEditTime: 2020-10-12 16:08:06
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -14,48 +14,60 @@ import NProgress from 'nprogress' // progress bar
 import { login, logout, LoginParams, getAdminInfo } from './api'
 import { setCacheAddTime, getCacheCheckTime } from './utils'
 import { Permissions, Menu } from './data'
+// 微前端模式
+const isInMFE = (<any>window).__SINGLE_SPA_MFE__
 export default class PowerPlugin {
   // 项目名称
-  projectId: number
+  projectId!: number | string
   // token键
-  tokenKey: string
+  tokenKey!: string
   // 用户信息存储键
-  userInfoKey: string
+  userInfoKey!: string
   // 登录页路径
-  loginPath: string
+  loginPath!: string
   // 无需鉴权白名单
   whiteList?: string[]
-  router: VueRouter
+  router!: VueRouter
   // 无需匹配就存在的路由
   staticRoutes?: RouteConfig[]
   // 需要匹配的路由
-  routes: RouteConfig[]
+  routes!: RouteConfig[]
   // 匹配好的路由
   matchRoutes: RouteConfig[] = []
   // 请求体
-  http: HttpService
+  public static http: HttpService
   // 请求地址
   baseUrlList = new Map([
     ['dev', 'http://47.113.105.208:8089/'],
-    ['test', ''],
+    ['test', 'http://47.113.105.208:8089/'],
     ['pre', ''],
     ['prod', ''],
   ])
   // 基础地址
   baseUrl?: string = ''
   // 当前环境
-  mode: string
-  constructor(options: PowerOptions) {
-    if (!options.projectId) {
-      throw new Error('projectId is undefined!')
+  mode!: string
+  // 单例模式
+  private static instance:PowerPlugin | null = null
+  public static getInstance(options: PowerOptions){
+    if(!PowerPlugin.instance){
+      return PowerPlugin.instance = new PowerPlugin(options)
+    } else {
+      return PowerPlugin.instance
     }
-    if (!options.router) {
-      throw new Error('VueRouter is undefined!')
+  }
+  private mfeOptionsInit(options:PowerOptions){
+    this.projectId = 'mfe__main'
+  }
+  private singleOptionsInit(options:PowerOptions){
+    this.projectId = options.projectId || ''
+  }
+  private optionsInit(options:PowerOptions){
+    if(isInMFE){
+      this.mfeOptionsInit(options)
+    } else {
+      this.singleOptionsInit(options)
     }
-    if (!options.routes) {
-      throw new Error('routes is undefined!')
-    }
-    this.projectId = options.projectId
     this.tokenKey = options.tokenKey || 'token'
     this.userInfoKey = options.userInfoKey || `__${this.projectId}__user_info`
     this.loginPath = options.loginPath || '/login'
@@ -65,15 +77,24 @@ export default class PowerPlugin {
     this.staticRoutes = options.staticRoutes || []
     this.mode = options.mode || 'dev'
     this.baseUrl = options.baseUrl
-    this.http = new HttpService(
+    PowerPlugin.http = PowerPlugin.http || new HttpService(
       this.baseUrl || this.baseUrlList.get(this.mode) || '',
       {
         msgUI: Message,
-        logout: this.logout,
+        logout: () => this.logout(),
         getToken: () => this.token,
         tokenHeaderKey: this.tokenKey,
       }
     )
+  }
+  constructor(options: PowerOptions) {
+    if (!options.router) {
+      throw new Error('VueRouter is undefined!')
+    }
+    if (!options.routes) {
+      throw new Error('routes is undefined!')
+    }
+    this.optionsInit(options)
   }
   get token() {
     return localStorage.getItem(this.authKey)
@@ -107,6 +128,7 @@ export default class PowerPlugin {
 
   routerUpdate() {
     this.matchRoutes = this.checkMenuList(this.userInfo.menuList)
+
     ;(this.router as any).matcher = (new VueRouter({
       routes: this.staticRoutes,
     }) as any).matcher
@@ -168,7 +190,7 @@ export default class PowerPlugin {
   }
 
   async login(data: LoginParams) {
-    const res = await login(this.http, data).catch((e: Error) =>
+    const res = await login(PowerPlugin.http, data).catch((e: Error) =>
       console.log('登录失败', e)
     )
     if (!res) return
@@ -178,13 +200,14 @@ export default class PowerPlugin {
   }
 
   async logout() {
-    await logout(this.http, { token: this.token || '' })
+    const nowIsLogin = this.router?.currentRoute.fullPath === this.loginPath
+    this.token && !nowIsLogin && await logout(PowerPlugin.http, { token: this.token })
     this.token = null
     this.userInfo = null
-    this.router.replace(this.loginPath)
+    !nowIsLogin && this.router.replace(this.loginPath)
   }
   async getUserInfo() {
-    const res = await getAdminInfo(this.http, { projectId: this.projectId })
+    const res = await getAdminInfo(PowerPlugin.http, { projectId: this.projectId })
     if (res) {
       this.userInfo = res.bodyMessage
       this.routerUpdate()
@@ -204,7 +227,7 @@ type PowerOptions = {
   tokenKey?: string
   userInfoKey?: string
   loginPath?: string
-  projectId: number
+  projectId: number | string
   whiteList?: string[]
   mode?: string
   router: VueRouter
