@@ -1,6 +1,6 @@
 {
   "name": "@stl/httprequest",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "兼容性较高的简易http请求封装",
   "main": "dist/index.js",
   "scripts": {
