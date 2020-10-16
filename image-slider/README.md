@@ -2,7 +2,7 @@
 
 ### 使用方法
 ```
-npm intall @stl/image-slider
+npm install @stl/image-slider
 
 css:@import "/node_modules/@stl/image-slider/dist/index.css"  //默认样式   如果需要自定义样式可以不引用
 
@@ -55,10 +55,12 @@ ts:
 |  distance  |  number     |  "auto"    |  轮播一次运动的距离，"auto":轮播框父元素的宽度，当传入数字时移动距离为传入的数字 |
 |  time         |  number     |  300    |  轮播一次需要的时间（单位：ms）  |
 |  item         |  boolean     |  true    |  是否显示下标小圆点    |
-|  switch         |  boolean     |  true    |  是都显示左右切换按钮    |
+|  switch         |  boolean     |  true    |  是否显示左右切换按钮    |
 |  auto         |  boolean     |  true    |  是否自动轮播    |
 |  hover         |  boolean     |  true    |  hover时是否停止运动    |
-|  switchType         |  string     |  "auto"    |  左右切换按钮显示方式,"auto":一直显示；"hover":鼠标移入时显示    |
+|  switchType         |  string     |  "auto"    |  左右切换按钮显示方式,"auto":一直显示；"hover":鼠标移入时显示,"out":到达最后一张或第一张隐藏对应切换按钮    |
+|  switchCallback  |  function     |  null    |  点击切换后的回调 此方法将接收四个参数 type:切换方向,"1"表示切换下一张、"-1"表示切换上一张,distance:已移动的总距离,clickDom:点击切换的元素,showDom:另一个切换元素 |
+
 
 ### 备注说明
 ```
