@@ -1,0 +1,41 @@
+import { dragsort } from "../src/index"
+
+let data:any = {
+    dragParent:document.getElementById("list"),
+    dragLevel:0,
+    dragEnd:function(thatdragEle:any,thatReplaceEle:any,thatPosition:any){
+        console.log(thatdragEle,thatReplaceEle,thatPosition)
+    },
+    placeHolderTemplate:"<div>12121212121212121</div>",
+    Maxlevel:1,
+    bodyMessage:[{
+        id:"1",
+        isDrag:true,
+        headEle:"head1",
+        contentEle:"content1",
+        children:[]
+    },
+    {
+        id:"2",
+        isDrag:true,
+        headEle:"head2",
+        contentEle:"content2",
+        children:[]        
+    },
+    {
+        id:"3",
+        isDrag:true,
+        headEle:"head3",
+        contentEle:"content3",
+        children:[
+            {
+                id:"4",
+                isDrag:true,
+                headEle:"children3head",
+                contentEle:"childern3content",
+                children:[]
+            }
+        ]          
+    }]
+}
+dragsort(data)

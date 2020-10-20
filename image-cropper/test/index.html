@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .img_box{width:400px;height:400px;overflow: hidden;border:1px solid #000;}
+        .img_box > img{width:400px}
+        .preview_box{display: inline-block;margin:10px 40px;position: relative;overflow: hidden;}
+        .preview_max{width:160px;height:160px;}
+        .preview_middle{width:120px;height:120px;}
+        .preview_min{width:80px;height:80px;}
+    </style>
+</head>
+<body>
+    <!-- <div class="img_box">
+        <img id="imgs" src="https://img.wbp5.com/upload/images/firstnews/2020/05/29/103906692.jpg" />
+    </div> -->
+<input type="file" id="input_box" />
+<div id="getCrop" style="width:50px;height:50px;background:yellow;">获取尺寸</div>
+    <div class="img_box" id="img_cropper">
+        <!-- <img id="imga" src="https://img.wbp5.com/upload/images/firstnews/2019/12/09/203350442.png" /> -->
+    </div>
+    <div class="yl" style="width:300px;height:200px;overflow: hidden;position: relative;border:1px solid black;"></div>
+    <div class="yl" style="width:210px;height:140px;overflow: hidden;position: relative;border:1px solid black;"></div>
+    <div class="yl" style="width:150px;height:100px;overflow: hidden;position: relative;border:1px solid black;"></div>
+    <div>
+        <div style="width:80px;height:80px;display: inline-block;border:1px solid red" id="fd">放大</div>
+        <div style="width:80px;height:80px;display: inline-block;border:1px solid red" id="sx">缩小</div>
+        <div style="width:80px;height:80px;display: inline-block;border:1px solid red" id="yy">右移</div>
+        <div style="width:80px;height:80px;display: inline-block;border:1px solid red" id="sy">上移</div>
+        <div style="width:80px;height:80px;display: inline-block;border:1px solid red" id="zy">左移</div>
+        <div style="width:80px;height:80px;display: inline-block;border:1px solid red" id="xy">下移</div>
+    </div>
+    <img id="show_img" style="display: block;width:300px;height:200px;" />
+</body>
+<script>
+    // var fileBox=document.getElementById("file_img");
+    // fileBox.addEventListener("input",function(e){
+    //     document.getElementById("imga").src=e.target.value;
+    // })
+</script>
+<script src="./index.js?v=50c9761d31"></script>
+</html>
