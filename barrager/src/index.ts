@@ -158,13 +158,15 @@ class barrager {
     var maxleft = parseInt(barrage.width ? `-${barrage.width}` : `-500`)
     function barrager() {
 
-
+      const thisDom = <HTMLElement>document.querySelector(id)
+      if (!thisDom) { clearInterval(looper); return }
       if (i > maxleft) {
         i -= 1;
-        (<HTMLElement>document.querySelector(id)).style.transform = `translateX(${i}px)`
+
+        thisDom.style.transform = `translateX(${i}px)`
 
       } else {
-        remove(document.querySelector(id))
+        remove(thisDom)
         clearInterval(looper)
         return false;
       }
@@ -186,6 +188,20 @@ class barrager {
 
       }
     }
+
+  }
+
+  /**
+   * 删除所有弹幕
+   */
+  removeAll() {
+    const parentDom: NodeListOf<HTMLElement> = document.querySelectorAll(`#${this.parentId} .barrage`)
+
+    parentDom.forEach(child => {
+      try {
+        remove(child)
+      } catch (err) { }
+    })
 
   }
 

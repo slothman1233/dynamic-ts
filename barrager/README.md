@@ -33,6 +33,9 @@ ts:
     //添加弹幕
     br.addBarrage(item)
 
+    //清空弹幕
+    br.removeAll()
+
 ```
 
 ### 参数说明
