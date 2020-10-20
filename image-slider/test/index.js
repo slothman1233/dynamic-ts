@@ -3,13 +3,30 @@
   factory();
 }((function () { 'use strict';
 
-  ///<reference path="../indexModel.d.ts" />
+  /**
+   * 绑定方法
+   * @param {Element} obj 绑定的元素
+   * @param {String} type 方法名称
+   * @param {function} fn  绑定的方法
+   */
+  var addEvent = function (obj, type, fn) {
+      if (obj.addEventListener) {
+          obj.addEventListener(type, fn, false);
+      }
+      else {
+          obj['e' + type + fn] = fn;
+          obj[type + fn] = function () { obj['e' + type + fn](window.event); };
+          obj.attachEvent('on' + type, obj[type + fn]);
+      }
+  };
+
   /**
    * 是否是object类型
    */
   function isObject(value) {
       return !!value && typeof value === "object";
   }
+
   /**
    * 判断是否是数组对象类型
    * @param value 值
@@ -19,6 +36,7 @@
           Object.prototype.toString.call(value) === '[object Object]' &&
           value.constructor === Object;
   }
+
   var keys = function (object) {
       return isObject(object) ? Object.keys(object) : [];
   };
@@ -30,6 +48,58 @@
   function each(object, fn) {
       keys(object).forEach(function (key) { return fn(object[key], key); });
   }
+
+  /**
+   * 合并对象
+   * @param { Array<any> } args 所有的参数   后面的参数替换前面的参数
+   * @param sources 需要合并的对象
+   */
+  function mergeOptions() {
+      var sources = [];
+      for (var _i = 0; _i < arguments.length; _i++) {
+          sources[_i] = arguments[_i];
+      }
+      var result = {};
+      sources.forEach(function (source) {
+          if (!source) {
+              return;
+          }
+          each(source, function (value, key) {
+              if (!isPlain(value)) {
+                  result[key] = value;
+                  return;
+              }
+              if (!isPlain(result[key])) {
+                  result[key] = {};
+              }
+              result[key] = mergeOptions(result[key], value);
+          });
+      });
+      return result;
+  }
+
+  var cn = {
+      index: {
+          error: "已经存在改方法名称"
+      },
+      httprequest: {
+          timeOut: "请求超时",
+          noAuthority: "没有权限",
+          parameterError: '参数有误'
+      },
+      dom: {
+          throwWhitespace: "类具有非法空格字符",
+          notElement: "不是元素"
+      },
+      select: {
+          prompt: "请选择"
+      },
+      proportion: {
+          noImg: "imageUrl参数不正确",
+          noParentEle: "容器元素不正确"
+      }
+  };
+
   /**
    * 获取或判断任意数据类类型的通用方法
    * @param {any} any 任意数据
@@ -105,72 +175,78 @@
       }
   }
 
+  var win;
+  if (typeof window !== "undefined") {
+      win = window;
+  }
+  else if (typeof global !== "undefined") {
+      win = global;
+  }
+  else if (typeof self !== "undefined") {
+      win = self;
+  }
+  else {
+      win = {};
+  }
+  var window$1 = win;
+
   /**
-   * 绑定方法
-   * @param {Element} obj 绑定的元素
-   * @param {String} type 方法名称
-   * @param {function} fn  绑定的方法
+   * 获取元素样式表里面的样式
+   * @param {Element} el 获取样式的元素
+   * @param {string} prop 样式的名称
+   * @return {String | Number}
+   * @example
+   *  computedStyle(document.getElementById('id'),"fontSize") ==> "12px"
    */
-  var addEvent = function (obj, type, fn) {
-      if (obj.addEventListener) {
-          obj.addEventListener(type, fn, false);
+  function computedStyle(el, prop) {
+      if (!el || !prop) {
+          return '';
       }
-      else {
-          obj['e' + type + fn] = fn;
-          obj[type + fn] = function () { obj['e' + type + fn](window.event); };
-          obj.attachEvent('on' + type, obj[type + fn]);
+      var cs;
+      if (typeof window$1.getComputedStyle === 'function') {
+          cs = window$1.getComputedStyle(el);
+          return cs ? cs[prop] : '';
       }
-  };
-  /**
-   * 合并对象
-   * @param { Array<any> } args 所有的参数   后面的参数替换前面的参数
-   * @param sources 需要合并的对象
-   */
-  function mergeOptions() {
-      var sources = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-          sources[_i] = arguments[_i];
-      }
-      var result = {};
-      sources.forEach(function (source) {
-          if (!source) {
-              return;
+      else { //ie6-8下不兼容
+          if (prop === "opacity") { //有些属性在浏览器上是不兼容的例如opacity
+              cs = el.currentStyle["filter"];
+              var reg_1 = /^alpha\(opacity=(\d+(?:\.\d+)?)\)$/i;
+              cs = reg_1.test(cs) ? reg_1.exec(cs)[1] / 100 : 1;
           }
-          each(source, function (value, key) {
-              if (!isPlain(value)) {
-                  result[key] = value;
-                  return;
-              }
-              if (!isPlain(result[key])) {
-                  result[key] = {};
-              }
-              result[key] = mergeOptions(result[key], value);
-          });
-      });
-      return result;
+          var reg = /^(-?\d+(\.\d+)?)(px|pt|rem|em)?$/i; //去掉单位的正则
+          cs = el.currentStyle[prop];
+          return cs ? reg.test(cs) ? parseFloat(cs) : cs : "";
+      }
   }
 
-  var cn = {
-      index: {
-          error: "已经存在改方法名称"
-      },
-      httprequest: {
-          timeOut: "请求超时",
-          noAuthority: "没有权限",
-          parameterError: '参数有误'
-      },
-      dom: {
-          throwWhitespace: "类具有非法空格字符",
-          notElement: "不是元素"
-      },
-      select: {
-          prompt: "请选择"
-      },
-      proportion: {
-          noImg: "imageUrl参数不正确",
-          noParentEle: "容器元素不正确"
+  /**
+   * 隐藏当前元素
+   * @param {Element|NodeList | Array<Element>} ele 需要隐藏的元素
+   * @return {Element|NodeList | Array<Element>} 返回当前元素
+   */
+  function hide(ele) {
+      var e = ele;
+      var type = getDataType(ele);
+      switch (type) {
+          case "[object String]":
+          case "[object NodeList]":
+          case "[object Array]":
+              for (var i = 0; i < e.length; i++) {
+                  if (computedStyle(e[i], "display") !== "none")
+                      e[i].style.display = "none";
+              }
+              break;
+          default:
+              if (/\[object HTML.*Element\]/.test(type)) {
+                  if (computedStyle(ele, "display") !== "none")
+                      ele.style.display = "none";
+              }
+              else {
+                  throw new Error("" + cn.dom.notElement);
+              }
       }
-  };
+      return ele;
+  }
 
   /**
    * 删除元素的类
@@ -189,6 +265,7 @@
       ele.className = classAry.join(" ");
       return ele;
   }
+
   /**
    * 添加元素的类
    * @param {Element} ele 元素
@@ -225,12 +302,17 @@
           this.getDom();
           this.getExerciseValue();
           this.addDom();
-          this.cloneFn(0);
+          if (this.option.customizeSwitch) {
+              hide(this.$prevDom);
+          }
+          else {
+              this.cloneFn(0);
+          }
           this.option.auto && this.startSportFn();
           this.addEventFn();
       }
       imageSlider.prototype.initOption = function (option) {
-          var optionObj = { distance: "auto", step: 2, time: 300, auto: true, item: true, switch: true, direction: "left", hover: true, switchType: "auto" };
+          var optionObj = { distance: "auto", step: 2, time: 300, auto: true, item: true, switch: true, direction: "left", hover: true, switchType: "auto", customizeSwitch: false };
           this.option = mergeOptions({}, optionObj, option);
           if (!this.option.auto)
               this.option.intervals = 1500, this.option.hover = false; //当设置为不自动轮播时则为间隔轮播且hover时不会停止运动
@@ -350,6 +432,11 @@
               this.updateIndex(index);
               if (this.index === 0) { //下标为0时将 如果是向左或向上轮播则将轮播元素的位置设置到初始位置，如果是向右或向下则设置到复制出来的元素的位置
                   this.translateVal = this.nowDistance = this.directionType < 0 ? 0 : -this.oneDistance;
+              }
+              if (this.isChangeSport && this.option.switchCallback) {
+                  var clickDom = index === "1" ? this.$nextDom : this.$prevDom;
+                  var showDom = index === "1" ? this.$prevDom : this.$nextDom;
+                  this.option.switchCallback.call(this, index, this.nowDistance, clickDom, showDom);
               }
               this.isChangeSport = false;
               if (this.changeType !== undefined) { //如果有切换操作则执行切换操作
@@ -480,37 +567,55 @@
 
   var imgSlider = new imageSlider({
       sliderWindowId: "slider_parent",
+      // distance:540,
+      // intervals:1500,
       distance: 540,
-      intervals: 1500,
-  });
-  var scrollSlider = new imageSlider({
-      sliderWindowId: "scroll_parent",
-      sliderDomId: "scroll_dom",
-      sliderListName: "li",
-      step: 4,
-  });
-  var scrollSliders = new imageSlider({
-      sliderWindowId: "scroll_parents",
-      step: 3,
-      intervals: 1000,
       item: false,
-      switch: false,
-      direction: "top"
-  });
-  var imgSliders = new imageSlider({
-      sliderWindowId: "slider_parents",
-      intervals: 1500,
-      time: 1000,
-      hover: false,
-      switchType: "hover",
-      direction: "bottom",
-      sliderDomId: "slider_doms",
-      sliderListName: ".slider_list",
-  });
-  var imgSlidera = new imageSlider({
-      sliderWindowId: "slider_parenta",
       auto: false,
+      time: 500,
+      hover: false,
+      switchType: "auto",
+      customizeSwitch: true,
+      switchCallback: function (type, distance, clickDom, showDom) {
+          showDom.style.display = "block";
+          if (type === "1") {
+              if (distance <= -2160)
+                  clickDom.style.display = "none";
+          }
+          else {
+              if (distance >= 0)
+                  clickDom.style.display = "none";
+          }
+      }
   });
+  // let scrollSlider = new imageSlider({
+  //   sliderWindowId:"scroll_parent",
+  //   sliderDomId:"scroll_dom",
+  //   sliderListName:"li",
+  //   step:4,
+  // })
+  // let scrollSliders = new imageSlider({
+  //   sliderWindowId:"scroll_parents",
+  //   step:3,
+  //   intervals:1000,
+  //   item:false,
+  //   switch:false,
+  //   direction:"top"
+  // })
+  // let imgSliders = new imageSlider({
+  //   sliderWindowId:"slider_parents",
+  //   intervals:1500,
+  //   time:1000,
+  //   hover:false,
+  //   switchType:"hover",
+  //   direction:"bottom",
+  //   sliderDomId:"slider_doms",
+  //   sliderListName:".slider_list",
+  // })
+  // let imgSlidera = new imageSlider({
+  //   sliderWindowId:"slider_parenta",
+  //   auto:false,
+  // })
 
 })));
 //# sourceMappingURL=index.js.map

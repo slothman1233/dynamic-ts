@@ -7,9 +7,11 @@
  */
 // import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import Intercept from './AxiosInstance'
+import Intercept from './lib/AxiosInstance'
+import QueryParse,{FILENAME} from './lib/QueryParse'
 import { stringify, IStringifyOptions } from 'qs'
-import merge from './merge'
+import merge from './lib/merge'
+export const SYMBOL_FILENAME = FILENAME
 const HEADERS_MAP = new Map([
   [
     'text',
@@ -36,9 +38,9 @@ const HEADERS_MAP = new Map([
     },
   ],
 ])
+
 class HttpService {
   private axios: AxiosInstance
-
   constructor(baseURL: string = '', options?: ReqBaseConfig) {
     this.axios = new Intercept(baseURL, options).getInterceptors()
   }
@@ -74,17 +76,26 @@ class HttpService {
     options: AxiosOptions = {}
   ): Promise<ResponseData<T> | undefined> {
     const { queryType = 'json', params, queryOptions } = options
+    let endData = data
     if (queryType === 'text') {
       options.params = params || data
     } else {
-      options.data = HttpService.queryParse(data, queryType, queryOptions)
+      endData = HttpService.queryParse(data, queryType, queryOptions)
+      options.data = endData
+    }
+    const isUpload = data[FILENAME]
+    let defaultConfig:any = { headers: HEADERS_MAP.get(queryType) }
+    if(isUpload){
+      defaultConfig = {}
+      delete options.data
+      // 利用axios原生处理
     }
     const opts: AxiosOptions = merge(
       {},
-      { headers: HEADERS_MAP.get(queryType) },
+      defaultConfig,
       options
     )
-    return this.axios.post(url, data, opts)
+    return this.axios.post(url, isUpload?endData:data, opts)
   }
 
   /**
@@ -133,41 +144,18 @@ class HttpService {
     )
     return this.axios.delete(url, opts)
   }
-
   // 参数格式转化
   public static queryParse(
     data: any,
     type?: string,
     options?: IStringifyOptions
   ) {
-    let dataOpts: any
-    if (type === 'formd' && data) {
-      const form = new FormData()
-      for (let key in data) {
-        const val = data[key]
-        !Array.isArray(val)
-          ? form.append(key, val)
-          : val.forEach((item) => form.append(`${key}[]`, item))
-      }
-      dataOpts = form
-    } else if (type === 'json') {
-      /*
-        axios 未解决的 数组变键值对BUG 起因是 util.deepMerge函数错误
-        issue: https://github.com/axios/axios/issues/2813
-        */
-      dataOpts = JSON.stringify(data)
-    } else if (type === 'forms') {
-      // 兼容json数组
-      dataOpts = stringify(data, options)
-    } else {
-      dataOpts = data
-    }
-    return dataOpts
+    const fn = type && QueryParse.queryMap.get(type)
+    return fn ? fn(data, options) : data
   }
 }
 
 export default HttpService
-
 interface DataOptions {
   params?: any
   data?: any
@@ -214,5 +202,5 @@ export type ReqBaseConfig = {
   // 响应拦截方法
   responseSet?: Function
   // 错误回调
-  errorFn?:Function
+  errorFn?: Function
 }

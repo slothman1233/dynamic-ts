@@ -12,4 +12,6 @@ export interface option {
     auto?: boolean;
     hover?: boolean;
     switchType?: string;
+    customizeSwitch?: boolean;
+    switchCallback?: (type: any, distance: any, clickDom: HTMLElement, showDom: HTMLElement) => void;
 }

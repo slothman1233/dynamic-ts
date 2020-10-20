@@ -1,6 +1,6 @@
 {
   "name": "@stl/image-slider",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "轮播图（无缝滚动）插件",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "author": "dh",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^0.2.4",
+    "@stl/tool-ts": "^0.5.0",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",

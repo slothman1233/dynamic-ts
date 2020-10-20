@@ -1,10 +1,10 @@
-# ts框架
+# 分页器插件
 
 ### 使用方法
 ```
 npm install @stl/kkpager
 
-css:import "@stl/kkpager/dist/index.css"  //默认分页器样式   如果需要自定义样式可以不引用
+css:@import "/node_modules/@stl/kkpager/dist/index.css"  //默认分页器样式   如果需要自定义样式可以不引用
 
 ts:
 import { kkpager } from "@stl/kkpager"

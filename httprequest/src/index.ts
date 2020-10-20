@@ -314,7 +314,7 @@ class dataModel {
 }
 
 export const http = {
-    get: (data: any):any => {
+    get: (data: any) => {
         let d:any = mergeOptions(new dataModel({ headers: {}, type: 'GET' }), data)
         return new Promise(function(resolve,reject){
             https.ajax(d,resolve,reject)
