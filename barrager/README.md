@@ -7,11 +7,15 @@ npm install @stl/contextmenu
 html:
     <div id="barrager"></div>
 
+less: 
+
+    需要在less文件里面引用
+      @import (less) "*/node_modules/@stl/barrager/src/index.less"
+    弹幕的样式文件
+
 ts:
     import barrager from "@stl/barrager"
-    
-    //需要引入要是文件
-    import '@stl/barrager/index.less'
+
 
     let item = {
             img: 'http://120.24.164.80:8080/static/18deed59/images/32x32/blue.png',
