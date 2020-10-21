@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-10-12 16:08:06
+ * @LastEditTime: 2020-10-21 15:23:14
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -39,9 +39,9 @@ export default class PowerPlugin {
   // 请求地址
   baseUrlList = new Map([
     ['dev', 'http://47.113.105.208:8089/'],
-    ['test', 'http://47.113.105.208:8089/'],
-    ['pre', ''],
-    ['prod', ''],
+    ['test', 'http://47.113.105.208:8189/'],
+    ['pre', 'http://47.113.105.208:8087/'],
+    ['prod', 'http://47.113.105.208:8086/'],
   ])
   // 基础地址
   baseUrl?: string = ''

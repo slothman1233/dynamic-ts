@@ -13,9 +13,9 @@ import { RouteProps } from 'react-router-dom'
 // 进度条
 const baseUrlList = new Map([
   ['dev', 'http://47.113.105.208:8089/'],
-  ['test', ''],
-  ['pre', ''],
-  ['prod', ''],
+  ['test', 'http://47.113.105.208:8189/'],
+  ['pre', 'http://47.113.105.208:8087/'],
+  ['prod', 'http://47.113.105.208:8086/'],
 ])
 type PowerOptions = {
   tokenKey?: string
