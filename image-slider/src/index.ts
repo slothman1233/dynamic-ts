@@ -1,7 +1,7 @@
 import "./index.less"
 import { option } from "./type"
 import { mergeOptions,addEvent,removeEvent } from "@stl/tool-ts/src/common/compatible";
-import { removeClass,addClass } from "@stl/tool-ts/src/common/dom";
+import { removeClass,addClass,show,hide } from "@stl/tool-ts/src/common/dom";
 
 export class imageSlider {
   private option:option
@@ -41,7 +41,11 @@ export class imageSlider {
     this.getDom();
     this.getExerciseValue();
     this.addDom();
-    this.cloneFn(0);
+    if(this.option.switchType === "out"){
+      hide(this.$prevDom)
+    }else{
+      this.cloneFn(0);      
+    }
     this.option.auto&&this.startSportFn();
     this.addEventFn();
   }
@@ -158,8 +162,13 @@ export class imageSlider {
       this.updateIndex(index);
       if(this.index===0){//下标为0时将 如果是向左或向上轮播则将轮播元素的位置设置到初始位置，如果是向右或向下则设置到复制出来的元素的位置
         this.translateVal = this.nowDistance = this.directionType<0?0:-this.oneDistance;
+      }  
+      if(this.isChangeSport&&this.option.switchCallback){
+        let clickDom:HTMLElement = index === "1"?this.$nextDom:this.$prevDom;
+        let showDom:HTMLElement = index === "1"?this.$prevDom:this.$nextDom;
+        this.option.switchCallback.call(this,index,this.nowDistance,clickDom,showDom)
       }
-      this.isChangeSport =false;
+      this.isChangeSport =false;  
       if(this.changeType!==undefined){//如果有切换操作则执行切换操作
         this.clickInitFn();
         this.changeFn();
@@ -258,7 +267,7 @@ export class imageSlider {
       addEvent(that.$nextDom,"click",function(){
         if(that.isChangeSport)return;
         that.changeType = "1";
-        if(!that.sportTimeout)that.clickInitFn(),that.changeFn();
+        if(!that.sportTimeout)that.clickInitFn(),that.changeFn();  
       })
     }
     if(that.option.item){

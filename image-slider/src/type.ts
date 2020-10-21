@@ -14,4 +14,5 @@ export interface option {
     auto?:boolean//是否自动移动 （轮播时有用）  默认为true
     hover?:boolean//hover时是否停止运动 （auto值为true时有用）默认为true
     switchType?:string//左右切换按钮显示方式  "auto" ：一直显示（默认值），"hover":鼠标移入时显示
+    switchCallback?:(type:any,distance:any,clickDom:HTMLElement,showDom:HTMLElement)=>void//点击切换后的回调
 }

@@ -17,7 +17,7 @@
 ```
 npm install @stl/scroll-bar
 
-css:  @import "@stl/scroll-bar/dist/index.css";
+css:  @import "/node_modules/@stl/scroll-bar/dist/index.css";
 js：  import { scrollBar } from "@stl/scroll-bar"
 
 let scrollBar = new scrollBar({id:"box"});
