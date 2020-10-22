@@ -1,4 +1,4 @@
-import { mousewheelObj,scaleObj } from "./types"
+import { mousewheelObj,scaleObj,positionScroll } from "./types"
 
 function addTransformFn(dom:any,val:string){//设置滚动条的transform样式兼容性写法
     dom.style.transform = val;
@@ -92,4 +92,16 @@ export function clickScrollX(event:any,that:any){//点击横向滚动条
     let clickScroll:number = (that.contentDomScrollSize["x"] - that.contentDomSize["x"])*clickOffset/(that.scrollDomSize["x"]-that.sliderDomSize["x"]);
     that.scrollBox.scrollLeft = clickScroll;
     addTransformFn(that.sliderDom["x"],"translateX("+clickOffset*100/that.sliderDomSize["x"]+"%)");
+}
+export function scrollSpecifiedPosition(obj:positionScroll){
+    if(obj.left){
+        this.scrollBox.scrollLeft = obj.left;
+        let clickOffset = obj.left*(this.scrollDomSize["x"]-this.sliderDomSize["x"])/(this.contentDomScrollSize["x"] - this.contentDomSize["x"]);
+        addTransformFn(this.sliderDom["x"],"translateX("+clickOffset*100/this.sliderDomSize["x"]+"%)");
+    }
+    if(obj.top){
+        this.scrollBox.scrollTop = obj.top;
+        let clickOffset = obj.top*(this.scrollDomSize["y"]-this.sliderDomSize["y"])/(this.contentDomScrollSize["y"] - this.contentDomSize["y"]);
+        addTransformFn(this.sliderDom["y"],"translateY("+clickOffset*100/this.sliderDomSize["y"]+"%)");
+    }
 }

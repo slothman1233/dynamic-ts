@@ -1,8 +1,9 @@
 /**/
 import "./index.less"
-import { option,domObj,domSize } from "./types"
+import { option,domObj,domSize,positionScroll } from "./types"
 import { addStyle,initScrollDom,refreshScrollDom } from "./dom"
 import { domResize } from "./resize"
+import { scrollSpecifiedPosition } from "./scroll"
 
 export class scrollBar{
     options:option//参数列表
@@ -44,6 +45,9 @@ export class scrollBar{
 
     refresh(){//手动刷新滚动条的方法
         refreshScrollDom.call(this)
+    }
+    fixedPointScroll(obj:positionScroll){
+        scrollSpecifiedPosition.call(this,obj)
     }
 }
 
