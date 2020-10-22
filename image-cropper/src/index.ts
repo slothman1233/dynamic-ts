@@ -1,6 +1,8 @@
+import "./index.less";
 import { option,domSize,dragValue } from "./type";
 import { mergeOptions,addEvent,removeEvent } from "@stl/tool-ts/src/common/compatible";
-import { show,hide } from "@stl/tool-ts/src/common/dom";
+import { show } from "@stl/tool-ts/src/common/dom/show";
+import { hide } from "@stl/tool-ts/src/common/dom/hide";
 import { addStyleFn,IE_VERSION,getImageSize,getTransform } from "./util"
 import { IMG_CROPPER_INPUT_TEMPLATE,IMG_CROPPER_BOX_TEMPLATE } from "./template"
 
