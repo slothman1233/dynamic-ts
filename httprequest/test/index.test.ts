@@ -58,7 +58,6 @@ server.respondWith("FROMDATA",'/test/fromData',[
 ])
 
 const logout = sinon.fake()
-
 describe("验证请求",function(){
     this.timeout(5000)
    it("get",()=>{

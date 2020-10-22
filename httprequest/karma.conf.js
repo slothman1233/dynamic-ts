@@ -12,7 +12,7 @@ module.exports = function(config) {
       frameworks: ["mocha","chai","karma-typescript","sinon"],
     //可以配置通配符把源代码和测试代码加载进来。
       files: [
-          { pattern: "node_modules/expect.js/index.js" },
+        { pattern: "node_modules/expect.js/index.js" },
           { pattern: "src/**/*.ts" },
           { pattern: "test/**/*.ts" }
       ],
@@ -37,6 +37,7 @@ module.exports = function(config) {
       karmaTypescriptConfig: {
         compilerOptions: {
           esModuleInterop: true,
+        //  sourceMap:false,
         },
         reports: {
             "html": 'config/karma/coverage/'
