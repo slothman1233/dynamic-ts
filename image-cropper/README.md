@@ -9,10 +9,10 @@ css:  @import "/node_modules/@stl/image-cropper/dist/index.css";
 
 html:
 <input type="file" id="input_box" />//上传图片框
-<div class="img_box" id="img_cropper"></div>//裁剪框父元素
-<div class="yl" ></div>//大预览框
-<div class="yl" ></div>//中等预览框
-<div class="yl" ></div>//小预览框
+<div class="img_box" id="img_cropper" style="width:200px;height:200px"></div>//裁剪框父元素
+<div class="yl" style="width:120px;height:120px;overflow:hidden;"></div>//大预览框
+<div class="yl" style="width:80px;height:80px;overflow:hidden;"></div>//中等预览框
+<div class="yl" style="width:40px;height:40px;overflow:hidden;"></div>//小预览框
 <div>
     <div id="fd">图片放大按钮</div>
     <div id="sx">图片缩小按钮</div>

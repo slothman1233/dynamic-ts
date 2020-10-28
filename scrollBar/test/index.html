@@ -10,7 +10,7 @@
         .box2{width:100%;height:100%;overflow: hidden;}
         .box2 p{line-height:20px;}
     </style>
-    <link rel="stylesheet" href="../dist/index.css" />
+    <link rel="stylesheet" href="./index.css" />
 </head>
 <body>
     <!-- <div id="parend"></div> -->
@@ -87,25 +87,26 @@
             <p>555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555</p>
         </div>
     </div>
+    <div id="btn" style="width:40px;height:40px;background:red;"></div>
 </body>
-<script src="../dist/index.js"></script>
+<script src="./index.js"></script>
 <script>
-     var ScrollBar = new scrollBar({id:"box2",smallSize:40,wheelDis:20,autoRefresh:false})
- var index = 20;
- var domObj = document.getElementById("box2");
+//      var ScrollBar = new scrollBar({id:"box2",smallSize:40,wheelDis:20,autoRefresh:false})
+//  var index = 20;
+//  var domObj = document.getElementById("box2");
 
 
- var timer = setInterval(function(){
-    index--;
-    let childDom = document.createElement("p");
-    childDom.innerText = "新加元素"+index;
-    domObj.appendChild(childDom)
-    if(index<0){
-        clearInterval(timer);
-        ScrollBar.refresh();
-    }
- },500)
-  var ScrollBar1 = new scrollBar({id:"box4",direction:"x",size:10,xMousewheel:false})
- var ScrollBar2 = new scrollBar({id:"box6",direction:"xy",className:"scroll_class"})
+//  var timer = setInterval(function(){
+//     index--;
+//     let childDom = document.createElement("p");
+//     childDom.innerText = "新加元素"+index;
+//     domObj.appendChild(childDom)
+//     if(index<0){
+//         clearInterval(timer);
+//         ScrollBar.refresh();
+//     }
+//  },500)
+//   var ScrollBar1 = new scrollBar({id:"box4",direction:"x",size:10,xMousewheel:false})
+//  var ScrollBar2 = new scrollBar({id:"box6",direction:"xy",className:"scroll_class"})
 </script>
 </html>

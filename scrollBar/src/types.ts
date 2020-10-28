@@ -32,3 +32,8 @@ export interface scaleObj {
     scrollType:string,
     transformType:string,
 }
+
+export interface positionScroll {
+    left?:number,
+    top?:number,
+}
