@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-10-21 15:23:14
+ * @LastEditTime: 2020-10-28 10:55:42
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -201,7 +201,8 @@ export default class PowerPlugin {
 
   async logout() {
     const nowIsLogin = this.router?.currentRoute.fullPath === this.loginPath
-    this.token && !nowIsLogin && await logout(PowerPlugin.http, { token: this.token })
+    //  异步多次出现401 后续解决
+    // this.token && !nowIsLogin && await logout(PowerPlugin.http, { token: this.token })
     this.token = null
     this.userInfo = null
     !nowIsLogin && this.router.replace(this.loginPath)
