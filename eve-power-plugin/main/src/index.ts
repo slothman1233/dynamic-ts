@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-10-28 10:55:42
+ * @LastEditTime: 2020-10-29 16:21:40
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -48,22 +48,22 @@ export default class PowerPlugin {
   // 当前环境
   mode!: string
   // 单例模式
-  private static instance:PowerPlugin | null = null
-  public static getInstance(options: PowerOptions){
-    if(!PowerPlugin.instance){
-      return PowerPlugin.instance = new PowerPlugin(options)
+  private static instance: PowerPlugin | null = null
+  public static getInstance(options: PowerOptions) {
+    if (!PowerPlugin.instance) {
+      return (PowerPlugin.instance = new PowerPlugin(options))
     } else {
       return PowerPlugin.instance
     }
   }
-  private mfeOptionsInit(options:PowerOptions){
+  private mfeOptionsInit(options: PowerOptions) {
     this.projectId = 'mfe__main'
   }
-  private singleOptionsInit(options:PowerOptions){
+  private singleOptionsInit(options: PowerOptions) {
     this.projectId = options.projectId || ''
   }
-  private optionsInit(options:PowerOptions){
-    if(isInMFE){
+  private optionsInit(options: PowerOptions) {
+    if (isInMFE) {
       this.mfeOptionsInit(options)
     } else {
       this.singleOptionsInit(options)
@@ -77,15 +77,14 @@ export default class PowerPlugin {
     this.staticRoutes = options.staticRoutes || []
     this.mode = options.mode || 'dev'
     this.baseUrl = options.baseUrl
-    PowerPlugin.http = PowerPlugin.http || new HttpService(
-      this.baseUrl || this.baseUrlList.get(this.mode) || '',
-      {
+    PowerPlugin.http =
+      PowerPlugin.http ||
+      new HttpService(this.baseUrl || this.baseUrlList.get(this.mode) || '', {
         msgUI: Message,
         logout: () => this.logout(),
         getToken: () => this.token,
         tokenHeaderKey: this.tokenKey,
-      }
-    )
+      })
   }
   constructor(options: PowerOptions) {
     if (!options.router) {
@@ -128,7 +127,6 @@ export default class PowerPlugin {
 
   routerUpdate() {
     this.matchRoutes = this.checkMenuList(this.userInfo.menuList)
-
     ;(this.router as any).matcher = (new VueRouter({
       routes: this.staticRoutes,
     }) as any).matcher
@@ -174,16 +172,30 @@ export default class PowerPlugin {
     if (!list) return []
     const _routes: RouteConfig[] = []
     list.forEach((item) => {
+      const { type, menuName, children, permission } = item
+      // 首先检查是否目录
+      const isDir = type === 1
+      // 检测是否包含子菜单
+      const hasChildren = children && !!children.length
       routes.forEach((route) => {
-        if (route.meta && item.id === route.meta.id) {
-          let children
-          if (route.children) {
-            children = this.checkMenuList(item.children, route.children)
-          }
-          _routes.push(
-            Object.assign({}, route, children ? { children } : undefined)
-          )
+        // 如果是目录则只比对名字 菜单则比对标识
+        const hasRoute = isDir
+          ? route?.meta?.title === menuName
+          : route?.meta?.permission === permission
+        const { children: _children } = route
+        let tempChildren
+        if (hasRoute && hasChildren && _children && _children.length) {
+          // 如果路由存在并且有子菜单 进行子菜单的比对
+          tempChildren = this.checkMenuList(children, _children)
         }
+        hasRoute &&
+          _routes.push(
+            Object.assign(
+              {},
+              route,
+              tempChildren ? { children: tempChildren } : undefined
+            )
+          )
       })
     })
     return _routes
@@ -208,7 +220,9 @@ export default class PowerPlugin {
     !nowIsLogin && this.router.replace(this.loginPath)
   }
   async getUserInfo() {
-    const res = await getAdminInfo(PowerPlugin.http, { projectId: this.projectId })
+    const res = await getAdminInfo(PowerPlugin.http, {
+      projectId: this.projectId,
+    })
     if (res) {
       this.userInfo = res.bodyMessage
       this.routerUpdate()
