@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+         .share{
+            display:inline-block;
+            font-size:12px;
+            color:#929292;
+            line-height:30px;
+            height:30px;
+        }
+        .share em{vertical-align:middle;}
+        .share .share_div{
+            background:url(https://www.fx110.uk/Images/1.0.0/BaiLen/down.png) no-repeat;
+            display:inline-block;
+            vertical-align:middle;
+            width:22px;
+            height:22px;
+            cursor: pointer;
+            margin:2px 0 0 5px;
+        }
+        .share .weixin_bg{background-position:-47px -24px;}
+        .share .qzone_bg{background-position:-47px -72px;}
+        .share .weibo_bg{background-position:-47px -120px;}
+        .share .copy_bg{background-position:0 0;}
+        .share .qq_bg{background-position:0 0;}
+    </style>
+</head>
+<body>
+    <div class="share" id="share">
+        <em>分享给朋友：</em>
+        <i class="share_div weixin_bg" id="weixin_share" data-bshare='{type:"weixin",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i>
+        <i class="share_div qzone_bg" id="qzone_share" data-bshare='{type:"qzone",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i>
+        <i class="share_div weibo_bg" id="weibo_share" data-bshare='{type:"weibo",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i> 
+        <i class="share_div qq_bg" id="qq_share" data-bshare='{type:"qq",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i>  
+        <i class="share_div copy_bg" id="copy_share" data-bshare='{type:"copy",url:"http://www.baidu.com"}'></i>     
+    </div>
+    <!-- <div class="share" id="share">
+        <em>分享给朋友1：</em>
+        <i class="share_div weixin_bg" id="weixin_share" data-bshare='{type:"weixin",url:"https://juejin.im/",title:"掘金",desc:"分享掘金",summary:"牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104531910.jpg?x-oss-process=image/resize,w_360"}'></i>
+        <i class="share_div qzone_bg" id="qzone_share" data-bshare='{type:"qzone",url:"https://juejin.im/",title:"掘金",desc:"分享掘金",summary:"牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104531910.jpg?x-oss-process=image/resize,w_360"}'></i>
+        <i class="share_div weibo_bg" id="weibo_share" data-bshare='{type:"weibo",url:"https://juejin.im/",title:"掘金",desc:"分享掘金",summary:"牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104531910.jpg?x-oss-process=image/resize,w_360"}'></i> 
+        <i class="share_div qq_bg" id="qq_share" data-bshare='{type:"qq",url:"https://juejin.im/",title:"掘金",desc:"分享掘金",summary:"牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104531910.jpg?x-oss-process=image/resize,w_360"}'></i>  
+        <i class="share_div copy_bg" id="copy_share" data-bshare='{type:"copy",url:"https://juejin.im/"}'></i>     
+    </div>
+    <div class="share" id="share">
+        <em>分享给朋友2：</em>
+        <i class="share_div weixin_bg" id="weixin_share" data-bshare='{type:"weixin",url:"https://www.zhihu.com/",title:"知乎",desc:"分享知乎",summary:"很牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"}'></i>
+        <i class="share_div qzone_bg" id="qzone_share" data-bshare='{type:"qzone",url:"https://www.zhihu.com/",title:"知乎",desc:"分享知乎",summary:"很牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"}'></i>
+        <i class="share_div weibo_bg" id="weibo_share" data-bshare='{type:"weibo",url:"https://www.zhihu.com/",title:"知乎",desc:"分享知乎",summary:"很牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"}'></i> 
+        <i class="share_div qq_bg" id="qq_share" data-bshare='{type:"qq",url:"https://www.zhihu.com/",title:"知乎",desc:"分享知乎",summary:"很牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"}'></i>  
+        <i class="share_div copy_bg" id="copy_share" data-bshare='{type:"copy",url:"https://www.zhihu.com/"}'></i>     
+    </div> -->
+    <div id="qrcode" style="width:200px;height:200px;" data-bshare='{url:"https://www.zhihu.com/"}'></div>
+</body>
+<script src="./index.js?v=3234"></script>
+</html>
