@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-10-29 16:21:40
+ * @LastEditTime: 2020-10-29 18:58:49
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -14,6 +14,7 @@ import NProgress from 'nprogress' // progress bar
 import { login, logout, LoginParams, getAdminInfo } from './api'
 import { setCacheAddTime, getCacheCheckTime } from './utils'
 import { Permissions, Menu } from './data'
+import { GetQueryString } from "@stl/tool-ts/src/common/compatible/GetQueryString"
 // 微前端模式
 const isInMFE = (<any>window).__SINGLE_SPA_MFE__
 export default class PowerPlugin {
@@ -118,7 +119,17 @@ export default class PowerPlugin {
 
   // 入口实例化之后 调用初始化 对router挂载
   async init() {
-    if (this.userInfo) {
+    const token = GetQueryString('token')
+    if(token){
+      this.token = token
+      await this.getUserInfo()
+      // 获取到token之后 对url进行重置
+      const nowUrl = location.href
+      const search = location.search
+      const nextUrl = nowUrl.replace(search, '')
+      location.replace(nextUrl)
+      return
+    } else if (this.userInfo) {
       // 先使用缓存
       this.routerUpdate()
     }
