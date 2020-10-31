@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-10-29 18:58:49
+ * @LastEditTime: 2020-10-31 10:36:15
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -217,6 +217,10 @@ export default class PowerPlugin {
       console.log('登录失败', e)
     )
     if (!res) return
+    if(res.subCode === 'B600102'){
+      Message.error('该账号为初始登录，请前往中控台初始化！本次登录无效')
+      return
+    }
     this.token = res.bodyMessage.token
     await this.getUserInfo()
     return res
