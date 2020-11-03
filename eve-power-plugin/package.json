@@ -1,6 +1,6 @@
 {
   "name": "@stl/power-plugin",
-  "version": "1.0.3",
+  "version": "1.0.9",
   "description": "权限处理插件",
   "main": "dist/index.js",
   "scripts": {
@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@stl/request": "1.2.0",
+    "@stl/tool-ts": "^0.5.6",
     "@types/blueimp-md5": "^2.7.0",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",

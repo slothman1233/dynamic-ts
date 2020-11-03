@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-10-29 16:21:40
+ * @LastEditTime: 2020-11-03 08:52:35
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -14,6 +14,7 @@ import NProgress from 'nprogress' // progress bar
 import { login, logout, LoginParams, getAdminInfo } from './api'
 import { setCacheAddTime, getCacheCheckTime } from './utils'
 import { Permissions, Menu } from './data'
+import { GetQueryString } from '@stl/tool-ts/src/common/compatible/GetQueryString'
 // 微前端模式
 const isInMFE = (<any>window).__SINGLE_SPA_MFE__
 export default class PowerPlugin {
@@ -106,7 +107,12 @@ export default class PowerPlugin {
     }
   }
   get userInfo(): any {
-    return getCacheCheckTime(this.userInfoKey)
+    const res = getCacheCheckTime(this.userInfoKey)
+    if(res === null){
+      // 过期 重新登录
+      this.logout()
+    }
+    return res
   }
   set userInfo(val) {
     setCacheAddTime(this.userInfoKey, val)
@@ -118,8 +124,18 @@ export default class PowerPlugin {
 
   // 入口实例化之后 调用初始化 对router挂载
   async init() {
-    if (this.userInfo) {
-      // 先使用缓存
+    const token = GetQueryString('token')
+    if (token) {
+      this.token = token
+      await this.getUserInfo()
+      // 获取到token之后 对url进行重置
+      const nowUrl = location.href
+      const search = location.search
+      const nextUrl = nowUrl.replace(search, '')
+      location.replace(nextUrl)
+      return
+    } else if (this.userInfo) {
+      // 先使用缓存 #正常
       this.routerUpdate()
     }
     this.routerHooks()
@@ -159,6 +175,8 @@ export default class PowerPlugin {
           throw new Error('获取权限失败,请重新登录尝试')
           return
         }
+        this.router.push({ path: to.path })
+        return
       }
       next()
       NProgress.done()
@@ -206,6 +224,10 @@ export default class PowerPlugin {
       console.log('登录失败', e)
     )
     if (!res) return
+    if (res.subCode === 'B600102') {
+      Message.error('该账号为初始登录，请前往中控台初始化！本次登录无效')
+      return
+    }
     this.token = res.bodyMessage.token
     await this.getUserInfo()
     return res

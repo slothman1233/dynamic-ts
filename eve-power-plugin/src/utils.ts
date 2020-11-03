@@ -1,10 +1,17 @@
-export function getCacheCheckTime(key: string, expires:number = 30 * 60 * 1000) {
+/*
+ * @Description:
+ * @Version: 0.1
+ * @Author: EveChee
+ * @Date: 2020-08-24 20:26:39
+ * @LastEditTime: 2020-11-02 17:32:23
+ */
+export function getCacheCheckTime(key: string, expires:number = 24 * 60 * 60 * 1000) {
   let res = localStorage.getItem(key)
   if (!res) return null
   const cache = res.split('__time__')
   const time = +cache[1]
   if (new Date().getTime() - time >= expires) {
-    // 缓存30m过期
+    // 缓存24小时过期
     res = null
     localStorage.removeItem(key)
   } else {
