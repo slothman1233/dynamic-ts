@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-11-02 10:57:36
+ * @LastEditTime: 2020-11-03 08:52:35
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -107,7 +107,12 @@ export default class PowerPlugin {
     }
   }
   get userInfo(): any {
-    return getCacheCheckTime(this.userInfoKey)
+    const res = getCacheCheckTime(this.userInfoKey)
+    if(res === null){
+      // 过期 重新登录
+      this.logout()
+    }
+    return res
   }
   set userInfo(val) {
     setCacheAddTime(this.userInfoKey, val)
