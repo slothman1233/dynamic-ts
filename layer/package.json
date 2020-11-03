@@ -1,7 +1,7 @@
 {
-  "name": "@stl/share",
-  "version": "1.1.1",
-  "description": "分享组件",
+  "name": "@stl/layer",
+  "version": "1.0.2",
+  "description": "layer插件",
   "main": "dist/index.js",
   "scripts": {
     "dev": "gulp clean:dist && rollup -c --environment NODE_ENV:development",
@@ -11,11 +11,9 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@stl/qrcode": "^1.0.5"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@stl/tool-ts": "^0.5.6",
+    "@stl/tool-ts": "^0.5.8",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -56,6 +54,6 @@
     "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
-    "share"
+    "layer"
   ]
 }
