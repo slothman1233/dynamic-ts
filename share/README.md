@@ -31,8 +31,7 @@ ts:
 ```
     * @param {HTMLElement|string} qrcodeBox 显示微信分享二维码的元素或元素id 如果不传则将生成弹窗显示二维码   
     * @param {object} qrcodeDeploy 微信分享二维码的配置  
-          {        
-              * @param {string} text  要生成二维码的内容  
+          {          
               * @param {number} width  生成二维码的宽度 默认 256  
               * @param {number} height  生成二维码的高度 默认 256  
               * @param {string} colorDark 生成二维码的颜色 默认 "#000000"  
@@ -61,11 +60,12 @@ changeQrcode：更新二维码的方法
 
 "data-bshare"属性值说明
     1.type:分享类型
-    2.url:要分享地址
+    2.url:要分享地址 如果不传则分享的地址为当前页面地址
     3.title:分享的标题 type为"weibo","qq","qzone"时需要
     4.desc:分享的描述 type为"weibo","qq","qzone"时需要
     4.summary:分享的说明 type为"weibo","qq","qzone"时需要
     5.images:分享的预览图 type为"weibo","qq","qzone"时需要
+    6.pop:是否弹窗显示二维码  当页面同时有弹窗显示二维码和显示在'qrcodeBox'元素时 在需要弹窗显示的微信分享按钮的"data-bshare"上加入"pop:true"
 
 参数中传入的"qrcodeBox"也需要添加"data-bshare"属性 此时只需要"url"一个参数
 ```

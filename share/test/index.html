@@ -22,6 +22,7 @@
             height:22px;
             cursor: pointer;
             margin:2px 0 0 5px;
+            border:1px solid #000;
         }
         .share .weixin_bg{background-position:-47px -24px;}
         .share .qzone_bg{background-position:-47px -72px;}
@@ -31,13 +32,16 @@
     </style>
 </head>
 <body>
-    <div class="share" id="share">
+    <div id="btn" style="width:80px;height:40px;border:1px solid #000">分享</div>
+    <div id="btn1" style="width:80px;height:40px;border:1px solid #000">分享1</div>
+    
+    <div class="share" id="share" style="display:none">
         <em>分享给朋友：</em>
-        <i class="share_div weixin_bg" id="weixin_share" data-bshare='{type:"weixin",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i>
+        <i class="share_div weixin_bg" id="weixin_share" data-bshare></i>
         <i class="share_div qzone_bg" id="qzone_share" data-bshare='{type:"qzone",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i>
         <i class="share_div weibo_bg" id="weibo_share" data-bshare='{type:"weibo",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i> 
         <i class="share_div qq_bg" id="qq_share" data-bshare='{type:"qq",url:"http://www.baidu.com",title:"百度",desc:"分享百度",summary:"一个很牛逼的网站",images:"https://imgs.wbp5.com/api/secrecymaster/html_up/2020/3/20200327115851614.png"}'></i>  
-        <i class="share_div copy_bg" id="copy_share" data-bshare='{type:"copy",url:"http://www.baidu.com"}'></i>     
+        <i class="share_div copy_bg" id="copy_share" data-bshare></i>     
     </div>
     <!-- <div class="share" id="share">
         <em>分享给朋友1：</em>
@@ -55,7 +59,7 @@
         <i class="share_div qq_bg" id="qq_share" data-bshare='{type:"qq",url:"https://www.zhihu.com/",title:"知乎",desc:"分享知乎",summary:"很牛逼的网站",images:"https://img.wbp5.com/upload/images/2018/12/10/20181210104517956.jpg?x-oss-process=image/resize,w_360"}'></i>  
         <i class="share_div copy_bg" id="copy_share" data-bshare='{type:"copy",url:"https://www.zhihu.com/"}'></i>     
     </div> -->
-    <div id="qrcode" style="width:200px;height:200px;" data-bshare='{url:"https://www.zhihu.com/"}'></div>
+    <div id="qrcode" style="width:200px;height:200px;"></div>
 </body>
 <script src="./index.js?v=3234"></script>
 </html>
