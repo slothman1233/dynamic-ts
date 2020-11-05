@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:40:09
- * @LastEditTime: 2020-07-27 14:50:20
+ * @LastEditTime: 2020-11-03 15:40:15
  */
 // import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
@@ -133,10 +133,11 @@ class HttpService {
     url: string,
     options: AxiosOptions = {}
   ): Promise<ResponseData<T> | undefined> {
-    const { queryType = 'text', data, queryOptions } = options
-    options.params = data
-    options.paramsSerializer = (params) =>
-      HttpService.queryParse(params, queryType, queryOptions)
+    const { queryType = 'text', data,params, queryOptions } = options
+    options.params = data || params
+    if(queryType !== 'text'){
+      options.paramsSerializer = (params) =>HttpService.queryParse(params, queryType, queryOptions)
+    }
     const opts: AxiosOptions = merge(
       {},
       { headers: HEADERS_MAP.get(queryType) },
