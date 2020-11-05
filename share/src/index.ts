@@ -27,9 +27,12 @@ export class share {
     weixinSrc:any
     shareDom:NodeListOf<Element>
     qrcodeObj:any = null
+    popQrcodeObj:any = null
     qrcodeKey:Boolean = false
     qrcodeParent:HTMLElement = null
+    popQrcodeUrl:string
     qrcodeUrl:string
+    popQrcodeBox:HTMLElement = null
     constructor(parameter:parameter){
         let that:any = this;
         that.parameter = parameter;
@@ -42,15 +45,20 @@ export class share {
                 that.clickFn.call(that,ev)
             }
         })
+        this.initQrcode();
+    }
+    initQrcode(url?:string){
+        let that = this;
         if(that.parameter.qrcodeBox){
-         let obj = that.getBshare(that.parameter.qrcodeBox)
-         if(!obj)return;
-         this.qrcodeObj = new qrcode(this.parameter.qrcodeBox,mergeOptions({},this.parameter.qrcodeDeploy,{text:obj.url}))
+            let obj = that.getBshare(that.parameter.qrcodeBox)
+            if(!obj&&!url)return;
+            this.qrcodeObj = new qrcode(this.parameter.qrcodeBox,mergeOptions({},this.parameter.qrcodeDeploy,{text:url?url:obj.url}))
         }
     }
     getBshare(dom:any){
       let shareData = dom.getAttribute("data-bshare");
       let obj = shareData&&shareData!==""?eval("(" + shareData + ")"):null;
+      if(obj&&obj.url==="")obj.url = location.href;
       return obj?obj:null;
     }
     clickFn(ev:any){
@@ -75,16 +83,18 @@ export class share {
         }
     }
     weixinFn(obj:any){
-      if(this.parameter.qrcodeBox)return;
-      this.getQrcodeDom();
-      if(!this.qrcodeObj){
-        this.qrcodeUrl = obj.url;
-        let data = {text:this.qrcodeUrl};
-        this.qrcodeObj = new qrcode(this.parameter.qrcodeBox,mergeOptions({},this.parameter.qrcodeDeploy,data))
-      }else{
-        if(this.qrcodeUrl!=obj.url)this.qrcodeObj.makeCode(obj.url), this.qrcodeUrl = obj.url;
-      }
-      if(this.qrcodeKey&&this.qrcodeParent)show(this.qrcodeParent);
+      // if(this.parameter.qrcodeBox)return;
+        if(obj.pop){
+            if(!this.popQrcodeObj){
+                this.getQrcodeDom();
+                this.popQrcodeUrl = obj.url;
+                let data = {text:this.popQrcodeUrl,width:200,height:200};
+                this.popQrcodeObj = new qrcode(this.popQrcodeBox,data)
+            }else{
+                if(this.popQrcodeUrl!=obj.url)this.popQrcodeObj.makeCode(obj.url), this.popQrcodeUrl = obj.url;
+            }
+            if(this.qrcodeKey&&this.qrcodeParent)show(this.qrcodeParent);
+        }
     }
     getQrcodeDom(){
         let that = this;
@@ -97,7 +107,7 @@ export class share {
         this.qrcodeParent.setAttribute("style",styles)
         this.qrcodeParent.innerHTML = html;
         document.body.appendChild(this.qrcodeParent);
-        this.parameter.qrcodeBox = document.getElementById("qrcHtml")
+        this.popQrcodeBox = document.getElementById("qrcHtml")
         addEvent(document.getElementById("qrcClose"),"click",function(){
             hide(that.qrcodeParent)
         });
@@ -135,6 +145,12 @@ export class share {
         return v;
     }
     changeQrcode(url:string){
-      if(this.qrcodeUrl!=url)this.qrcodeObj.makeCode(url), this.qrcodeUrl = url;
+        if(this.qrcodeUrl==url)return;
+        this.qrcodeUrl = url;
+        if(this.qrcodeObj){
+            this.qrcodeObj.makeCode(url)
+        }else{
+            this.initQrcode(url);
+        }
     }
 }

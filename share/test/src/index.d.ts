@@ -17,10 +17,14 @@ export declare class share {
     weixinSrc: any;
     shareDom: NodeListOf<Element>;
     qrcodeObj: any;
+    popQrcodeObj: any;
     qrcodeKey: Boolean;
     qrcodeParent: HTMLElement;
+    popQrcodeUrl: string;
     qrcodeUrl: string;
+    popQrcodeBox: HTMLElement;
     constructor(parameter: parameter);
+    initQrcode(url?: string): void;
     getBshare(dom: any): any;
     clickFn(ev: any): void;
     weixinFn(obj: any): void;
