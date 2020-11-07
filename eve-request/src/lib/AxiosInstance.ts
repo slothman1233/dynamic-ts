@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-10-09 08:38:06
+ * @LastEditTime: 2020-11-07 14:56:35
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
@@ -49,7 +49,11 @@ export default class Intercept {
     this.token = (options && options.getToken) || undefined
     this.logout = (options && options.logout) || undefined
     this.tokenHeaderKey = options?.tokenHeaderKey || 'Authorization'
-    this.instance = axios.create({ timeout: this.timeout, baseURL })
+    this.instance = axios.create({
+      timeout: this.timeout,
+      baseURL,
+      headers: options?.headers,
+    })
     // 初始化拦截器
     this.initInterceptors()
   }
@@ -150,7 +154,7 @@ export default class Intercept {
     if (data.code !== 0 || notSure) {
       // 失败 在自行处理错误subCode里面的
       const isAutoError = this.codeEqual(codes.err, data.subCode)
-      if(isAutoError){
+      if (isAutoError) {
         this.MsgUI?.error(data.message)
         return
       }

@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:40:09
- * @LastEditTime: 2020-11-03 15:40:15
+ * @LastEditTime: 2020-11-07 14:55:28
  */
 // import '@babel/polyfill'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
@@ -196,6 +196,8 @@ export type ReqBaseConfig = {
   getToken?: Function
   // 默认请求头tokenKey
   tokenHeaderKey?: string
+  // 全局头部信息
+  headers?:any
   // 签名方法 返回头部
   signHeaders?: Function
   // 请求拦截方法
