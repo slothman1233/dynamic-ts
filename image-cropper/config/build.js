@@ -17,9 +17,9 @@ const paths = {
 
 // 需要生成的文件
 const jspages = [
-    "index"
+    //"index"
     //测试用的
-    //"test"
+    "test"
 
 ]
 

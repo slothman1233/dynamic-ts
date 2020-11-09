@@ -79,8 +79,9 @@ export class imageCropper {
         that.getContainerStyle();
         that.option.cropInitComplete&&that.option.cropInitComplete.call(that);//裁剪框元素初始化完成的回调
         if(that.option.src){//如果传入了初始化图片则添加图片
-            that.fileSrc = that.option.src;
-            getImageSize.call(that,that.fileSrc,that.inputFn)//获取上传的图片尺寸
+             that.fileSrc = that.option.src;
+            //that.getBase64(that.option.src);
+             getImageSize.call(that,that.fileSrc,that.inputFn)//获取上传的图片尺寸
         }
         if(that.option.inputBox){//如果传入了上传图片标签则添加上传图片事件
             if(that.option.inputBox.tagName!=="INPUT"||that.option.inputBox.type!=="file")return console.log("上传图片标签不是input标签或者type不为file")
@@ -89,10 +90,40 @@ export class imageCropper {
         }
         that.stateCallback();//声明回调方法
     }
+    private getBase64(imgUrl:string){
+        let that:any = this;
+        if(imgUrl.indexOf("http://")>=0||imgUrl.indexOf("https://")>=0){
+            window.URL = window.URL || (<any>window).webkitURL;
+            var xhr = new XMLHttpRequest();
+            xhr.open("get", imgUrl, true);
+            // 至关重要
+            xhr.responseType = "blob";
+            xhr.onload = function () {
+              if (this.status == 200) {
+                //得到一个blob对象
+                var blob = this.response;
+                // 至关重要
+                let oFileReader = new FileReader();
+                oFileReader.onloadend = function (e:any) {
+                  // 此处拿到的已经是 base64的图片了
+                  that.fileSrc = e.target.result;
+                  getImageSize.call(that,that.fileSrc,that.inputFn)//获取上传的图片尺寸
+                  //console.log("方式一》》》》》》》》》", base64)
+                };
+                oFileReader.readAsDataURL(blob);
+              }
+            }
+            xhr.send();
+        }else{
+            that.fileSrc = imgUrl;
+            getImageSize.call(that,that.fileSrc,that.inputFn)//获取上传的图片尺寸
+        }
+    }
     changeImg(src:string){//更改图片的回调
         let that:any = this;
-        that.fileSrc = src;
-        getImageSize.call(that,that.fileSrc,that.inputFn)//获取上传的图片尺寸
+         that.fileSrc = src;
+         getImageSize.call(that,that.fileSrc,that.inputFn)//获取上传的图片尺寸
+        //that.getBase64(src);
     }
     private getContainerStyle(){//设置裁剪父元素样式
         let that:any = this;
@@ -136,9 +167,9 @@ export class imageCropper {
                 const file:any = this.files[0];
                 that.fileSrc = file?URL.createObjectURL(file):"";//获取上传的图片
             }
+            that.option.inputImgComplete&&that.option.inputImgComplete.call(that,this);
             e.target.type = "text";
             e.target.type = "file";
-            that.option.inputImgComplete&&that.option.inputImgComplete.call(that,this);
             if(that.fileSrc&&that.fileSrc!==""){
                 getImageSize.call(that,that.fileSrc,that.inputFn)//获取上传的图片尺寸
             }
