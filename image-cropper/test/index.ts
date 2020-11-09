@@ -22,6 +22,9 @@ let imgCropper:any = new imageCropper(
         moveDownBtn:xy,
         getImgBtn:document.getElementById("getCrop"),
         getImgCallback:getSrc,
+        inputImgComplete:function(){
+            this.fileSrc = "";
+        }
     }
 );
 // addEvent(document.getElementById("input_box"),"input",function(){
