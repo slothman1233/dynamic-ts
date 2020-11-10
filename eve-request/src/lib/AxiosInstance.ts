@@ -3,11 +3,11 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-11-07 14:56:35
+ * @LastEditTime: 2020-11-10 14:30:51
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
-import { ResponseData, ReqBaseConfig } from '..'
+import { ResponseData, ReqBaseConfig, Codes } from '..'
 import merge from './merge'
 import { parse } from 'qs'
 
@@ -33,6 +33,7 @@ export default class Intercept {
   requestSet?: Function
   responseSet?: Function
   errorFn?: Function
+  codes?:Codes
   constructor(baseURL: string = '', options?: ReqBaseConfig) {
     try {
       this.supportMsg = new Uint8Array([])
@@ -49,6 +50,7 @@ export default class Intercept {
     this.token = (options && options.getToken) || undefined
     this.logout = (options && options.logout) || undefined
     this.tokenHeaderKey = options?.tokenHeaderKey || 'Authorization'
+    this.codes = options?.codes || {}
     this.instance = axios.create({
       timeout: this.timeout,
       baseURL,
@@ -144,7 +146,7 @@ export default class Intercept {
       return
     }
     if (!data) return
-    const codes = config?.codes || {}
+    const codes = config?.codes || this.codes
     // 兼容后端code不规范
     if (data.code) {
       data.code = +data.code
