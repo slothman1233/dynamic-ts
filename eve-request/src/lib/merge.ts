@@ -1,4 +1,11 @@
 /*
+ * @Description:
+ * @Version: 0.1
+ * @Author: EveChee
+ * @Date: 2020-09-27 18:17:36
+ * @LastEditTime: 2020-11-10 19:28:16
+ */
+/*
 判断普通数据类型 可以toString的目标
 console.log(Object.prototype.toString.call([]))
 console.log(Object.prototype.toString.call({}))
@@ -45,5 +52,4 @@ const merge = (...args:any[]) => {
   })
   return obj
 }
-
 export default merge

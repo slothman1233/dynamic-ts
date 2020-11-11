@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-11-10 14:30:51
+ * @LastEditTime: 2020-11-11 11:19:30
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
@@ -175,7 +175,7 @@ export default class Intercept {
   }
 
   codeEqual = (arr: any[], subCode: string) =>
-    arr && arr.find((code) => subCode.indexOf(code) !== -1)
+    arr && subCode && arr.find((code) => subCode.indexOf(code) !== -1)
 
   checkStatus = (response: AxiosResponse) => {
     // loading
