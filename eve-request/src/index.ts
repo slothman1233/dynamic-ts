@@ -174,7 +174,7 @@ export interface AxiosOptions extends DataOptions, AxiosRequestConfig {
 }
 
 // codes
-interface Codes {
+export interface Codes {
   sures?: Array<string>
   err?: Array<string>
 }
@@ -206,4 +206,6 @@ export type ReqBaseConfig = {
   responseSet?: Function
   // 错误回调
   errorFn?: Function
+  // 全局subCode模式 优先级小于指定在接口内的codes
+  codes?: Codes
 }

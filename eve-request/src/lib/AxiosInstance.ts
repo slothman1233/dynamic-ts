@@ -3,11 +3,11 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-11-07 14:56:35
+ * @LastEditTime: 2020-11-11 11:49:53
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
-import { ResponseData, ReqBaseConfig } from '..'
+import { ResponseData, ReqBaseConfig, Codes } from '..'
 import merge from './merge'
 import { parse } from 'qs'
 
@@ -33,6 +33,7 @@ export default class Intercept {
   requestSet?: Function
   responseSet?: Function
   errorFn?: Function
+  codes?:Codes
   constructor(baseURL: string = '', options?: ReqBaseConfig) {
     try {
       this.supportMsg = new Uint8Array([])
@@ -49,6 +50,7 @@ export default class Intercept {
     this.token = (options && options.getToken) || undefined
     this.logout = (options && options.logout) || undefined
     this.tokenHeaderKey = options?.tokenHeaderKey || 'Authorization'
+    this.codes = options?.codes || {}
     this.instance = axios.create({
       timeout: this.timeout,
       baseURL,
@@ -143,17 +145,18 @@ export default class Intercept {
       this.MsgUI?.error(msg)
       return
     }
-    if (!data) return
-    const codes = config?.codes || {}
+	if (!data) return
+	const {subCode} = data
+    const codes = config?.codes || this.codes
     // 兼容后端code不规范
     if (data.code) {
       data.code = +data.code
     }
 
-    const notSure = codes.sures && !this.codeEqual(codes.sures, data.subCode)
+    const notSure = (codes.sures && !this.codeEqual(codes.sures, subCode)) || !(/00$/.test(subCode))
     if (data.code !== 0 || notSure) {
       // 失败 在自行处理错误subCode里面的
-      const isAutoError = this.codeEqual(codes.err, data.subCode)
+      const isAutoError = this.codeEqual(codes.err, subCode)
       if (isAutoError) {
         this.MsgUI?.error(data.message)
         return
@@ -173,7 +176,7 @@ export default class Intercept {
   }
 
   codeEqual = (arr: any[], subCode: string) =>
-    arr && arr.find((code) => subCode.indexOf(code) !== -1)
+    arr && subCode && arr.find((code) => subCode.indexOf(code) !== -1)
 
   checkStatus = (response: AxiosResponse) => {
     // loading
