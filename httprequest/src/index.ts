@@ -1,6 +1,7 @@
 import { mergeOptions } from "@stl/tool-ts/src/common/compatible";
 import { log } from "@stl/tool-ts/src/common/log";
 import { each } from '@stl/tool-ts/src/common/obj';
+import ES6Promise from "es6-promise";
 import fxLanguage from "@stl/tool-ts/src/languages/cn";
 
 //-----------------单元测试使用  测试完成换成上面的引入方式  放开所有的log打印----------------------------
@@ -9,6 +10,10 @@ import fxLanguage from "@stl/tool-ts/src/languages/cn";
 // import { obj } from '@stl/tool-ts';
 // import fxLanguage from "@stl/tool-ts";
  declare var Function: any;
+
+if(!(<any>window).Promise){
+    ES6Promise.polyfill();
+}
 
 interface ErrBodyMessage {
     bodyMessage:any,

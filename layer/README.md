@@ -100,6 +100,29 @@ ts:
             cancelFn:()=>void 取消按钮点击的方法（非必传）
             showCallback：function alert框显示后的回调（非必传）   
             endCallback：function alert框关闭后的回调（非必传）  
+
+4.layer.loading(obj)
+    方法说明：全局加载层
+    参数：
+        obj:{} 包含5个属性
+            img:string loading图片地址
+            bg?:boolean 是否显示背景遮罩 默认true
+            width?:number loading图片显示的宽度 默认60
+            height?:number loading图片显示的高度 默认60
+            parent?:HTMLElement loading框显示的父元素，如果传入了此参数 "bg"参数将无效
+
+    关闭方法：layer.closeLoad()
+    参数：parent?:HTMLElement 如果调用layer.loading方法时传入了“parent”参数，则关闭此load框时也需要传入“parent”参数
+        
+5.layer.tips(that,content,data)
+    方法说明：tip层
+    参数：
+        that:HTMLElement tip层显示的定位元素
+        content:string tip层显示的内容
+        data:{} 包含3个属性
+            time?:number 关闭的时间 默认3000
+            position?:"top"|"bottom"|"left"|"right" 显示在定位元素的位置 默认"top"
+            maxWidth?:number tip层的最大宽度
 ```
 ### 图标说明
 ```

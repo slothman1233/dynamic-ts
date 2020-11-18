@@ -1,6 +1,6 @@
 {
   "name": "@stl/image-cropper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "图片裁剪插件",
   "main": "dist/index.js",
   "scripts": {

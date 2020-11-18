@@ -43,7 +43,7 @@ class livStream extends Component {
     initplaymode(play: any, ready: any) {
         let mode;
 
-        if (IE_VERSION === -1) {
+        if (IE_VERSION === -1||IE_VERSION === 11) {
 
             // 播放模式存在 且 第一个是存在的
             if (this.options_.teachOrder.length > 0 && this.options_.teachOrder[0].indexOf(optionModel.teachModel)) {
@@ -89,7 +89,7 @@ livStream.playhtml5 = (option: any) => {
  * 播放flash格式的流
  */
 livStream.playflash = () => {
-
+    return Component.getComponents("flash");
 }
 
 

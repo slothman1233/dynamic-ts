@@ -1,6 +1,6 @@
 {
   "name": "@stl/layer",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "description": "layer插件",
   "main": "dist/index.js",
   "scripts": {

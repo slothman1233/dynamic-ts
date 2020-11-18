@@ -11,12 +11,12 @@ function initAddScrollJudgment(type:string,domAttr:string,scrollAttr:string):voi
 function refreshAddScrollJudgment(type:string,domAttr:string,scrollAttr:string):void{//刷新滚动条判断是否生成滚动条
     // getScrollContentHeight.call(this,type,domAttr,scrollAttr);//获取滚动框的高度/宽度 及滚动内容的高度/宽度
     if(this.contentDomScrollSize[type]<=this.contentDomSize[type]){//内容未超出
-        if(this.scrollDom[type]){//已有滚动条则隐藏
+        if(this.scrollDom[type])//已有滚动条则隐藏
             this.scrollDom[type].style.display = "none";
-        }
         return;
     }
     if(this.contentDomSize[type]){//已有滚动条则刷新滚动条高度
+        if(this.scrollDom[type].style.display === "none")this.scrollDom[type].style.display = "block";
         getScrollDomSize.call(this,type,domAttr);
     }else{//没有滚动条则添加滚动条
         createScrollDom.call(this,type);//添加滚动条dom
@@ -34,6 +34,7 @@ function createScrollDom(type:string):void{//根据类型添加滚动条
     this.scrollDom[type] = document.createElement("div");
     this.sliderDom[type] = document.createElement("div");
     this.scrollDom[type].className = this.options.className=== "" ?className:className+" "+this.options.className;//添加类名
+    
     if(type==="y"){//设置滚动条的宽度/高度
         this.scrollDom[type].style.width = this.options.size+"px";
     }else{

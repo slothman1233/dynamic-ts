@@ -1,4 +1,4 @@
-import { domSize } from "./type";
+import { domSize } from "./index";
 import { IMG_CROPPER_STYLE_STRING } from "./template"
 
 export function addStyleFn(){//添加style标签

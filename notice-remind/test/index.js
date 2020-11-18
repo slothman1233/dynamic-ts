@@ -306,14 +306,90 @@
       }
   }
 
+  /**
+   * 获取或判断任意数据类类型的通用方法
+   * @param {any} any 任意数据
+   * @example
+   * var aa=null;
+   * getDataType(aa);
+   * var abc;
+   * getDataType(abc); //[object Undefined] 说明此变量已经声明，但尚未被初始化
+   * var fn=function(){}
+   * getDataType(fn); //[object Function]
+   * getDataType(new Object()); //[object Object]
+   * getDataType("Hello");//[object String]
+   * getDataType(234);//[object Number]
+   * getDataType(true));//[object Boolean]
+   * getDataType(new Date()); //[object Date]
+   * getDataType(new Date().getTime()); //[object Number]
+   * getDataType(document.getElementById("demopic")); //[object HTMLDivElement]
+   * getDataType(document.querySelector('div'));//[object HTMLDivElement]
+   * var nodelist=NodeListToArray(document.getElementsByTagName("*"));
+   * getDataType(nodelist); //[object Array]
+   * getDataType(document.getElementsByTagName("*")); //[object NodeList)]
+   * getDataType(document.querySelectorAll('div')); //[object NodeList)]
+   * //nodelist[10].tagName);
+   * getDataType(/[a-z]/); //[object RegExp]
+   */
+  function getDataType(any) {
+      /* (1) Object.prototype.toString.call 方法判断类型：
+      优点：通用，返回"[object String]" 具体object的类型
+      缺点：不能返回继承的类型
+      
+      (2)typeof x
+      缺点：对object类型不能细分；
+      优点：对空null的判断 'undefined'的应用;
+      返回类型有：'undefined' “string” 'number' 'boolean' 'function' 'object'
+      
+      (3) instanceof 能返回具体的类型，只适用于用new关键字创建的对象进行判断
+      */
+      // var baseType=["string","number","boolean"];//基本类型
+      // var refType=["object", "Function","Array","Date"];//引用类型
+      try {
+          var dtype = Object.prototype.toString.call(any);
+          if (dtype == "[object Object]") //IE，某个dom元素对象
+           {
+              try {
+                  if (any.constructor) {
+                      var constructorStr = any.constructor.toString(); //obj.constructor可以返回继承的类型
+                      if (constructorStr.indexOf("Array") != -1) {
+                          dtype = "[object Array]";
+                      }
+                      else if (constructorStr.indexOf("HTMLCollection") != -1) { /* IE */
+                          dtype = "[object NodeList]";
+                      }
+                      else if ((constructorStr.indexOf("function") != -1) && (constructorStr.indexOf("Object()") != -1)) {
+                          dtype = "[object Object]";
+                      }
+                      else
+                          dtype = constructorStr;
+                  }
+              }
+              catch (e) {
+                  return "[object Null]";
+              }
+          }
+          else {
+              if (dtype == "[object HTMLCollection]") { /* FF */
+                  dtype = "[object NodeList]";
+              }
+          }
+          return dtype;
+      }
+      catch (e) {
+          return "variable is not defined.";
+      }
+  }
+
   var NoticeRemind = /** @class */ (function () {
       function NoticeRemind(option) {
           this.noticeDom = {};
           this.noticeTimeout = {};
           this.index = 0;
+          this.showIndex = 0;
           this.cancelKey = true;
           this.noticeList = [];
-          this.initOption = { close: false, cancel: true, autoClose: true, closeTime: 3000, only: true, top: 195, right: 23, };
+          this.initOption = { close: false, cancel: true, autoClose: true, closeTime: 3000, number: 1, top: 195, right: 23, };
           this.option = mergeOptions({}, this.initOption, option);
           this.getParent();
           this.addEvent();
@@ -321,8 +397,14 @@
       NoticeRemind.prototype.getParent = function () {
           this.noticeParent = document.createElement("div");
           this.noticeParent.id = "notice_remind_parent";
-          this.noticeParent.style.top = this.option.top + "px";
-          this.noticeParent.style.right = this.option.right + "px";
+          if (this.option.bottom)
+              this.noticeParent.style.bottom = this.option.bottom + "px";
+          else
+              this.noticeParent.style.top = this.option.top + "px";
+          if (this.option.left)
+              this.noticeParent.style.left = this.option.left + "px";
+          else
+              this.noticeParent.style.right = this.option.right + "px";
           document.body.appendChild(this.noticeParent);
       };
       NoticeRemind.prototype.addEvent = function () {
@@ -335,6 +417,18 @@
                   fn: function () {
                       that.closeAll.call(that);
                       that.cancelKey = false;
+                      that.option.cancelCallback && that.option.cancelCallback();
+                  }
+              });
+          }
+          if (this.option.close) {
+              on({
+                  agent: that.noticeParent,
+                  events: "click",
+                  ele: ".notice_close_box",
+                  fn: function (e) {
+                      var item = e.getAttribute("type");
+                      that.closeOnce.call(that, item);
                   }
               });
           }
@@ -348,6 +442,18 @@
           this.noticeParent.innerHTML = "";
           this.noticeTimeout = {};
           this.noticeDom = {};
+          this.showIndex = 0;
+      };
+      NoticeRemind.prototype.closeOnce = function (index) {
+          this.noticeParent.removeChild(this.noticeDom[index]);
+          delete this.noticeDom[index];
+          try {
+              clearTimeout(this.noticeTimeout[index]);
+          }
+          catch (e) { }
+          delete this.noticeTimeout[index];
+          this.showIndex--;
+          this.addNextNotice.call(this);
       };
       NoticeRemind.prototype.getNoticeDom = function (str) {
           var dom = document.createElement("div");
@@ -357,26 +463,28 @@
           this.noticeParent.appendChild(this.noticeDom[this.index]);
           this.autoCloseFn(this.index);
           this.index++;
+          this.showIndex++;
+          if (this.showIndex < this.option.number) {
+              this.addNextNotice();
+          }
       };
       NoticeRemind.prototype.getNewNotice = function (obj) {
-          var closeStr = this.option.close ? "<i type=\"" + this.index + "\">\u00D7</i>" : "";
+          var closeStr = this.option.close ? "<i class=\"notice_close_box\" type=\"" + this.index + "\">\u00D7</i>" : "";
           var cancelStr = this.option.cancel ? "<div class=\"notice_cancel_box\"><i class=\"notice_cancel\"></i><span>\u4E0D\u518D\u5F39\u7A97</span></div>" : "";
           var str = "" + closeStr + cancelStr + "\n      <div class=\"notice_head_box " + (this.option.cancel ? 'notice_head_cancel' : '') + "\">" + (obj.headStr ? obj.headStr : "") + "</div>\n      <div class=\"notice_content_box\">" + obj.contentStr + "</div>\n      <div class=\"notice_bottom_box\">" + (obj.footStr ? obj.footStr : "") + "</div>";
           this.getNoticeDom(str);
+          this.option.showCallback && this.option.showCallback(obj);
       };
       NoticeRemind.prototype.autoCloseFn = function (index) {
           if (!this.option.autoClose)
               return;
           var that = this;
           this.noticeTimeout[index] = setTimeout(function () {
-              that.noticeParent.removeChild(that.noticeDom[index]);
-              delete that.noticeDom[index];
-              delete that.noticeTimeout[index];
-              that.addNextNotice.call(that);
+              that.closeOnce.call(that, index);
           }, this.option.closeTime);
       };
       NoticeRemind.prototype.addNextNotice = function () {
-          if (this.option.only && this.noticeList.length > 0) {
+          if (this.noticeList.length > 0) {
               var obj = this.noticeList.shift();
               this.getNewNotice(obj);
           }
@@ -384,32 +492,63 @@
       NoticeRemind.prototype.addNewNotice = function (obj) {
           if (!this.cancelKey)
               return;
-          if (this.option.only) {
-              if (JSON.stringify(this.noticeTimeout) !== "{}") {
-                  this.noticeList.push(obj);
+          if (getDataType(obj) === "[object Object]") {
+              this.addNoice(obj);
+          }
+          else if (getDataType(obj) === "[object Array]") {
+              for (var i = 0; i < obj.length; i++) {
+                  var item = obj[i];
+                  this.addNoice(item);
               }
-              else {
-                  this.getNewNotice(obj);
-              }
+          }
+      };
+      NoticeRemind.prototype.addNoice = function (obj) {
+          if (this.showIndex < this.option.number) {
+              this.getNewNotice(obj);
+          }
+          else {
+              this.noticeList.push(obj);
           }
       };
       return NoticeRemind;
   }());
 
-  var stlNoticeRemind = new NoticeRemind({});
+  var stlNoticeRemind = new NoticeRemind({ number: 3, closeTime: 5000, left: 50, bottom: 50, showCallback: function (obj) { console.log(obj); } });
   var dom$1 = document.getElementById("btn");
+  var doms = document.getElementById("btns");
   var index = 0;
-  var obj = {
-      contentStr: "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
-      headStr: "标题标题标题标题标题标题标题标题标题标题" + index,
-  };
   // addEvent(dom,"click",function(){
   //     stlNoticeRemind.addNewNotice(obj);
   //     index++;
   // })
   dom$1.addEventListener("click", function () {
+      var obj = {
+          contentStr: "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
+          headStr: "标题标题标题标题标题标题标题标题标题标题" + index,
+          id: index
+      };
       stlNoticeRemind.addNewNotice(obj);
       index++;
+  });
+  doms.addEventListener("click", function () {
+      var arr = [{
+              contentStr: "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
+              headStr: "标题标题标题标题标题标题标题标题标题标题11",
+              id: 11
+          }, {
+              contentStr: "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
+              headStr: "标题标题标题标题标题标题标题标题标题标题12",
+              id: 12
+          }, {
+              contentStr: "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
+              headStr: "标题标题标题标题标题标题标题标题标题标题13",
+              id: 13
+          }, {
+              contentStr: "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
+              headStr: "标题标题标题标题标题标题标题标题标题标题14",
+              id: 14
+          }];
+      stlNoticeRemind.addNewNotice(arr);
   });
 
 })));

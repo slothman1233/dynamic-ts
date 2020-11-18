@@ -17,7 +17,8 @@
             .player_progress {width: 100%;height: 4px;background-color: rgba(255,255,255,0.5);position: relative;cursor: pointer;
                 margin:1px 0;
                 /*height: 8px;background: rgba(133, 133, 133, 0.3);opacity: .85;*/
-                
+                .move-time{position: absolute;height:20px;background:rgba(0,0,0,0.7);top:-25px;padding:0 6px;-webkit-transform:translateX(-50%);transform:translateX(-50%);
+                    border-radius:2px;color:#fff;font-size:12px;line-height:20px;display: none;}
                 .range-container {position: absolute;height: 100%;}
                 .progress-played {position: absolute;z-index: 100;height: 100%;background: #26d1e0;
                     /*background: linear-gradient(-90deg, #05E4FC 4%, #148AFF 100%);*/
@@ -41,6 +42,10 @@
                 }
 
                 &:hover{
+                    height:6px;margin:0;
+                    .range-thumb{display: block;}
+                }
+                &.player_progress_hover{
                     height:6px;margin:0;
                     .range-thumb{display: block;}
                 }
@@ -129,8 +134,11 @@
     }
 }
 
-.load-waiting {position: absolute;height: 50px;width: 8px;text-align: center;line-height: 50px;top: calc(50% - 50px);left: calc(50% - 8px);display: none;color: #fff;
-
+.load-waiting {position: absolute;text-align: center;display: none;
+    top: 50%;left: 50%;transform: translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);
+    height: 50px;width: 8px;line-height: 50px;color: #fff;
+    //top: calc(50% - 50px);left: calc(50% - 8px);
+    //.loader-content img{width:100%;height:100%;display: block;}
     .loader-content {background: currentcolor;position: relative;-webkit-animation: loader-content 1s ease-in-out infinite;animation: loader-content 1s ease-in-out infinite;
         -webkit-animation-delay: 0.4s;animation-delay: 0.4s;width: 8px;height: 20px;color: #d60b52;border-width: 3px;line-height: 40px;font-size: 40px;
     }
