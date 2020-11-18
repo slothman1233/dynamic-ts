@@ -52,10 +52,10 @@ Component.videoEmit = new videoEmit();
  * @param {HTMLVideoElement} el video的元素
  */
 (<any>vidoejs).addoption = (el: HTMLVideoElement) => {
-    Component.options_.loop = el.loop || Component.options_.loop;
-    Component.options_.autoplay = el.autoplay || Component.options_.autoplay;
-    Component.options_.preload = el.preload || Component.options_.preload;
-    Component.options_.poster = el.poster || Component.options_.poster;
+    Component.options_.loop = el&&el.loop?el.loop:Component.options_.loop;
+    Component.options_.autoplay = el&&el.autoplay?el.autoplay: Component.options_.autoplay;
+    Component.options_.preload = el&&el.preload?el.preload:Component.options_.preload;
+    Component.options_.poster = el&&el.poster?el.poster:Component.options_.poster;
 }
 Component.videoForegin.operation.load = vidoejs
 
@@ -83,6 +83,8 @@ function vidoejs(id: string, option?: object, ready?: any) {
 
     const tag = new Componentplay(player, option, ready);
 }
+
+export default vidoejs;
 
 
 // 推流地址

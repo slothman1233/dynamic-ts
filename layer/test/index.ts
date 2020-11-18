@@ -1,9 +1,26 @@
 import { layer } from "../src/index";
-import { addEvent } from "@stl/tool-ts/src/common/compatible"
+/**
+ * 绑定方法
+ * @param {Element} obj 绑定的元素
+ * @param {String} type 方法名称
+ * @param {function} fn  绑定的方法
+ */
+export const addEvent = (obj: any, type: string, fn: any) => {
+
+    if (obj.addEventListener) {
+      obj.addEventListener(type, fn, false);
+    } else {
+      obj['e' + type + fn] = fn;
+      obj[type + fn] = function () { obj['e' + type + fn](window.event); }
+      obj.attachEvent('on' + type, obj[type + fn]);
+    }
+  }
 let btn = document.getElementById("btn")
 let btn1 = document.getElementById("btn1")
 let btn2 = document.getElementById("btn2")
 let btn3 = document.getElementById("btn3")
+let btn4 = document.getElementById("btn4")
+let btn5 = document.getElementById("btn5")
 
 addEvent(btn,"click",function(){
     layer.msg("不开心。。。",{icon:11,time:3000})
@@ -48,4 +65,15 @@ addEvent(btn3,"click",function(){
             console.log("点击了取消")
         }
     })
+})
+addEvent(btn4,"click",function(){
+    layer.loading({
+        img:"./loading.gif",
+        width:60,
+        height:60,
+        parent:document.getElementById("parent_box")
+    })
+})
+addEvent(btn5,"click",function(){
+    layer.tips(this,"这是一条tips这是一条tips这是一条tips这是一条tips这是一条tips",{position:"left"})
 })

@@ -10,11 +10,13 @@
         background-color: #ffffff;
         padding:16px 24px 24px;
         position: relative;
+        margin-bottom:10px;
         .notice_cancel_box{
             position: absolute;
             top:18px;
             right:24px;
             line-height:20px;
+            z-index:2;
             .notice_cancel{
                 display: inline-block;
                 width:14px;height:14px;
@@ -29,6 +31,10 @@
                 font-size:12px;
                 color:rgba(0, 0, 0, 0.25);
             }
+        }
+        .notice_close_box{
+            position: absolute;width:22px;height:22px;display: block;color:#666666;cursor:pointer;
+            right:8px;top:4px;font-size:16px;line-height:22px;text-align: center;list-style:none;text-decoration:none;font-style: normal;
         }
         .notice_head_box{
             width:100%;

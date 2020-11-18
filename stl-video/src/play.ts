@@ -161,7 +161,12 @@ class Play extends Component {
       )
       this.play_.insertAdjacentElement("beforeBegin", this.el_);
 
-      this.play_.remove();
+      //this.play_.remove();
+      try{
+        this.play_.remove();
+    }catch(e){
+        this.play_.parentNode.removeChild(this.play_)
+    }
       this.play_ = this.el_;
 
       return this.el_;
