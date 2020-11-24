@@ -90,13 +90,16 @@ class Component {
      * @param error 
      */
     static sendError(error: any) {
-        if (Component.videoForegin.hooks.error) {
-            Component.videoForegin.hooks.error(error)
-        }
-
-        Component.options_.errorDom.dom.innerHTML = error.message;
-        Component.options_.errorDom.show(Component.options_.errorDom.dom)
-
+        try{
+            if (Component.videoForegin.hooks.error) {
+                Component.videoForegin.hooks.error(error)
+            }
+    
+            Component.options_.errorDom.dom.innerHTML = error.message;
+            Component.options_.errorDom.show(Component.options_.errorDom.dom)
+    
+        }catch(e){}
+        
     }
 
     /**

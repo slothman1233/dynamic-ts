@@ -1,1 +1,719 @@
-!function(e){"function"==typeof define&&define.amd?define(e):e()}(function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}function t(e,t){return e(t={exports:{}},t.exports),t.exports}var n=e(t(function(e,t){t.__esModule=!0,t.default=function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}})),p=t(function(e){var t=e.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=t)}),D=t(function(e){var t=e.exports={version:"2.6.1"};"number"==typeof __e&&(__e=t)}),S=(D.version,function(o,l,e){if(function(e){if("function"!=typeof e)throw TypeError(e+" is not a function!")}(o),void 0===l)return o;switch(e){case 1:return function(e){return o.call(l,e)};case 2:return function(e,t){return o.call(l,e,t)};case 3:return function(e,t,n){return o.call(l,e,t,n)}}return function(){return o.apply(l,arguments)}}),l=function(e){return"object"==typeof e?null!==e:"function"==typeof e},o=function(e){if(!l(e))throw TypeError(e+" is not an object!");return e},i=function(e){try{return!!e()}catch(e){return!0}},r=!i(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a}),s=p.document,c=l(s)&&l(s.createElement),a=!r&&!i(function(){return 7!=Object.defineProperty((e="div",c?s.createElement(e):{}),"a",{get:function(){return 7}}).a;var e}),u=Object.defineProperty,h={f:r?Object.defineProperty:function(e,t,n){if(o(e),t=function(e,t){if(!l(e))return e;var n,o;if(t&&"function"==typeof(n=e.toString)&&!l(o=n.call(e)))return o;if("function"==typeof(n=e.valueOf)&&!l(o=n.call(e)))return o;if(!t&&"function"==typeof(n=e.toString)&&!l(o=n.call(e)))return o;throw TypeError("Can't convert object to primitive value")}(t,!0),o(n),a)try{return u(e,t,n)}catch(e){}if("get"in n||"set"in n)throw TypeError("Accessors not supported!");return"value"in n&&(e[t]=n.value),e}},x=r?function(e,t,n){return h.f(e,t,{enumerable:!((o=1)&o),configurable:!(2&o),writable:!(4&o),value:n});var o}:function(e,t,n){return e[t]=n,e},z={}.hasOwnProperty,w="prototype",b=function(e,t,n){var o,l,i,r,s,c=e&b.F,a=e&b.G,u=e&b.S,h=e&b.P,f=e&b.B,m=e&b.W,d=a?D:D[t]||(D[t]={}),v=d[w],y=a?p:u?p[t]:(p[t]||{})[w];for(o in a&&(n=t),n)(l=!c&&y&&void 0!==y[o])&&(r=d,s=o,z.call(r,s))||(i=l?y[o]:n[o],d[o]=a&&"function"!=typeof y[o]?n[o]:f&&l?S(i,p):m&&y[o]==i?function(o){var e=function(e,t,n){if(this instanceof o){switch(arguments.length){case 0:return new o;case 1:return new o(e);case 2:return new o(e,t)}return new o(e,t,n)}return o.apply(this,arguments)};return e[w]=o[w],e}(i):h&&"function"==typeof i?S(Function.call,i):i,h&&((d.virtual||(d.virtual={}))[o]=i,e&b.R&&v&&!v[o]&&x(v,o,i)))};b.F=1,b.G=2,b.S=4,b.P=8,b.B=16,b.W=32,b.U=64,b.R=128;var f=b;f(f.S+f.F*!r,"Object",{defineProperty:h.f});var m=D.Object,d=function(e,t,n){return m.defineProperty(e,t,n)},v=t(function(e){e.exports={default:d,__esModule:!0}});e(v);var y=e(t(function(e,t){t.__esModule=!0;var n,l=(n=v)&&n.__esModule?n:{default:n};t.default=function(){function o(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),(0,l.default)(e,o.key,o)}}return function(e,t,n){return t&&o(e.prototype,t),n&&o(e,n),e}}()})),E=function(){function e(){n(this,e),this.addEvent=null,this.removeEvent=null,window.addEventListener?(this.addEvent=function(e,t,n){e.addEventListener(t,n,!1)},this.removeEvent=function(e,t,n){e.removeEventListener(t,n,!1)}):window.attachEvent&&(this.addEvent=function(e,t,n){e.attachEvent("on"+t,n)},this.removeEvent=function(e,t,n){e.detachEvent("on"+t,n)})}return y(e,null,[{key:"bind",value:function(){return null===this.instance&&(this.instance=new e),this.instance}}]),e}();E.instance=null;var g=E.bind();function _(){return 0<=window.navigator.userAgent.toLowerCase().indexOf("firefox")}function N(e,t){e.style.transform=t,e.style.webkitTransform=t,e.style.msTransform=t,e.style.mozTransform=t,e.style.oTransform=t}function B(e,t){var n={scrollRange:e.contentDomScrollSize[t]-e.contentDomSize[t],sliderRange:e.scrollDomSize[t]-e.sliderDomSize[t],scrollNumber:e.scrollBox.scrollTop,scrollType:"scrollTop",transformType:"translateY"};return"x"===t&&(n.scrollNumber=e.scrollBox.scrollLeft,n.scrollType="scrollLeft",n.transformType="translateX"),n}function O(e,t,n){if(!(t.contentDomScrollSize[n]<=t.contentDomSize[n])){var o=B(t,n),l=function(e,t,n,o,l){if(e.wheelDelta?0<e.wheelDelta:e.detail<0){if(n<=0)return null;try{e.preventDefault()}catch(e){}n-=t.options.wheelDis}else{if(o<=n)return null;try{e.preventDefault()}catch(e){}n+=t.options.wheelDis}return{scrollNumber:n=n<0?0:o<n?o:n,sliderScale:n*l/o}}(e,t,o.scrollNumber,o.scrollRange,o.sliderRange);l&&(t.scrollBox[o.scrollType]=l.scrollNumber,N(t.sliderDom[n],o.transformType+"("+100*l.sliderScale/t.sliderDomSize[n]+"%)"))}}function M(t,n){var o=this,l=document.documentElement,i=function(e){!function(e,t,n){var o="y"===n?e.clientY:e.clientX,l=o-t.startClient[n];t.startClient[n]=o;var i=B(t,n),r=function(e,t,n,o,l){try{e.preventDefault()}catch(e){}return n<=0&&t<0||o<=n&&0<t?null:{scrollNumber:n=(n+=t*o/l)<0?0:o<n?o:n,sliderScale:n*l/o}}(e,l,i.scrollNumber,i.scrollRange,i.sliderRange);r&&(t.scrollBox[i.scrollType]=r.scrollNumber,N(t.sliderDom[n],i.transformType+"("+100*r.sliderScale/t.sliderDomSize[n]+"%)"))}(e||window.event,o,t)};g.addEvent(l,"mousemove",i),g.addEvent(l,"mouseup",function e(t){t||window.event;0<=n.className.indexOf("stl_scroll_move_box")&&(n.className=n.className.replace(" stl_scroll_move_box","")),o.startClient={x:0,y:0},o.isScrollMove=0,g.removeEvent(l,"mousemove",i),g.removeEvent(l,"mouseup",e),_()?n.parentElement.parentElement.className=n.parentElement.parentElement.className.replace(" stl_scroll_unselect",""):n.parentElement.parentElement.onselectstart=function(){return!0}})}function T(t){var n=this,e=_()?"DOMMouseScroll":"mousewheel";("y"===t||"x"===this.options.direction&&this.options.xMousewheel)&&(g.addEvent(n.scrollBox,e,function(){var e=event||window.event;O.call(this,e,n,t)}),g.addEvent(n.scrollDom[t],e,function(){var e=event||window.event;O.call(this,e,n,t)})),g.addEvent(n.scrollDom[t],"click",function(){var e=event||window.event;"y"===t?function(e,t){if(!(e.target.className.indexOf("stl_yscroll_box")<0)){var n=e.offsetY-t.sliderDomSize.y/2;n=n<0?0:n>t.scrollDomSize.y-t.sliderDomSize.y?t.scrollDomSize.y-t.sliderDomSize.y:n;var o=(t.contentDomScrollSize.y-t.contentDomSize.y)*n/(t.scrollDomSize.y-t.sliderDomSize.y);t.scrollBox.scrollTop=o,N(t.sliderDom.y,"translateY("+100*n/t.sliderDomSize.y+"%)")}}.call(this,e,n,t):function(e,t){if(!(e.target.className.indexOf("stl_xscroll_box")<0)){var n=e.offsetX-t.sliderDomSize.x/2;n=n<0?0:n>t.scrollDomSize.x-t.sliderDomSize.x?t.scrollDomSize.x-t.sliderDomSize.x:n;var o=(t.contentDomScrollSize.x-t.contentDomSize.x)*n/(t.scrollDomSize.x-t.sliderDomSize.x);t.scrollBox.scrollLeft=o,N(t.sliderDom.x,"translateX("+100*n/t.sliderDomSize.x+"%)")}}.call(this,e,n,t)}),function(n,o){var l=this;g.addEvent(o,"mousedown",function(e){var t=e||window.event;_()?o.parentElement.parentElement.className=o.parentElement.parentElement.className+" stl_scroll_unselect":o.parentElement.parentElement.onselectstart=function(){return!1},o.className.indexOf("stl_scroll_move_box")<0&&(o.className=o.className+" stl_scroll_move_box"),l.startClient[n]="y"===n?t.clientY:t.clientX,M.call(l,n,o)})}.call(this,t,this.sliderDom[t])}function P(e,t,n){(function(e,t,n){this.contentDomSize[e]=this.scrollBox[t],this.contentDomScrollSize[e]=this.scrollBox[n]}).call(this,e,t,n),this.contentDomScrollSize[e]>this.contentDomSize[e]&&(k.call(this,e),R.call(this,e,t))}function H(e,t,n){this.contentDomScrollSize[e]<=this.contentDomSize[e]?this.scrollDom[e]&&(this.scrollDom[e].style.display="none"):(this.contentDomSize[e]||k.call(this,e),R.call(this,e,t))}function k(e){var t="stl_"+e+"scroll_box";this.scrollDom[e]=document.createElement("div"),this.sliderDom[e]=document.createElement("div"),this.scrollDom[e].className=""===this.options.className?t:t+" "+this.options.className,"y"===e?this.scrollDom[e].style.width=this.options.size+"px":this.scrollDom[e].style.height=this.options.size+"px",this.scrollDom[e].appendChild(this.sliderDom[e]),this.scrollParent.appendChild(this.scrollDom[e]),T.call(this,e)}function R(e,t){this.scrollDomSize[e]=this.scrollDom[e][t];var n=this.contentDomSize[e]*this.scrollDomSize[e]/this.contentDomScrollSize[e];this.sliderDomSize[e]=n>this.options.smallSize?n:this.options.smallSize,"x"===e?this.sliderDom[e].style.width=this.sliderDomSize[e]+"px":this.sliderDom[e].style.height=this.sliderDomSize[e]+"px"}function W(){switch(this.options.direction){case"x":this.contentDomScrollSize.x=this.scrollBox.scrollWidth,H.call(this,"x","clientWidth","scrollWidth");break;case"y":this.contentDomScrollSize.y=this.scrollBox.scrollHeight,H.call(this,"y","clientHeight","scrollHeight");break;case"xy":this.contentDomScrollSize.x=this.scrollBox.scrollWidth,this.contentDomScrollSize.y=this.scrollBox.scrollHeight,H.call(this,"x","clientWidth","scrollWidth"),H.call(this,"y","clientHeight","scrollHeight");break;default:this.contentDomScrollSize.y=this.scrollBox.scrollHeight,H.call(this,"y","clientHeight","scrollHeight")}}var L=new(function(){function t(e){n(this,t),this.contentDomSize={x:0,y:0},this.contentDomScrollSize={x:0,y:0},this.scrollDom={x:null,y:null},this.sliderDom={x:null,y:null},this.scrollDomSize={x:0,y:0},this.sliderDomSize={x:0,y:0},this.startClient={x:0,y:0},this.initOption(e),function(){"relative"!==getComputedStyle(this.scrollParent,null).position&&(this.scrollParent.style.position="relative")}.call(this),function(){switch(this.options.direction){case"x":P.call(this,"x","clientWidth","scrollWidth");break;case"y":P.call(this,"y","clientHeight","scrollHeight");break;case"xy":P.call(this,"x","clientWidth","scrollWidth"),P.call(this,"y","clientHeight","scrollHeight");break;default:P.call(this,"y","clientHeight","scrollHeight")}}.call(this),this.options.autoRefresh&&function(e,t,n){var o=window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver,l=this,i=document.getElementById(e);if(o){var r=n||{attributes:!0,childList:!0,characterData:!0};new o(function(e){e.forEach(function(e){t.call(l)})}).observe(i,r)}else i.addEventListener("DOMNodeRemoved",function(e){t.call(l)},!1),i.addEventListener("DOMNodeInserted",function(e){t.call(l)},!1)}.call(this,this.options.id,W)}return y(t,[{key:"initOption",value:function(e){this.options={id:e.id,autoRefresh:void 0===e.autoRefresh||e.autoRefresh,size:e.size||5,direction:e.direction||"y",className:e.className||"",smallSize:void 0===e.smallSize?20:e.smallSize,xMousewheel:void 0===e.xMousewheel||e.xMousewheel,wheelDis:e.wheelDis||40},this.scrollBox=document.getElementById(e.id),this.scrollParent=this.scrollBox.parentNode}},{key:"refresh",value:function(){W.call(this)}},{key:"fixedPointScroll",value:function(e){(function(e){if(e.left){this.scrollBox.scrollLeft=e.left;var t=e.left*(this.scrollDomSize.x-this.sliderDomSize.x)/(this.contentDomScrollSize.x-this.contentDomSize.x);N(this.sliderDom.x,"translateX("+100*t/this.sliderDomSize.x+"%)")}if(e.top){this.scrollBox.scrollTop=e.top;var n=e.top*(this.scrollDomSize.y-this.sliderDomSize.y)/(this.contentDomScrollSize.y-this.contentDomSize.y);N(this.sliderDom.y,"translateY("+100*n/this.sliderDomSize.y+"%)")}}).call(this,e)}}]),t}())({id:"box6",direction:"y",className:"scroll_class"});document.getElementById("btn").addEventListener("click",function(){L.fixedPointScroll({top:1e3})})});
+(function (factory) {
+	typeof define === 'function' && define.amd ? define(factory) :
+	factory();
+}(function () { 'use strict';
+
+	function unwrapExports (x) {
+		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
+	}
+
+	function createCommonjsModule(fn, module) {
+		return module = { exports: {} }, fn(module, module.exports), module.exports;
+	}
+
+	var classCallCheck = createCommonjsModule(function (module, exports) {
+
+	exports.__esModule = true;
+
+	exports.default = function (instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	};
+	});
+
+	var _classCallCheck = unwrapExports(classCallCheck);
+
+	var _global = createCommonjsModule(function (module) {
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var global = module.exports = typeof window != 'undefined' && window.Math == Math
+	  ? window : typeof self != 'undefined' && self.Math == Math ? self
+	  // eslint-disable-next-line no-new-func
+	  : Function('return this')();
+	if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+	});
+
+	var _core = createCommonjsModule(function (module) {
+	var core = module.exports = { version: '2.6.1' };
+	if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+	});
+	var _core_1 = _core.version;
+
+	var _aFunction = function (it) {
+	  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+	  return it;
+	};
+
+	// optional / simple context binding
+
+	var _ctx = function (fn, that, length) {
+	  _aFunction(fn);
+	  if (that === undefined) return fn;
+	  switch (length) {
+	    case 1: return function (a) {
+	      return fn.call(that, a);
+	    };
+	    case 2: return function (a, b) {
+	      return fn.call(that, a, b);
+	    };
+	    case 3: return function (a, b, c) {
+	      return fn.call(that, a, b, c);
+	    };
+	  }
+	  return function (/* ...args */) {
+	    return fn.apply(that, arguments);
+	  };
+	};
+
+	var _isObject = function (it) {
+	  return typeof it === 'object' ? it !== null : typeof it === 'function';
+	};
+
+	var _anObject = function (it) {
+	  if (!_isObject(it)) throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+	var _fails = function (exec) {
+	  try {
+	    return !!exec();
+	  } catch (e) {
+	    return true;
+	  }
+	};
+
+	// Thank's IE8 for his funny defineProperty
+	var _descriptors = !_fails(function () {
+	  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+	});
+
+	var document$1 = _global.document;
+	// typeof document.createElement is 'object' in old IE
+	var is = _isObject(document$1) && _isObject(document$1.createElement);
+	var _domCreate = function (it) {
+	  return is ? document$1.createElement(it) : {};
+	};
+
+	var _ie8DomDefine = !_descriptors && !_fails(function () {
+	  return Object.defineProperty(_domCreate('div'), 'a', { get: function () { return 7; } }).a != 7;
+	});
+
+	// 7.1.1 ToPrimitive(input [, PreferredType])
+
+	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+	// and the second argument - flag - preferred type is a string
+	var _toPrimitive = function (it, S) {
+	  if (!_isObject(it)) return it;
+	  var fn, val;
+	  if (S && typeof (fn = it.toString) == 'function' && !_isObject(val = fn.call(it))) return val;
+	  if (typeof (fn = it.valueOf) == 'function' && !_isObject(val = fn.call(it))) return val;
+	  if (!S && typeof (fn = it.toString) == 'function' && !_isObject(val = fn.call(it))) return val;
+	  throw TypeError("Can't convert object to primitive value");
+	};
+
+	var dP = Object.defineProperty;
+
+	var f = _descriptors ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+	  _anObject(O);
+	  P = _toPrimitive(P, true);
+	  _anObject(Attributes);
+	  if (_ie8DomDefine) try {
+	    return dP(O, P, Attributes);
+	  } catch (e) { /* empty */ }
+	  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+	  if ('value' in Attributes) O[P] = Attributes.value;
+	  return O;
+	};
+
+	var _objectDp = {
+		f: f
+	};
+
+	var _propertyDesc = function (bitmap, value) {
+	  return {
+	    enumerable: !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable: !(bitmap & 4),
+	    value: value
+	  };
+	};
+
+	var _hide = _descriptors ? function (object, key, value) {
+	  return _objectDp.f(object, key, _propertyDesc(1, value));
+	} : function (object, key, value) {
+	  object[key] = value;
+	  return object;
+	};
+
+	var hasOwnProperty = {}.hasOwnProperty;
+	var _has = function (it, key) {
+	  return hasOwnProperty.call(it, key);
+	};
+
+	var PROTOTYPE = 'prototype';
+
+	var $export = function (type, name, source) {
+	  var IS_FORCED = type & $export.F;
+	  var IS_GLOBAL = type & $export.G;
+	  var IS_STATIC = type & $export.S;
+	  var IS_PROTO = type & $export.P;
+	  var IS_BIND = type & $export.B;
+	  var IS_WRAP = type & $export.W;
+	  var exports = IS_GLOBAL ? _core : _core[name] || (_core[name] = {});
+	  var expProto = exports[PROTOTYPE];
+	  var target = IS_GLOBAL ? _global : IS_STATIC ? _global[name] : (_global[name] || {})[PROTOTYPE];
+	  var key, own, out;
+	  if (IS_GLOBAL) source = name;
+	  for (key in source) {
+	    // contains in native
+	    own = !IS_FORCED && target && target[key] !== undefined;
+	    if (own && _has(exports, key)) continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+	    // bind timers to global for call from export context
+	    : IS_BIND && own ? _ctx(out, _global)
+	    // wrap global constructors for prevent change them in library
+	    : IS_WRAP && target[key] == out ? (function (C) {
+	      var F = function (a, b, c) {
+	        if (this instanceof C) {
+	          switch (arguments.length) {
+	            case 0: return new C();
+	            case 1: return new C(a);
+	            case 2: return new C(a, b);
+	          } return new C(a, b, c);
+	        } return C.apply(this, arguments);
+	      };
+	      F[PROTOTYPE] = C[PROTOTYPE];
+	      return F;
+	    // make static versions for prototype methods
+	    })(out) : IS_PROTO && typeof out == 'function' ? _ctx(Function.call, out) : out;
+	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+	    if (IS_PROTO) {
+	      (exports.virtual || (exports.virtual = {}))[key] = out;
+	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+	      if (type & $export.R && expProto && !expProto[key]) _hide(expProto, key, out);
+	    }
+	  }
+	};
+	// type bitmap
+	$export.F = 1;   // forced
+	$export.G = 2;   // global
+	$export.S = 4;   // static
+	$export.P = 8;   // proto
+	$export.B = 16;  // bind
+	$export.W = 32;  // wrap
+	$export.U = 64;  // safe
+	$export.R = 128; // real proto method for `library`
+	var _export = $export;
+
+	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+	_export(_export.S + _export.F * !_descriptors, 'Object', { defineProperty: _objectDp.f });
+
+	var $Object = _core.Object;
+	var defineProperty = function defineProperty(it, key, desc) {
+	  return $Object.defineProperty(it, key, desc);
+	};
+
+	var defineProperty$1 = createCommonjsModule(function (module) {
+	module.exports = { "default": defineProperty, __esModule: true };
+	});
+
+	unwrapExports(defineProperty$1);
+
+	var createClass = createCommonjsModule(function (module, exports) {
+
+	exports.__esModule = true;
+
+
+
+	var _defineProperty2 = _interopRequireDefault(defineProperty$1);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];
+	      descriptor.enumerable = descriptor.enumerable || false;
+	      descriptor.configurable = true;
+	      if ("value" in descriptor) descriptor.writable = true;
+	      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+	    }
+	  }
+
+	  return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	    if (staticProps) defineProperties(Constructor, staticProps);
+	    return Constructor;
+	  };
+	}();
+	});
+
+	var _createClass = unwrapExports(createClass);
+
+	var boundEvent = function () {
+	    function boundEvent() {
+	        _classCallCheck(this, boundEvent);
+
+	        this.addEvent = null;
+	        this.removeEvent = null;
+	        if (window.addEventListener) {
+	            this.addEvent = function (elem, type, handler) {
+	                elem.addEventListener(type, handler, false);
+	            };
+	            this.removeEvent = function (elem, type, handler) {
+	                elem.removeEventListener(type, handler, false);
+	            };
+	        } else if (window.attachEvent) {
+	            this.addEvent = function (elem, type, handler) {
+	                elem.attachEvent('on' + type, handler);
+	            };
+	            this.removeEvent = function (elem, type, handler) {
+	                elem.detachEvent('on' + type, handler);
+	            };
+	        }
+	    }
+
+	    _createClass(boundEvent, null, [{
+	        key: 'bind',
+	        value: function bind() {
+	            if (this.instance === null) {
+	                this.instance = new boundEvent();
+	            }
+	            return this.instance;
+	        }
+	    }]);
+
+	    return boundEvent;
+	}();
+
+	boundEvent.instance = null;
+	var addObj = boundEvent.bind();
+	function IsFirefox() {
+	    if (window.navigator.userAgent.toLowerCase().indexOf('firefox') >= 0) return true;else return false;
+	}
+
+	function addTransformFn(dom, val) {
+	    dom.style.transform = val;
+	    dom.style.webkitTransform = val;
+	    dom.style.msTransform = val;
+	    dom.style.mozTransform = val;
+	    dom.style.oTransform = val;
+	}
+	function scrollScale(that, type) {
+	    var scrollObj = {
+	        scrollRange: that.contentDomScrollSize[type] - that.contentDomSize[type],
+	        sliderRange: that.scrollDomSize[type] - that.sliderDomSize[type],
+	        scrollNumber: that.scrollBox.scrollTop,
+	        scrollType: "scrollTop",
+	        transformType: "translateY"
+	    };
+	    if (type === "x") {
+	        scrollObj.scrollNumber = that.scrollBox.scrollLeft;
+	        scrollObj.scrollType = "scrollLeft";
+	        scrollObj.transformType = "translateX";
+	    }
+	    return scrollObj;
+	}
+	function getScrollValue(event, that, scrollNumber, scrollRange, sliderRange) {
+	    var key = event.wheelDelta ? event.wheelDelta > 0 : event.detail < 0; //兼容性处理判断是向上滚动还是向下滚动  true向上滚动  false向下滚动   
+	    if (key) {
+	        if (scrollNumber <= 0) return null;
+	        try {
+	            event.preventDefault();
+	        } catch (e) {}
+	        scrollNumber -= that.options.wheelDis;
+	    } else {
+	        if (scrollNumber >= scrollRange) return null;
+	        try {
+	            event.preventDefault();
+	        } catch (e) {}
+	        scrollNumber += that.options.wheelDis;
+	    }
+	    scrollNumber = scrollNumber < 0 ? 0 : scrollNumber > scrollRange ? scrollRange : scrollNumber;
+	    return {
+	        scrollNumber: scrollNumber,
+	        sliderScale: scrollNumber * sliderRange / scrollRange
+	    };
+	}
+	function getMoveValue(event, moveNumber, scrollNumber, scrollRange, sliderRange) {
+	    try {
+	        event.preventDefault();
+	    } catch (e) {}
+	    if (scrollNumber <= 0 && moveNumber < 0 || scrollNumber >= scrollRange && moveNumber > 0) return null;
+	    scrollNumber += moveNumber * scrollRange / sliderRange;
+	    scrollNumber = scrollNumber < 0 ? 0 : scrollNumber > scrollRange ? scrollRange : scrollNumber;
+	    return {
+	        scrollNumber: scrollNumber,
+	        sliderScale: scrollNumber * sliderRange / scrollRange
+	    };
+	}
+	function mousewheelFn(event, that, type) {
+	    if (that.contentDomScrollSize[type] <= that.contentDomSize[type]) {
+	        return;
+	    } //当内容高度小于滚动元素的高度则返回
+	    var scaleObj = scrollScale(that, type);
+	    var scrollNumberObj = getScrollValue(event, that, scaleObj.scrollNumber, scaleObj.scrollRange, scaleObj.sliderRange);
+	    if (scrollNumberObj) {
+	        that.scrollBox[scaleObj.scrollType] = scrollNumberObj.scrollNumber; //更新滚动内容的滚动位置
+	        addTransformFn(that.sliderDom[type], scaleObj.transformType + "(" + scrollNumberObj.sliderScale * 100 / that.sliderDomSize[type] + "%)"); //更新滚动条的滚动位置
+	    }
+	}
+	function mouseMoveFn(event, that, type) {
+	    var clientNumber = type === "y" ? event.clientY : event.clientX;
+	    var moveNumber = clientNumber - that.startClient[type]; //获取拖动距离
+	    that.startClient[type] = clientNumber; //更新初始值
+	    var scaleObj = scrollScale(that, type);
+	    var scrollNumberObj = getMoveValue(event, moveNumber, scaleObj.scrollNumber, scaleObj.scrollRange, scaleObj.sliderRange);
+	    if (scrollNumberObj) {
+	        that.scrollBox[scaleObj.scrollType] = scrollNumberObj.scrollNumber;
+	        addTransformFn(that.sliderDom[type], scaleObj.transformType + "(" + scrollNumberObj.sliderScale * 100 / that.sliderDomSize[type] + "%)");
+	    }
+	}
+	function clickScrollY(event, that) {
+	    if (event.target.className.indexOf("stl_yscroll_box") < 0) {
+	        return;
+	    }
+	    var clickOffset = event.offsetY - that.sliderDomSize["y"] / 2;
+	    clickOffset = clickOffset < 0 ? 0 : clickOffset > that.scrollDomSize["y"] - that.sliderDomSize["y"] ? that.scrollDomSize["y"] - that.sliderDomSize["y"] : clickOffset;
+	    var clickScroll = (that.contentDomScrollSize["y"] - that.contentDomSize["y"]) * clickOffset / (that.scrollDomSize["y"] - that.sliderDomSize["y"]);
+	    that.scrollBox.scrollTop = clickScroll;
+	    addTransformFn(that.sliderDom["y"], "translateY(" + clickOffset * 100 / that.sliderDomSize["y"] + "%)");
+	}
+	function clickScrollX(event, that) {
+	    if (event.target.className.indexOf("stl_xscroll_box") < 0) {
+	        return;
+	    }
+	    var clickOffset = event.offsetX - that.sliderDomSize["x"] / 2;
+	    clickOffset = clickOffset < 0 ? 0 : clickOffset > that.scrollDomSize["x"] - that.sliderDomSize["x"] ? that.scrollDomSize["x"] - that.sliderDomSize["x"] : clickOffset;
+	    var clickScroll = (that.contentDomScrollSize["x"] - that.contentDomSize["x"]) * clickOffset / (that.scrollDomSize["x"] - that.sliderDomSize["x"]);
+	    that.scrollBox.scrollLeft = clickScroll;
+	    addTransformFn(that.sliderDom["x"], "translateX(" + clickOffset * 100 / that.sliderDomSize["x"] + "%)");
+	}
+	function scrollSpecifiedPosition(obj) {
+	    if (obj.left) {
+	        this.scrollBox.scrollLeft = obj.left;
+	        var clickOffset = obj.left * (this.scrollDomSize["x"] - this.sliderDomSize["x"]) / (this.contentDomScrollSize["x"] - this.contentDomSize["x"]);
+	        addTransformFn(this.sliderDom["x"], "translateX(" + clickOffset * 100 / this.sliderDomSize["x"] + "%)");
+	    }
+	    if (obj.top) {
+	        this.scrollBox.scrollTop = obj.top;
+	        var _clickOffset = obj.top * (this.scrollDomSize["y"] - this.sliderDomSize["y"]) / (this.contentDomScrollSize["y"] - this.contentDomSize["y"]);
+	        addTransformFn(this.sliderDom["y"], "translateY(" + _clickOffset * 100 / this.sliderDomSize["y"] + "%)");
+	    }
+	}
+
+	function bindMouseMove(type, dom) {
+	    var that = this;
+	    var documentDom = document.documentElement;
+	    var mousemoveCallback = function mousemoveCallback(evn) {
+	        var event = evn || window.event;
+	        mouseMoveFn(event, that, type);
+	    };
+	    var mouseupCallback = function mouseupCallback(evn) {
+	        var event = evn || window.event;
+	        if (dom.className.indexOf("stl_scroll_move_box") >= 0) {
+	            //取消按下滚动条样式
+	            dom.className = dom.className.replace(" stl_scroll_move_box", "");
+	        }
+	        that.startClient = { "x": 0, "y": 0 };
+	        that.isScrollMove = 0;
+	        addObj.removeEvent(documentDom, "mousemove", mousemoveCallback); //鼠标松开取消mousemove和mouseup事件绑定
+	        addObj.removeEvent(documentDom, "mouseup", mouseupCallback);
+	        if (IsFirefox()) {
+	            dom.parentElement.parentElement.className = dom.parentElement.parentElement.className.replace(" stl_scroll_unselect", ""); //防止选中内容兼容firefox
+	        } else {
+	            dom.parentElement.parentElement.onselectstart = function () {
+	                return true;
+	            };
+	        }
+	    };
+	    addObj.addEvent(documentDom, "mousemove", mousemoveCallback);
+	    addObj.addEvent(documentDom, "mouseup", mouseupCallback);
+	}
+	function bindMouseDown(type, dom) {
+	    var that = this;
+	    addObj.addEvent(dom, "mousedown", function (evn) {
+	        var event = evn || window.event;
+	        if (IsFirefox()) {
+	            dom.parentElement.parentElement.className = dom.parentElement.parentElement.className + " stl_scroll_unselect"; //防止选中内容兼容firefox
+	        } else {
+	            dom.parentElement.parentElement.onselectstart = function () {
+	                return false;
+	            };
+	        }
+	        if (dom.className.indexOf("stl_scroll_move_box") < 0) {
+	            //按下滚动条添加样式
+	            dom.className = dom.className + " stl_scroll_move_box";
+	        }
+	        that.startClient[type] = type === "y" ? event.clientY : event.clientX; //鼠标按下的初始位置
+	        bindMouseMove.call(that, type, dom); //按下鼠标绑定拖动和松开鼠标事件
+	    });
+	}
+	function boundEventFn(type) {
+	    var that = this;
+	    var mouseScrollKey = IsFirefox() ? "DOMMouseScroll" : "mousewheel"; //鼠标滚轮滚动事件兼容firefox浏览器
+	    if (type === "y" || this.options.direction === "x" && this.options.xMousewheel) {
+	        //滚动鼠标滚轮事件绑定
+	        addObj.addEvent(that.scrollBox, mouseScrollKey, function () {
+	            var ev = event || window.event;
+	            mousewheelFn.call(this, ev, that, type);
+	        });
+	        addObj.addEvent(that.scrollDom[type], mouseScrollKey, function () {
+	            var ev = event || window.event;
+	            mousewheelFn.call(this, ev, that, type);
+	        });
+	    }
+	    addObj.addEvent(that.scrollDom[type], "click", function () {
+	        var ev = event || window.event;
+	        if (type === "y") {
+	            clickScrollY.call(this, ev, that, type);
+	        } else {
+	            clickScrollX.call(this, ev, that, type);
+	        }
+	    });
+	    bindMouseDown.call(this, type, this.sliderDom[type]); //拖动滚动条事件绑定
+	}
+
+	function initAddScrollJudgment(type, domAttr, scrollAttr) {
+	    getScrollContentHeight.call(this, type, domAttr, scrollAttr); //获取滚动框的高度/宽度 及滚动内容的高度/宽度
+	    if (this.contentDomScrollSize[type] > this.contentDomSize[type]) {
+	        //内容超出才生成滚动条
+	        createScrollDom.call(this, type); //添加滚动条dom
+	        getScrollDomSize.call(this, type, domAttr); //设置滚动条尺寸
+	    }
+	}
+	function refreshAddScrollJudgment(type, domAttr, scrollAttr) {
+	    // getScrollContentHeight.call(this,type,domAttr,scrollAttr);//获取滚动框的高度/宽度 及滚动内容的高度/宽度
+	    if (this.contentDomScrollSize[type] <= this.contentDomSize[type]) {
+	        //内容未超出
+	        if (this.scrollDom[type]) {
+	            //已有滚动条则隐藏
+	            this.scrollDom[type].style.display = "none";
+	        }
+	        return;
+	    }
+	    if (this.contentDomSize[type]) {
+	        //已有滚动条则刷新滚动条高度
+	        if (this.scrollDom[type].style.display === "none") this.scrollDom[type].style.display = "block";
+	        getScrollDomSize.call(this, type, domAttr);
+	    } else {
+	        //没有滚动条则添加滚动条
+	        createScrollDom.call(this, type); //添加滚动条dom
+	        getScrollDomSize.call(this, type, domAttr); //设置滚动条尺寸
+	    }
+	}
+	function getScrollContentHeight(type, domAttr, scrollAttr) {
+	    this.contentDomSize[type] = this.scrollBox[domAttr];
+	    this.contentDomScrollSize[type] = this.scrollBox[scrollAttr];
+	}
+	function createScrollDom(type) {
+	    var className = "stl_" + type + "scroll_box";
+	    this.scrollDom[type] = document.createElement("div");
+	    this.sliderDom[type] = document.createElement("div");
+	    this.scrollDom[type].className = this.options.className === "" ? className : className + " " + this.options.className; //添加类名
+	    if (type === "y") {
+	        //设置滚动条的宽度/高度
+	        this.scrollDom[type].style.width = this.options.size + "px";
+	    } else {
+	        this.scrollDom[type].style.height = this.options.size + "px";
+	    }
+	    this.scrollDom[type].appendChild(this.sliderDom[type]);
+	    this.scrollParent.appendChild(this.scrollDom[type]);
+	    boundEventFn.call(this, type); //绑定事件
+	}
+	function getScrollDomSize(type, domAttr) {
+	    this.scrollDomSize[type] = this.scrollDom[type][domAttr];
+	    var scrollDomSize = this.contentDomSize[type] * this.scrollDomSize[type] / this.contentDomScrollSize[type];
+	    this.sliderDomSize[type] = scrollDomSize > this.options.smallSize ? scrollDomSize : this.options.smallSize;
+	    if (type === "x") {
+	        this.sliderDom[type].style.width = this.sliderDomSize[type] + "px";
+	    } else {
+	        this.sliderDom[type].style.height = this.sliderDomSize[type] + "px";
+	    }
+	}
+	function addStyle() {
+	    var parentStyle = getComputedStyle(this.scrollParent, null);
+	    if (parentStyle.position !== "relative") {
+	        //父元素设置样式
+	        this.scrollParent.style.position = "relative";
+	    }
+	    // const scrollStyle:any = getComputedStyle(this.scrollBox,null)
+	    // if(scrollStyle.overflow!=="hidden"){
+	    //     this.scrollBox.style.overflow = "hidden";
+	    // };
+	}
+	function initScrollDom() {
+	    switch (this.options.direction) {
+	        case "x":
+	            initAddScrollJudgment.call(this, "x", "clientWidth", "scrollWidth");
+	            break;
+	        case "y":
+	            initAddScrollJudgment.call(this, "y", "clientHeight", "scrollHeight");
+	            break;
+	        case "xy":
+	            initAddScrollJudgment.call(this, "x", "clientWidth", "scrollWidth");
+	            initAddScrollJudgment.call(this, "y", "clientHeight", "scrollHeight");
+	            break;
+	        default:
+	            initAddScrollJudgment.call(this, "y", "clientHeight", "scrollHeight");
+	    }
+	}
+	function refreshScrollDom() {
+	    switch (this.options.direction) {
+	        case "x":
+	            this.contentDomScrollSize["x"] = this.scrollBox.scrollWidth; //重新获取滚动内容的高度
+	            refreshAddScrollJudgment.call(this, "x", "clientWidth", "scrollWidth");
+	            break;
+	        case "y":
+	            this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+	            refreshAddScrollJudgment.call(this, "y", "clientHeight", "scrollHeight");
+	            break;
+	        case "xy":
+	            this.contentDomScrollSize["x"] = this.scrollBox.scrollWidth;
+	            this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+	            refreshAddScrollJudgment.call(this, "x", "clientWidth", "scrollWidth");
+	            refreshAddScrollJudgment.call(this, "y", "clientHeight", "scrollHeight");
+	            break;
+	        default:
+	            this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+	            refreshAddScrollJudgment.call(this, "y", "clientHeight", "scrollHeight");
+	    }
+	}
+
+	// function debounce(method:any,delay:number){//防抖函数
+	//     let timer:any = null,that = this;
+	//     return function(){
+	//         if(timer){
+	//             clearTimeout(timer);
+	//             timer = null;
+	//         }
+	//         timer = setTimeout(function(){
+	//             method.call(that)
+	//         },delay)
+	//     }
+	// }
+	/**
+	 * 监听元素内容变化的方法
+	 * @param id   需要监听的元素的id
+	 * @param callback  内容变化后需要执行的回调
+	 * @param config?  观察选项配置 详细配置见config接口
+	 */
+	function domResize(id, callback, config) {
+	    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+	    var that = this;
+	    // let debounceFn = debounce.call(that,callback,100)
+	    var target = document.getElementById(id); // 选择目标节点
+	    if (MutationObserver) {
+	        // 创建观察者对象
+	        var observer = new MutationObserver(function (mutations) {
+	            mutations.forEach(function (mutation) {
+	                // debounceFn.call(that);
+	                callback.call(that);
+	            });
+	        });
+	        // 配置观察选项:
+	        var configs = config || {
+	            attributes: true,
+	            childList: true,
+	            characterData: true //节点内容或节点文本的变动。
+	        };
+	        observer.observe(target, configs);
+	    } else {
+	        target.addEventListener("DOMNodeRemoved", function (event) {
+	            // debounceFn.call(that);
+	            callback.call(that);
+	        }, false);
+	        target.addEventListener("DOMNodeInserted", function (event) {
+	            // debounceFn.call(that);
+	            callback.call(that);
+	        }, false);
+	    }
+	}
+
+	var scrollBar = function () {
+	    function scrollBar(options) {
+	        _classCallCheck(this, scrollBar);
+
+	        this.contentDomSize = { "x": 0, "y": 0 }; //滚动元素的高度(y)/宽度(x)
+	        this.contentDomScrollSize = { "x": 0, "y": 0 }; //滚动元素的scrollHeight(y)/scrollWidth(x)
+	        this.scrollDom = { "x": null, "y": null }; //滚动条元素对象
+	        this.sliderDom = { "x": null, "y": null }; //滚动滑块元素对象
+	        this.scrollDomSize = { "x": 0, "y": 0 }; //滚动条的尺寸
+	        this.sliderDomSize = { "x": 0, "y": 0 }; //滚动画框的尺寸
+	        // isScrollMove:number = 0//是否正在拖动滚动条 0表示没有拖动  1表示
+	        this.startClient = { "x": 0, "y": 0 }; //鼠标按下的起始位置
+	        this.initOption(options); //初始化参数
+	        addStyle.call(this); //给需要添加滚动条的元素添加样式
+	        initScrollDom.call(this); //添加滚动元素
+	        if (this.options.autoRefresh) {
+	            //自动监听内容变化
+	            domResize.call(this, this.options.id, refreshScrollDom);
+	        }
+	    }
+
+	    _createClass(scrollBar, [{
+	        key: "initOption",
+	        value: function initOption(options) {
+	            this.options = {
+	                id: options.id,
+	                autoRefresh: options.autoRefresh === undefined ? true : options.autoRefresh,
+	                size: options.size || 5,
+	                direction: options.direction || "y",
+	                className: options.className || "",
+	                smallSize: options.smallSize === undefined ? 20 : options.smallSize,
+	                xMousewheel: options.xMousewheel === undefined ? true : options.xMousewheel,
+	                wheelDis: options.wheelDis || 40
+	            };
+	            this.scrollBox = document.getElementById(options.id);
+	            this.scrollParent = this.scrollBox.parentNode;
+	        }
+	    }, {
+	        key: "refresh",
+	        value: function refresh() {
+	            refreshScrollDom.call(this);
+	        }
+	    }, {
+	        key: "fixedPointScroll",
+	        value: function fixedPointScroll(obj) {
+	            scrollSpecifiedPosition.call(this, obj);
+	        }
+	    }]);
+
+	    return scrollBar;
+	}();
+	//  let ScrollBar:any = new scrollBar({id:"box2",smallSize:40,wheelDis:20,autoRefresh:false})
+	//  let index:number = 20;
+	//  let domObj:any = document.getElementById("box2");
+	//  let timer = setInterval(function(){
+	//     index--;
+	//     let childDom:any = document.createElement("p");
+	//     childDom.innerText = "新加元素"+index;
+	//     domObj.appendChild(childDom)
+	//     if(index<0){
+	//         clearInterval(timer);
+	//         ScrollBar.refresh();
+	//     }
+	//  },500)
+	//   let ScrollBar1:any = new scrollBar({id:"box4",direction:"x",size:10,xMousewheel:false})
+	//  let ScrollBar2:any = new scrollBar({id:"box6",direction:"xy",className:"scroll_class"})
+
+	var ScrollBar2;
+	var btn = document.getElementById("btn");
+	btn.addEventListener("click", function () {
+	    // ScrollBar2.fixedPointScroll({top:1000})
+	    document.getElementById("box6").style.display = "block";
+	    if (!ScrollBar2) {
+	        ScrollBar2 = new scrollBar({ id: "box6", direction: "y", className: "scroll_class" });
+	    }
+	});
+	var btn1 = document.getElementById("btn1");
+	btn1.addEventListener("click", function () {
+	    // ScrollBar2.fixedPointScroll({top:1000})
+	    document.getElementById("box6").style.display = "none";
+	});
+
+}));
+//# sourceMappingURL=index.js.map

@@ -1,4 +1,4 @@
-import  "../src/index"
+// import  "../src/index"
 let that = this;
 declare let BlVideo:any
 let option = {
@@ -15,8 +15,9 @@ let option = {
     // autoplay: 'autoplay',
     // preload: "none",
     loop:true,
-    iconfont:{play:"&#xE001;",pause:"&#xE002;",volume:"&#xE001;",volumeSilent:"&#xE001;",fullScreen:"&#xE001;",exitFullScreen:"&#xE001;"},
-    fullScreenDom:document.getElementById("fullDom")
+    //iconfont:{play:"&#xE001;",pause:"&#xE002;",volume:"&#xE001;",volumeSilent:"&#xE001;",fullScreen:"&#xC001;",exitFullScreen:"&#xC003;"},
+    fullScreenDom:document.getElementById("fullDom"),
+    //loadWaitingDom:`<div class='loader-content' style="width:90px;height:27px;"><img src="https://img.wbp5.com/upload/files/master/2020/11/11/135946429.gif" /></div>`
 };
 BlVideo.operation.load("videojs", option);
 BlVideo.hooks.videoTimeupdate = function(){

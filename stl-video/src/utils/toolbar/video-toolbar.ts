@@ -15,25 +15,30 @@ class videoToolBar extends Component {
     backEl: any;
     frontEl: any;
     showTimeOut: any;
+    mp4ShowTimeOut: any;
     allTime: any;
     currentTime: any;
-    isRangeThumbDrop:any = false;
+    isRangeThumbDrop: any = false;
     controlTimeDurationEl: any;
     controlTimeCurrentEl: any;
-    volumebarEl:any;
-    volumeBoxEl:any;
+    volumebarEl: any;
+    volumeBoxEl: any;
     livePlayerEl: any;
     playerProgress: any;
     progressPlayed: any;
     rangeThumb: any;
     exitFullScreenEl: any;
+    moveTime: any;
     isClickFlag = false;
-    isFullScreen = false;
+    fullScreenChangeKey:boolean = false;
+    fullScreenKey:boolean = false;
+    iconfontList: any = { play: "&#xC002;", pause: "&#xC006;", volume: "&#xC004;", volumeSilent: "&#xC005;", fullScreen: "&#xC001;", exitFullScreen: "&#xC003;" }
+    // isFullScreen = false;
     clickTimeId: any;
     isInVideoContainer = false;
     isPc: boolean;
-    liveEl:any;
-    showVolumebarTimeout:any = null;
+    liveEl: any;
+    showVolumebarTimeout: any = null;
     constructor(play: any, option: any, ready: any) {
         super(play, option, ready)
         this.getUserAgentInfo();
@@ -45,26 +50,27 @@ class videoToolBar extends Component {
      * 创建视频控件的自定义控制条
      */
     renderDom() {
-        let palyIconfont:string = Component.options_.iconfont.play,
-            pauseIconfont:string = Component.options_.iconfont.pause,
-            volumeIconfont:string = Component.options_.iconfont.volume,
-            volumeSilentIconfont:string = Component.options_.iconfont.volumeSilent,
-            fullScreenIconfont:string = Component.options_.iconfont.fullScreen,
-            exitFullScreenIconfont:string = Component.options_.iconfont.exitFullScreen;
+        let palyIconfont: string = Component.options_.iconfont.play || this.iconfontList.play,
+            pauseIconfont: string = Component.options_.iconfont.pause || this.iconfontList.pause,
+            volumeIconfont: string = Component.options_.iconfont.volume || this.iconfontList.volume,
+            volumeSilentIconfont: string = Component.options_.iconfont.volumeSilent || this.iconfontList.volumeSilent,
+            fullScreenIconfont: string = Component.options_.iconfont.fullScreen || this.iconfontList.fullScreen,
+            exitFullScreenIconfont: string = Component.options_.iconfont.exitFullScreen || this.iconfontList.exitFullScreen;
         const dom = this.createEl('div', {
             className: "video_toolbar_content",
             innerHTML: `
                 <div class = 'toolbar-container'>
                     <div class = 'left'>
-                        <div class = 'play iconfont' title='播放'>${palyIconfont}</div>
-                        <div class = 'pause iconfont' title='暂停'>${pauseIconfont}</div>
+                        <div class = 'play iconfont_video' title='播放'>${palyIconfont}</div>
+                        <div class = 'pause iconfont_video' title='暂停'>${pauseIconfont}</div>
                         <div class = 'reload' title='重新加载'></div>
                         ${this.renderRoom()}                   
                     </div>
                     <div class = 'right'>
+                        <div class="toolbar_empty_label"></div>
                         <div class='volume-box'>
-                            <div class = 'volume iconfont' title='设置静音'>${volumeIconfont}</div>
-                            <div class = 'volume-silent iconfont'  title='取消静音'>${volumeSilentIconfont}</div>
+                            <div class = 'volume iconfont_video' title='设置静音'>${volumeIconfont}</div>
+                            <div class = 'volume-silent iconfont_video'  title='取消静音'>${volumeSilentIconfont}</div>
                         </div> 
                         <div class="volume-bar">
                             <div class="volume-bar-container">
@@ -73,16 +79,17 @@ class videoToolBar extends Component {
                                 <div class="point vcenter" style="bottom: 56px;"></div>
                             </div>
                         </div>
-                        <div class='fullScreen iconfont'>${fullScreenIconfont}</div>
-                        <div class='exit-fullScreen iconfont'>${exitFullScreenIconfont}</div>
+                        <div class='fullScreen iconfont_video'>${fullScreenIconfont}</div>
+                        <div class='exit-fullScreen iconfont_video'>${exitFullScreenIconfont}</div>
                     </div>
                 </div>
             `
         })
-        const dmDom = this.createEl('div',{
+        const dmDom = this.createEl('div', {
             className: "video_danmu_box",
-            id:"video_danmu_box",
-            innerHTML: ""})
+            id: "video_danmu_box",
+            innerHTML: ""
+        })
         this.livePlayerEl = document.getElementsByClassName('live-player')[0];
         this.insertBeforeEl(dom, this.livePlayerEl)
         this.insertBeforeEl(dmDom, this.livePlayerEl)
@@ -108,7 +115,7 @@ class videoToolBar extends Component {
                     </div>
                     <div class = 'visitors-number-content'>                                                        
                         <span class='visitors-number-val'></span>
-                    </div>` 
+                    </div>`
         } else {
             return ''
         }
@@ -153,6 +160,7 @@ class videoToolBar extends Component {
             const playerProgressDom = this.createEl('div', {
                 className: "player_progress",
                 innerHTML: `
+                    <div class='move-time'></div>
                     <div class='range-container'></div>
                     <div class='progress-played'></div>
                     <div class='range-thumb'></div>
@@ -243,9 +251,12 @@ class videoToolBar extends Component {
                     this.changeVideoPlayOrPause();
                     break;
                 case 'fullScreen':
+                    this.fullScreenKey = true;
                     this.fullScreen(this.livePlayerEl);
+                    
                     break;
                 case 'exit-fullScreen':
+                this.fullScreenKey = true;
                     this.exitFullscreen();
                     break;
                 case 'volume':
@@ -266,41 +277,42 @@ class videoToolBar extends Component {
                     break;
                 case 'front vcenter':
                     let frontLeft,
-                        frontOffsetY = e.target.offsetHeight-e.offsetY;
+                        frontOffsetY = e.target.offsetHeight - e.offsetY;
                     // e.offsetX > backCha ? frontLeft = backCha : frontLeft = e.offsetX
-                    frontOffsetY > backCha ? frontLeft = backCha : frontLeft = frontOffsetY                    
+                    frontOffsetY > backCha ? frontLeft = backCha : frontLeft = frontOffsetY
                     let frontBili = Math.ceil(frontLeft / backCha * 100)
                     this.updateVolumePosiontion(frontLeft, frontBili)
                     break;
 
                 case 'back vcenter':
                     let backLeft,
-                    offsetY = 64-e.offsetY;
+                        offsetY = 64 - e.offsetY;
                     //e.offsetX > backCha ? backLeft = backCha : backLeft = e.offsetX
-                    offsetY > backCha ? backLeft = backCha : backLeft = offsetY  
+                    offsetY > backCha ? backLeft = backCha : backLeft = offsetY
                     let backBili = Math.ceil(backLeft / backCha * 100)
                     this.updateVolumePosiontion(backLeft, backBili);
                     break;
             }
         })
+     
         if (this.isPc) {
             this.pointEl.onmousedown = ((ev: any) => {
                 // this.poinMousedownCallBack.call(that, ev, backCha, ev.clientX);
-                 this.poinMousedownCallBack.call(that, ev, backCha, ev.clientY);       
+                this.poinMousedownCallBack.call(that, ev, backCha, ev.clientY);
             })
-            this.volumeBoxEl.onmouseenter = (() =>{
-                that.showVolumebarTimeout&&clearTimeout(that.showVolumebarTimeout),that.showVolumebarTimeout = null;
-                that.volumebarEl.style.visibility = "initial";
+            this.volumeBoxEl.onmouseenter = (() => {
+                that.showVolumebarTimeout && clearTimeout(that.showVolumebarTimeout), that.showVolumebarTimeout = null;
+                that.volumebarEl.style.visibility = "visible";
             })
-            this.volumeBoxEl.onmouseleave = ((e:any) =>{
-                that.showVolumebarTimeout = setTimeout(()=>{
+            this.volumeBoxEl.onmouseleave = ((e: any) => {
+                that.showVolumebarTimeout = setTimeout(() => {
                     that.volumebarEl.style.visibility = "hidden";
-                },350)
+                }, 350)
             })
-            this.volumebarEl.onmouseenter = ((e:any)=>{
-                that.showVolumebarTimeout&&clearTimeout(that.showVolumebarTimeout),that.showVolumebarTimeout = null;
+            this.volumebarEl.onmouseenter = ((e: any) => {
+                that.showVolumebarTimeout && clearTimeout(that.showVolumebarTimeout), that.showVolumebarTimeout = null;
             })
-            this.volumebarEl.onmouseleave = ((e:any)=>{
+            this.volumebarEl.onmouseleave = ((e: any) => {
                 that.volumebarEl.style.visibility = "hidden";
             })
         } else {
@@ -375,8 +387,9 @@ class videoToolBar extends Component {
             that.updateVolumePosiontion(newL, bili)
             return false //取消默认事件
         }
-        window.onmouseup = function () {
+        window.onmouseup = function (e:any) {
             window.onmousemove = null //解绑移动事件                
+            window.onmouseup = null;
             that.judgeIsInVideoContainer();
             return false
         }
@@ -410,12 +423,12 @@ class videoToolBar extends Component {
         }
         // val = (this.currentVolume - this.pointEl.offsetWidth) / (this.backEl.offsetWidth - this.pointEl.offsetWidth)
         val = (this.currentVolume - this.pointEl.offsetHeight) / (this.backEl.offsetHeight - this.pointEl.offsetHeight)
-        
+
         var vcbPosition = val * 100
         // if (vcbPosition > 50) {
         if (vcbPosition > 30) {
             // vcbPosition = vcbPosition - this.pointEl.offsetWidth
-            vcbPosition = vcbPosition - this.pointEl.offsetHeight            
+            vcbPosition = vcbPosition - this.pointEl.offsetHeight
         }
 
         this.updateVolumePosiontion(vcbPosition, this.currentVolume);
@@ -431,8 +444,8 @@ class videoToolBar extends Component {
         if (vcbPosition === this.pointLeft && this.currentVolume === volumeSize && isMuted === true) return;
         // this.pointEl.style.left = vcbPosition + 'px'
         // this.frontEl.style.width = vcbPosition + this.pointEl.offsetWidth + 'px';
-         this.pointEl.style.bottom = vcbPosition + 'px'
-         this.frontEl.style.height = vcbPosition + this.pointEl.offsetHeight + 'px';
+        this.pointEl.style.bottom = vcbPosition + 'px'
+        this.frontEl.style.height = vcbPosition + this.pointEl.offsetHeight + 'px';
         if (isMuted) return;
         this.pointLeft = vcbPosition;
         // this.frontWidth = vcbPosition + this.pointEl.offsetWidth;
@@ -461,12 +474,37 @@ class videoToolBar extends Component {
      * @param el 
      */
     fullScreen(el: any) {
-        var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+        let that =this;
+        var rfs = el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen || el.requestFullScreen;
         if (typeof rfs != "undefined" && rfs) {
-            if (!this.isPc) {
-                this.changeFullScreenOrExit();
+            // if (!this.isPc) {
+
+            // }
+
+
+            try {
+                rfs.call(el)
+            } catch (e) {
             }
-            rfs.call(el);
+
+          setTimeout(() => {
+            that.changeFullScreenOrExit.call(that);
+            this.fullScreenChange();
+            this.fullScreenKey = false;
+          }, 200);
+
+            // var isFull = rfs.call(el)
+            // if (isFull) {
+            //     isFull.then(() => {
+            //         this.changeFullScreenOrExit();
+
+            //     }).catch((e: any) => {
+            //         console.log(e);
+            //         this.changeFullScreenOrExit();
+            //     })
+            // } else {
+            //     console.log(192929, isFull, this.getFullscreenElement())
+            // }
         }
 
     }
@@ -475,10 +513,12 @@ class videoToolBar extends Component {
      * 推出全屏
      */
     exitFullscreen() {
+        const that = this;
         const documenEl: any = document;
-        if (!this.isPc) {
-            this.changeFullScreenOrExit();
-        }
+        // if (!this.isPc) {
+
+        // }
+    
         if (documenEl.exitFullscreen) {
             documenEl.exitFullscreen();
         } else if (documenEl.webkitExitFullscreen) {
@@ -489,20 +529,73 @@ class videoToolBar extends Component {
             documenEl.mozCancelFullScreen();
         }
 
+        setTimeout(() => {
+            that.changeFullScreenOrExit.call(that);
+            this.fullScreenKey = false;
+          }, 200);
+
     }
 
     changeFullScreenOrExit() {
-        if (this.isFullScreen) {
-            this.isFullScreen = false;
-            this.show(this.fullScreenEl);
-            this.hide(this.exitFullScreenEl);
+        let key: any = this.getFullscreenElement();
+        if (!key) {
+            //  this.isFullScreen = false;
+            if (this.livePlayerEl.offsetWidth == document.body.offsetWidth) {
+                this.show(this.exitFullScreenEl);
+                this.hide(this.fullScreenEl);
+            } else {
+                this.show(this.fullScreenEl);
+                this.hide(this.exitFullScreenEl);
+            }
         } else {
-            this.isFullScreen = true;
+            // this.isFullScreen = true;
             this.show(this.exitFullScreenEl);
             this.hide(this.fullScreenEl);
         }
     }
+    getFullscreenElement() {
+        return (
+            document.fullscreenElement ||
+            (<any>document).mozFullScreenElement ||
+            (<any>document).msFullScreenElement ||
+            (<any>document).webkitFullscreenElement || null
+        );
+    }
 
+    exitorFullscreen(el: any) {
+        if (this.getFullscreenElement()) {
+            this.exitFullscreen()
+        } else {
+            this.fullScreen(el)
+
+        }
+    }
+    fullScreenChange(){
+        // if ((<any>document).exitFullscreen) {
+        //     this.livePlayerEl.addEventListener("fullscreenchange", ()=>{console.log("fullscreenchange")});
+        // } else 
+        if(this.fullScreenChangeKey)return;
+        if ((<any>document).webkitExitFullscreen) {
+            this.livePlayerEl.addEventListener("webkitfullscreenchange", (e:any)=>{
+                console.log("webkitfullscreenchange:"+this.fullScreenKey)
+                if(!this.fullScreenKey)
+                    this.exitorFullscreen(this.livePlayerEl);
+            });
+        } else if ((<any>document).msExitFullscreen) {
+            this.livePlayerEl.addEventListener("msfullscreenchange", ()=>{
+                this.exitFullscreen()
+            });
+        } else if ((<any>document).mozCancelFullScreen) {
+            this.livePlayerEl.addEventListener("mozfullscreenchange", ()=>{
+                
+                this.exitFullscreen()});
+        }else if((<any>document).exitFullscreen) {
+            this.livePlayerEl.addEventListener("fullscreenchange", ()=>{
+                this.exitFullscreen()
+            });
+        }
+        this.fullScreenChangeKey = true;
+    }
     /**
      * 判断鼠标位置是否在范围内 如果是的 就显示控制条 如果不是则隐藏   默认为显示三秒,三秒后隐藏如果鼠标移动到可操作范围内就自动取消三秒后隐藏事件
      */
@@ -539,7 +632,7 @@ class videoToolBar extends Component {
      */
     judgeIsInVideoContainer() {
         const toolbar: any = document.getElementsByClassName('video_toolbar_content')[0];
-        window.onmousemove = ((event:any) => {
+        window.onmousemove = ((event: any) => {
             let offsetBottom = this.livePlayerEl.offsetHeight + this.livePlayerEl.offsetTop - toolbar.offsetHeight;
             let offsetRight = this.livePlayerEl.offsetWidth + this.livePlayerEl.getBoundingClientRect().left;
             if (event.clientX < offsetRight && event.clientX > this.livePlayerEl.getBoundingClientRect().left && event.clientY > this.livePlayerEl.offsetTop && event.clientY < offsetBottom) {
@@ -547,17 +640,40 @@ class videoToolBar extends Component {
             } else {
                 this.isInVideoContainer = false;
             }
+            //return false;
+        })
+        let liveBar: any = document.getElementById("live-player");
+        // toolbar.onmouseenter = (()=>{
+        //     if(this.mp4ShowTimeOut)clearTimeout(this.mp4ShowTimeOut),this.mp4ShowTimeOut = null;
+        //     toolbar.className = `${toolbar.className.replace(' video_toolbar_content_hide', '')}`;
+        //     //this.toolBarControl(toolbar);
+        // })
+        toolbar.onmousemove = (() => {
+            if (this.mp4ShowTimeOut) clearTimeout(this.mp4ShowTimeOut), this.mp4ShowTimeOut = null;
+            toolbar.className = `${toolbar.className.replace(' video_toolbar_content_hide', '')}`;
             return false;
         })
-        let liveBar:any = document.getElementById("live-player");
-        liveBar.onmouseenter = (()=>{
-            toolbar.className = `${toolbar.className.replace(' video_toolbar_content_hide', '')}`;
+        toolbar.onmouseleave = (() => {
+            this.toolBarControl(toolbar);
         })
-        liveBar.onmouseleave=(()=>{
-            if(toolbar.className.indexOf("video_toolbar_content_hide")<0)toolbar.className = `${toolbar.className} video_toolbar_content_hide`;
+        liveBar.onmousemove = ((e: any) => {
+            let ev: any = e || (<any>window).event;
+            if (ev.target.tagName !== "VIDEO") return;
+            this.toolBarControl(toolbar);
+        })
+        liveBar.onmouseleave = (() => {
+            if (this.mp4ShowTimeOut) clearTimeout(this.mp4ShowTimeOut), this.mp4ShowTimeOut = null;
+            if (toolbar.className.indexOf("video_toolbar_content_hide") < 0) toolbar.className = `${toolbar.className} video_toolbar_content_hide`;
         })
     }
-
+    toolBarControl(toolbar: any) {
+        toolbar.className = `${toolbar.className.replace(' video_toolbar_content_hide', '')}`;
+        if (this.mp4ShowTimeOut) clearTimeout(this.mp4ShowTimeOut), this.mp4ShowTimeOut = null;
+        this.mp4ShowTimeOut = setTimeout(function () {
+            if (toolbar.className.indexOf("video_toolbar_content_hide") < 0) toolbar.className = `${toolbar.className} video_toolbar_content_hide`;
+            this.mp4ShowTimeOut = null;
+        }, 2000)
+    }
     /**
      * 初始化一些快捷操作的方法
      * 单击视频播放/暂停
@@ -578,22 +694,30 @@ class videoToolBar extends Component {
             //双击视频
             video.ondblclick = ((e: any) => {
                 clearTimeout(this.clickTimeId);
-                this.isFullScreen == true ? this.exitFullscreen() : this.fullScreen(this.livePlayerEl);
+                // this.isFullScreen == true ? this.exitFullscreen() : this.fullScreen(this.livePlayerEl);
+                this.exitorFullscreen(this.livePlayerEl)
             });
         } else {
             //双击视频
             video.ondblclick = ((e: any) => {
-                this.isFullScreen == true ? this.exitFullscreen() : this.fullScreen(this.livePlayerEl);
+                //this.isFullScreen == true ? this.exitFullscreen() : this.fullScreen(this.livePlayerEl);
+                this.exitorFullscreen(this.livePlayerEl)
             });
         }
         window.onresize = (() => {
-            if (this.isPc) {
-                this.changeFullScreenOrExit();
-            }
+            // if (this.isPc) {
+
+            // }
+            this.changeFullScreenOrExit();
         })
 
         // 鼠标在video的范围内敲击空格暂停/播放D
         window.onkeydown = ((event: any) => {
+            console.log(event.keyCode)
+            if(event.keyCode == 27){
+                console.log("退出全屏")
+            }
+            if(event)
             if (this.isInVideoContainer) {
                 if (Component.options_.mode === VideoPlayMode.mp4) {
                     //按下了右方向快进十秒
@@ -687,16 +811,29 @@ class videoToolBar extends Component {
     addtProgressListener() {
         this.playerProgress = document.getElementsByClassName('player_progress')[0];
         this.progressPlayed = document.getElementsByClassName('progress-played')[0];
-        this.rangeThumb = document.getElementsByClassName('range-thumb')[0]
+        this.rangeThumb = document.getElementsByClassName('range-thumb')[0];
+        this.moveTime = document.getElementsByClassName("move-time")[0];
         this.playerProgress.addEventListener('click', (event: any) => {
             // var length = event.pageX - this.playerProgress.offsetLeft - this.livePlayerEl.offsetLeft;
             var length = event.pageX - this.playerProgress.offsetLeft - this.livePlayerEl.getBoundingClientRect().left;
             var percent = length / this.playerProgress.offsetWidth;
             this.progressPlayed.style.width = percent * (this.playerProgress.offsetWidth) - 2 + "px";
-            try{this.rangeThumb.style.left = percent * (this.playerProgress.offsetWidth) - 2 + "px"}catch(e){}
+            try { this.rangeThumb.style.left = percent * (this.playerProgress.offsetWidth) - 2 + "px" } catch (e) { }
             Component.options_.play.currentTime = percent * Component.options_.play.duration;
             return false //取消默认事件
         })
+        this.playerProgress.onmousemove = (event: any) => {
+            let length = event.pageX - this.playerProgress.offsetLeft - this.livePlayerEl.getBoundingClientRect().left;
+            let percent = length / this.playerProgress.offsetWidth;
+            let time = Component.options_.play.duration * percent;
+            this.moveTime.innerText = this.timeStamp(time);
+            let left = length < 15 ? 15 : length > (this.playerProgress.offsetWidth - 15) ? this.playerProgress.offsetWidth - 15 : length;
+            this.moveTime.style.left = left + "px";
+            this.moveTime.style.display = "block";
+        }
+        this.playerProgress.onmouseleave = () => {
+            this.moveTime.style.display = "none";
+        }
     }
 
     /**
@@ -713,11 +850,18 @@ class videoToolBar extends Component {
             this.isRangeThumbDrop = true;
             Component.options_.play.pause();
             window.onmousemove = function (ev: any) {
+                if (that.playerProgress.className.indexOf("player_progress_hover") < 0) that.playerProgress.className = "player_progress player_progress_hover"
                 var thisX = (ev || window.event).clientX;
                 var to = Math.min(max, Math.max(-2, pointL + (thisX - mouseX)));
                 that.rangeThumb.style.left = to + 'px';
                 that.progressPlayed.style.width = Math.max(0, to) + 'px';
+                let length = ev.pageX - that.playerProgress.offsetLeft - that.livePlayerEl.getBoundingClientRect().left;
                 percent = to / max;
+                let time = Component.options_.play.duration * percent;
+                that.moveTime.innerText = that.timeStamp(time);
+                let left = length < 15 ? 15 : length > (that.playerProgress.offsetWidth - 15) ? that.playerProgress.offsetWidth - 15 : length;
+                that.moveTime.style.left = left + "px";
+                that.moveTime.style.display = "block";
                 return false //取消默认事件
             }
             window.onmouseup = (() => {
@@ -728,6 +872,8 @@ class videoToolBar extends Component {
                 Component.options_.play.currentTime = percent * Component.options_.play.duration;
                 this.changeVideoPlayOrPause()
                 percent = 0;
+                that.moveTime.style.display = "none";
+                that.playerProgress.className = "player_progress"
                 return false
             })
             return false

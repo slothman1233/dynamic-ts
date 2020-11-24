@@ -3,12 +3,66 @@ import { addLinkLoad } from "@stl/tool-ts/src/common/compatible/addLinkLoad"
 import { addEvent } from "@stl/tool-ts/src/common/compatible/addEvent"
 import { removeEvent } from "@stl/tool-ts/src/common/compatible/removeEvent"
 import { mergeOptions } from "@stl/tool-ts/src/common/compatible/mergeOptions"
+import { removeClass } from "@stl/tool-ts/src/common/dom/removeClass"
+import { addClass } from "@stl/tool-ts/src/common/dom/addClass"
 import { parent } from "@stl/tool-ts/src/common/dom/parent"
 import { each } from "@stl/tool-ts/src/common/obj/each"
-import { msgOption,alertParameter,openParameter,modalParameter } from "./type"
+interface msgOption{
+    icon?:number,
+    iconColor?:string,
+    time?:number,
+}
+
+interface alertParameter{
+    content:string,
+    icon?:number,
+    iconColor?:string,
+    title?:string,
+    autoClose?:boolean,
+    time?:number,
+    // bg?:boolean,
+    btnStr?:string,
+    btnCallback?:(ev:any)=>void,
+    showCallback?:()=>void,
+    endCallback?:()=>void,
+}
+
+interface modalParameter{
+    title:string,
+    content:string,
+    hasClose?:boolean,
+    bg?:boolean,
+    determineBtn?:boolean,
+    determineText?:string,
+    determineFn?:()=>void,
+    cancelBtn?:boolean,
+    cancelText?:string,
+    cancelFn?:()=>void,
+    showCallback?:()=>void,
+    endCallback?:()=>void,
+}
+interface openParameter extends modalParameter{
+    type?:1|2,
+    icon?:number,
+    iconColor?:string,
+}
+
+interface loadParameter{
+    img:string
+    parent?:HTMLElement
+    bg?:boolean
+    width?:number
+    height?:number
+} 
+interface tipsParameter{
+    //auto?:boolean
+    time?:number
+    position?:"top"|"bottom"|"left"|"right"
+    maxWidth?:number
+}
 class stlLayer{
     times:number = 1
-    iconfontSrc:string = "https://js.wbp5.com/iconfont/build/layer/iconfont.css"
+    iconfontSrc:string = "https://js.wbp5.com/iconfont/build/layer/iconfont.css?v=888"
     iconList:any = {
         11:"&#xA001;",12:"&#xA002;",//1开头为‘✔’的图标
         21:"&#xA003;",22:"&#xA004;",//2开头为‘×’的图标
@@ -51,6 +105,7 @@ class stlLayer{
     }
     openObj:any = {
         className:"stl-layer-shadow stl-layer-centered stl-layer-open",
+        bgClassName:"stl-layer-open-bg",
         classNameTwo:"stl-layer-open-two",
         contentPadding:"stl-layer-open-padding stl-layer-open-content",
         iconContentPadding:"stl-layer-icon-open-padding stl-layer-open-content",
@@ -71,6 +126,7 @@ class stlLayer{
     }
     modalObj:any = {
         className:"stl-layer-shadow stl-layer-centered stl-layer-modal",
+        bgClassName:"stl-layer-modal-bg",
         headClassName:"stl-layer-modal-head",
         titleClassName:"stl-layer-modal-title",
         contentClassName:"stl-layer-modal-content",
@@ -84,16 +140,33 @@ class stlLayer{
             hasClose:true,determineBtn:true,determineText:"确定",cancelBtn:true,cancelText:"取消",bg:true,
         }
     }
+    loadObj:any = {
+        className:"stl-layer-loading",
+        bgClassName:"stl-layer-loading-bg",
+        pClassName:"stl-layer-parent-loading",
+        pBgClassName:"stl-layer-parent-loading-bg",
+        parameter:{bg:true,width:40,height:40,}
+    }
+    tipObj:any = {
+        parameter:{position:"top",time:3000,},
+        hideClassName:"stl-layer-tip-hide",
+        className:"stl-layer-tip",
+        ContentClassName:"stl-layer-tip-content",
+    }
     bgDom:HTMLElement = null
+    timeoutList:any = {
+        msg:null,
+        alert:null,
+    }
     closeCallback:(e:any)=>void
     alertBtnCallback:(e:any)=>void
     constructor(){
         let arr:Array<string> = [this.iconfontSrc];
         addLinkLoad(arr);
     }
-    private getBgDom(){
+    private getBgDom(className?:string){
         let dom:HTMLElement = document.createElement("div");
-        dom.className = "stl-layer-shade";
+        dom.className = "stl-layer-shade "+className;
         dom.id = `stl-layer-shade${this.times}`;
         dom.setAttribute("times",""+this.times);
         return dom;
@@ -108,18 +181,26 @@ class stlLayer{
     }
     private getIconStr(className:string,icon?:number,iconColor?:string){
         let iconColorStr:string = iconColor&& iconColor!==""?iconColor:this.iconColorList[icon]; 
-        return icon&&this.iconList[icon]?`<i class="${className} iconfont" style="color:${iconColorStr}">${this.iconList[icon]}</i>`:"";
+        return icon&&this.iconList[icon]?`<i class="${className} iconfont_layer" style="color:${iconColorStr}">${this.iconList[icon]}</i>`:"";
     }
     private getCloseStr(className:string){
-        return `<i class="iconfont ${className}">&#xA005;</i>`
+        return `<i class="iconfont_layer ${className}">&#xA005;</i>`
     }
-
+    private deduplication(className:string,type:string){
+        let domList = document.getElementsByClassName(className)
+        if(domList.length>0){
+            document.body.removeChild(domList[0]);
+            clearTimeout(this.timeoutList[type]);
+            this.timeoutList[type] = null;
+        }
+    }
     private msgStr(content:string,icon?:number,iconColor?:string){
         let iconStr = "",className = this.msgObj.paddingClassName;
         if(icon)iconStr = this.getIconStr(this.msgObj.iconClassName,icon,iconColor),className = this.msgObj.iconPaddingClassName;
         return `<div id="" class="stl-layer-content ${className}">${iconStr}${content}</div>`
     }
     msg(content:string,options?:msgOption,end?:()=>void){
+        this.deduplication("stl-layer-msg","msg");
         let type:boolean = typeof options === "function",callback:any = end?end:null,time:number = this.msgObj.time,icon:number = 0,iconColor:string = "";
         if(type)callback = options;
         if(options&&!type){
@@ -131,7 +212,7 @@ class stlLayer{
         let dom:HTMLElement = this.getDomStr(contentStr,this.msgObj.className);
         this.appendDom(dom);
         this.times++;
-        this.autoClose(dom,time,end);
+        this.autoClose("msg",dom,time,end);
     }
 
     private hasTitleAlertStr(obj:alertParameter){
@@ -170,6 +251,7 @@ class stlLayer{
         addEvent(dom.getElementsByClassName(btnClassName)[0],"click",that.alertBtnCallback);
     }
     alert(obj:alertParameter){
+        this.deduplication("stl-layer-alert","alert");
         let contentStr:string = "",className:string = "",hasTitle:boolean = false;
         if(obj.title){
             contentStr = this.hasTitleAlertStr(obj),className = this.alertObj.className,hasTitle = true;
@@ -185,7 +267,7 @@ class stlLayer{
         this.times++;
         if(obj.btnStr&&obj.btnCallback) this.addAlertBtnEvent(dom,hasTitle,obj.btnCallback)
         if(obj.autoClose){
-            return this.autoClose(dom,this.alertObj.time,end);
+            return this.autoClose("alert",dom,this.alertObj.time,end);
         }else if(!obj.btnStr||obj.title){
             let closeDom:Element = dom.getElementsByClassName(this.alertObj.closeClassName)[0];
             this.addCloseEventFn(closeDom,end)
@@ -216,7 +298,7 @@ class stlLayer{
         let contentStr:string = this.getOpenStr(obj,iconStr);
         let openTypeClassName = obj.type === 2?this.openObj.classNameTwo:"";
         let dom:HTMLElement = this.getDomStr(contentStr+iconStr+closeStr,this.openObj.className+" "+openTypeClassName);
-        if(obj.bg)this.bgDom = this.getBgDom(),this.appendDom(this.bgDom),this.addBgEvent(this.bgDom,end);
+        if(obj.bg)this.bgDom = this.getBgDom(this.openObj.bgClassName),this.appendDom(this.bgDom),this.addBgEvent(this.bgDom,end);
         this.appendDom(dom);
         this.times++;
         try{obj.showCallback&&obj.showCallback.call(this)}catch(e){};
@@ -250,7 +332,7 @@ class stlLayer{
         let obj = mergeOptions({},this.modalObj.parameter,data),end = obj.end?obj.end:null;
         let contentStr:string = this.getModalFn(obj);
         let dom:HTMLElement = this.getDomStr(contentStr,this.modalObj.className);
-        if(obj.bg)this.bgDom = this.getBgDom(),this.appendDom(this.bgDom),this.addBgEvent(this.bgDom,end);
+        if(obj.bg)this.bgDom = this.getBgDom(this.modalObj.bgClassName),this.appendDom(this.bgDom),this.addBgEvent(this.bgDom,end);
         this.appendDom(dom);
         this.times++;
         try{obj.showCallback&&obj.showCallback.call(this)}catch(e){};
@@ -309,16 +391,129 @@ class stlLayer{
         //     })
         // }
     }
-    private appendDom(dom:HTMLElement){
-        document.body.appendChild(dom);
+    private appendDom(dom:HTMLElement,parent?:HTMLElement){
+        let parentDom:HTMLElement = parent?parent:document.body;
+        parentDom.appendChild(dom);
     }
-    private autoClose(dom:HTMLElement,time:number,end?:()=>void){
+    private autoClose(type:string,dom:HTMLElement,time:number,end?:()=>void){
         let that = this;
-        setTimeout(function(){
+        this.timeoutList[type] = setTimeout(function(){
             document.body.removeChild(dom);
             if(that.bgDom)document.body.removeChild(that.bgDom),that.bgDom = null;
+            that.timeoutList[type] = null;
             try{end&&end()}catch(e){};
         },time)
+    }
+    loading(data:loadParameter){
+        let obj = mergeOptions({},this.loadObj.parameter,data);
+        if(data.parent){
+            this.parentLoad(obj)
+        }else{
+            this.noParentLoad(obj)
+        }
+    }
+    private getLoadDom(obj:loadParameter,className:string):HTMLElement{
+        let imgStr:string = `<img src="${obj.img}" style="width:${obj.width}px;height:${obj.height}px;display:block;" />`;
+        return this.getDomStr(imgStr,className);
+    }
+    private parentLoad(obj:loadParameter){
+        let dom:HTMLElement = this.getLoadDom(obj,this.loadObj.pClassName);
+        let bg:HTMLElement = this.getBgDom(this.loadObj.pBgClassName);
+        this.appendDom(bg,obj.parent);
+        this.appendDom(dom,obj.parent);
+        this.times++;
+    }
+    private noParentLoad(obj:loadParameter){
+        let load:HTMLCollectionOf<Element> = document.getElementsByClassName("stl-layer-loading");
+        if(load.length>0)return;
+        let dom:HTMLElement = this.getLoadDom(obj,this.loadObj.className);
+        if(obj.bg){
+            let bg:HTMLElement = this.getBgDom(this.loadObj.bgClassName);
+            this.appendDom(bg)
+        }
+        this.appendDom(dom);
+        this.times++;
+    }
+    closeLoad(parent?:HTMLElement){
+        let parentDom:HTMLElement | Document = document,removeDom:HTMLElement = document.body,
+            ClassName:string = "stl-layer-loading",BgClassName:string = "stl-layer-loading-bg";
+        if(parent){
+            parentDom = parent,
+            removeDom = parent,
+            ClassName = "stl-layer-parent-loading",
+            BgClassName = "stl-layer-parent-loading-bg";
+        }
+        let load:NodeListOf<Element> | HTMLCollectionOf<Element> = parentDom.getElementsByClassName(ClassName)
+        let dom:NodeListOf<Element> | HTMLCollectionOf<Element> = parentDom.getElementsByClassName(BgClassName)
+        if(load.length>0)removeDom.removeChild(load[0]);
+        if(dom.length>0)removeDom.removeChild(dom[0]);
+    }
+    tips(that:any,content:string,data:tipsParameter = {},end?:()=>void){
+        let obj:tipsParameter = mergeOptions({},this.tipObj.parameter,data);
+        let styleStr:string = obj.maxWidth?`max-width:${obj.maxWidth}px`:"";
+        let str:string = `<div class="${this.tipObj.ContentClassName}">
+                <p class="${this.tipObj.className}-p" style="${styleStr}">${content}</p>
+                <em class="${this.tipObj.className}-em ${this.tipObj.className}-em-${obj.position}"></em>
+            </div>`;
+        let dom:HTMLElement = this.getDomStr(str,this.tipObj.className+" "+this.tipObj.hideClassName);
+        this.getTipPosition(dom,that,obj);
+        this.times++;
+        this.autoClose("tips",dom,obj.time,end)
+    }
+    // closeTips(dom:HTMLElement){
+    //     dom.removeChild(document.getElementsByClassName("stl-layer-tip")[0])
+    // }
+    private getTipPosition(dom:HTMLElement,that:any,obj:tipsParameter){
+        let left:number = that.getBoundingClientRect().left
+        let top:number = that.getBoundingClientRect().top
+        let width:number = that.offsetWidth;
+        let height:number = that.offsetHeight;
+        document.body.appendChild(dom);
+        let domWidth:number = dom.offsetWidth;
+        let domHeight:number = dom.offsetHeight;
+        let leftNum:number = left+width/2-domWidth/2
+        let domLeft:number = leftNum<0?0:leftNum;
+        let topNum:number = top+height/2-domHeight/2
+        let domTop:number = topNum<0?0:topNum;
+        let emDom:Element = dom.getElementsByClassName(this.tipObj.className+"-em")[0];
+        switch(obj.position){
+            case "top":
+                let positionTop:number = top-domHeight-8;
+                dom.style.left = domLeft+"px";
+                if(top+positionTop<0)
+                    dom.style.top = (top+height+8)+"px",
+                    removeClass(emDom,this.tipObj.className+"-em-"+obj.position),
+                    addClass(emDom,this.tipObj.className+"-em-bottom");
+                else dom.style.top = positionTop+"px";
+                break;
+            case "bottom":
+                let positionBottom:number = top+height+8;
+                dom.style.left = domLeft+"px";
+                if(top+positionBottom+domHeight>document.body.clientHeight)
+                    dom.style.top = (top-domHeight-8)+"px",
+                    removeClass(emDom,this.tipObj.className+"-em-"+obj.position),
+                    addClass(emDom,this.tipObj.className+"-em-top");
+                else dom.style.top = positionBottom+"px";
+                break;
+            case "right":
+                let positionLeft:number = left+width+8;
+                dom.style.top = domTop+"px";
+                if(left+positionLeft+domWidth>document.body.clientWidth)
+                    dom.style.left =(left-domWidth-8)+"px",
+                    removeClass(emDom,this.tipObj.className+"-em-"+obj.position),
+                    addClass(emDom,this.tipObj.className+"-em-left");
+                else dom.style.left =positionLeft+"px";
+                break;
+            case "left":
+                let positionRight:number = left-domWidth-8;
+                dom.style.top = domTop+"px";
+                if(left+positionRight<0)
+                    dom.style.left = (left+width+8)+"px",
+                    removeClass(emDom,this.tipObj.className+"-em-"+obj.position),
+                    addClass(emDom,this.tipObj.className+"-em-right");
+                else dom.style.left = positionRight+"px";
+        } 
+        removeClass(dom,"stl-layer-tip-hide");
     }
 }
 

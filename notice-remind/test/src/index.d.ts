@@ -4,14 +4,19 @@ interface parameter {
     cancel?: boolean;
     autoClose?: boolean;
     closeTime?: number;
-    only?: boolean;
+    number?: number;
     top?: number;
     right?: number;
+    left?: number;
+    bottom?: number;
+    showCallback?: (obj: htmlStr) => void;
+    cancelCallback?: () => void;
 }
 interface htmlStr {
     contentStr: string;
     headStr?: string;
     footStr?: string;
+    id?: string | number;
 }
 export declare class NoticeRemind {
     noticeDom: any;
@@ -19,6 +24,7 @@ export declare class NoticeRemind {
     noticeParent: HTMLElement;
     option: parameter;
     index: number;
+    showIndex: number;
     cancelKey: boolean;
     noticeList: Array<any>;
     initOption: parameter;
@@ -26,10 +32,12 @@ export declare class NoticeRemind {
     private getParent;
     private addEvent;
     private closeAll;
+    private closeOnce;
     private getNoticeDom;
     private getNewNotice;
     private autoCloseFn;
     private addNextNotice;
-    addNewNotice(obj: htmlStr): void;
+    addNewNotice(obj: htmlStr | Array<htmlStr>): void;
+    private addNoice;
 }
 export {};

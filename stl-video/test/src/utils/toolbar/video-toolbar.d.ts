@@ -14,6 +14,7 @@ declare class videoToolBar extends Component {
     backEl: any;
     frontEl: any;
     showTimeOut: any;
+    mp4ShowTimeOut: any;
     allTime: any;
     currentTime: any;
     isRangeThumbDrop: any;
@@ -26,8 +27,9 @@ declare class videoToolBar extends Component {
     progressPlayed: any;
     rangeThumb: any;
     exitFullScreenEl: any;
+    moveTime: any;
     isClickFlag: boolean;
-    isFullScreen: boolean;
+    iconfontList: any;
     clickTimeId: any;
     isInVideoContainer: boolean;
     isPc: boolean;
@@ -41,7 +43,7 @@ declare class videoToolBar extends Component {
     /**
      * 判断是否需要添加房间号的函数
      */
-    renderRoom(): "<div class = 'room-number-content'> \n                        '<span>房间号：</span>'\n                        <span class='room-number-val'></span>\n                    </div>\n                    <div class = 'visitors-number-content'>                                                        \n                        <span class='visitors-number-val'></span>\n                    </div>" | "";
+    renderRoom(): "" | "<div class = 'room-number-content'> \n                        '<span>房间号：</span>'\n                        <span class='room-number-val'></span>\n                    </div>\n                    <div class = 'visitors-number-content'>                                                        \n                        <span class='visitors-number-val'></span>\n                    </div>";
     /**
      * 初始化 直播情况下 的房间号和观看人数
      */
@@ -104,6 +106,8 @@ declare class videoToolBar extends Component {
      */
     exitFullscreen(): void;
     changeFullScreenOrExit(): void;
+    getFullscreenElement(): any;
+    exitorFullscreen(el: any): void;
     /**
      * 判断鼠标位置是否在范围内 如果是的 就显示控制条 如果不是则隐藏   默认为显示三秒,三秒后隐藏如果鼠标移动到可操作范围内就自动取消三秒后隐藏事件
      */
@@ -112,6 +116,7 @@ declare class videoToolBar extends Component {
      * 判断鼠标位置是否是在video的位置范围内  此方法使用于mp4模式下
      */
     judgeIsInVideoContainer(): void;
+    toolBarControl(toolbar: any): void;
     /**
      * 初始化一些快捷操作的方法
      * 单击视频播放/暂停
