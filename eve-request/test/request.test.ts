@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-08-03 14:16:10
- * @LastEditTime: 2020-09-27 11:09:14
+ * @LastEditTime: 2020-11-11 11:56:01
  */
 /// <reference path="../node_modules/@types/mocha/index.d.ts" />
 /// <reference path="../node_modules/@types/expect.js/index.d.ts" />
@@ -36,8 +36,9 @@ describe('请求测试', () => {
   })
   it('Delete', async () => {
     const del = await http
-      .delete('/test/delete', { params: { abc: 1 } })
-      .catch((e) => console.log(e))
+      .delete('/test/delete', { data: { abc: 1 } })
+	  .catch((e) => console.log(12333, e))
+	  console.log(22, del)
     expect(JSON.stringify(del)).to.be.equal(responseData)
   })
 })

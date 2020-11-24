@@ -13,17 +13,17 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import { login, logout, LoginParams, getAdminInfo } from './api'
 import { setCacheAddTime, getCacheCheckTime } from './utils'
-import { Permissions, Menu } from './data'
+import { Menu } from './data'
 import { GetQueryString } from '@stl/tool-ts/src/common/compatible/GetQueryString'
 // 微前端模式
 const isInMFE = (<any>window).__SINGLE_SPA_MFE__
+const MFE_TOKEN_KEY = `__MFE__TOKEN`
+const MFE_USER_INFO_KEY = `__MFE__USER_INFO`
 export default class PowerPlugin {
   // 项目名称
   projectId!: number | string
   // token键
   tokenKey!: string
-  // 用户信息存储键
-  userInfoKey!: string
   // 登录页路径
   loginPath!: string
   // 无需鉴权白名单
@@ -57,20 +57,12 @@ export default class PowerPlugin {
       return PowerPlugin.instance
     }
   }
-  private mfeOptionsInit(options: PowerOptions) {
-    this.projectId = 'mfe__main'
-  }
   private singleOptionsInit(options: PowerOptions) {
     this.projectId = options.projectId || ''
   }
   private optionsInit(options: PowerOptions) {
-    if (isInMFE) {
-      this.mfeOptionsInit(options)
-    } else {
-      this.singleOptionsInit(options)
-    }
+    this.singleOptionsInit(options)
     this.tokenKey = options.tokenKey || 'token'
-    this.userInfoKey = options.userInfoKey || `__${this.projectId}__user_info`
     this.loginPath = options.loginPath || '/login'
     this.whiteList = options.whiteList || [this.loginPath]
     this.router = options.router
@@ -107,7 +99,7 @@ export default class PowerPlugin {
     }
   }
   get userInfo(): any {
-    const res = getCacheCheckTime(this.userInfoKey)
+    const res = getCacheCheckTime(this.authUserInfoKey)
     if(res === null){
       // 过期 重新登录
       this.logout()
@@ -115,16 +107,19 @@ export default class PowerPlugin {
     return res
   }
   set userInfo(val) {
-    setCacheAddTime(this.userInfoKey, val)
+    setCacheAddTime(this.authUserInfoKey, val)
   }
   // 用户信息
+  get authUserInfoKey(){
+      return `__${this.projectId}__user_info`
+  }
   get authKey() {
-    return `__${this.projectId}__${this.tokenKey}`
+    return isInMFE ? MFE_TOKEN_KEY : `__${this.projectId}__${this.tokenKey}`
   }
 
   // 入口实例化之后 调用初始化 对router挂载
   async init() {
-    const token = GetQueryString('token')
+    const token = GetQueryString('token') || this.token
     if (token) {
       this.token = token
       await this.getUserInfo()
@@ -239,7 +234,7 @@ export default class PowerPlugin {
     // this.token && !nowIsLogin && await logout(PowerPlugin.http, { token: this.token })
     this.token = null
     this.userInfo = null
-    !nowIsLogin && this.router.replace(this.loginPath)
+    !nowIsLogin && this.router.replace(this.loginPath).catch(e => console.log(e))
   }
   async getUserInfo() {
     const res = await getAdminInfo(PowerPlugin.http, {
@@ -262,7 +257,6 @@ export default class PowerPlugin {
 
 type PowerOptions = {
   tokenKey?: string
-  userInfoKey?: string
   loginPath?: string
   projectId: number | string
   whiteList?: string[]

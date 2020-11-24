@@ -3,13 +3,13 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:40:09
- * @LastEditTime: 2020-11-07 14:55:28
+ * @LastEditTime: 2020-11-24 11:10:20
  */
 // import '@babel/polyfill'
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosInstance, AxiosRequestConfig } from 'axios'
 import Intercept from './lib/AxiosInstance'
 import QueryParse,{FILENAME} from './lib/QueryParse'
-import { stringify, IStringifyOptions } from 'qs'
+import { IStringifyOptions } from 'qs'
 import merge from './lib/merge'
 export const SYMBOL_FILENAME = FILENAME
 const HEADERS_MAP = new Map([
@@ -171,6 +171,7 @@ export interface AxiosOptions extends DataOptions, AxiosRequestConfig {
   queryOptions?: IStringifyOptions
   msgPack?: boolean
   oth?: AxiosRequestConfig
+  [configName:string]:any
 }
 
 // codes
