@@ -1,6 +1,6 @@
 {
   "name": "@stl/stl-video",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "播放器组件",
   "main": "dist/index.js",
   "scripts": {
