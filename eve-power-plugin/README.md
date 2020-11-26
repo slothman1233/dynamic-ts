@@ -15,6 +15,10 @@
 @delete:剔除了 permissions 集成到了 userInfo 内部
 @add:增加了 react hooks 版本
 
+## 1.2+ 版本更新说明
+
+！！！vue模式增加了微前端版本 react未增加  请使用1.1(不包含)以下
+
 ## 内置导出 PowerPlugin 类
 
 (安装说明:

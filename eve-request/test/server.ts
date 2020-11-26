@@ -3,14 +3,15 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-08-03 16:54:27
- * @LastEditTime: 2020-08-04 09:13:56
+ * @LastEditTime: 2020-11-11 12:01:12
  */
 import sinon from 'sinon'
 
 const bodyMessage = '{ test: 1 }'
 export const responseData = JSON.stringify({
-  bodyMessage: bodyMessage,
+  bodyMessage,
   code: 0,
+  subCode: 'E000001'
 })
 let server = sinon.fakeServer.create()
 server.autoRespond = true
