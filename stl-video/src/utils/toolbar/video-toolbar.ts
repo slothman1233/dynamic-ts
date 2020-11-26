@@ -887,7 +887,7 @@ class videoToolBar extends Component {
                 window.onmouseup = null;
                 this.judgeIsInVideoContainer();
                 this.isRangeThumbDrop = false;
-                Component.options_.play.currentTime = percent * Component.options_.play.duration;
+                if(percent)Component.options_.play.currentTime = percent * Component.options_.play.duration;
                 this.changeVideoPlayOrPause()
                 percent = 0;
                 that.moveTime.style.display = "none";

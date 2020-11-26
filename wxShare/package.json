@@ -1,7 +1,7 @@
 {
-  "name": "@stl/notice-remind",
-  "version": "1.0.6",
-  "description": "通知弹窗组件",
+  "name": "@stl/wxshare",
+  "version": "1.0.0",
+  "description": "自定义微信分享",
   "main": "dist/index.js",
   "scripts": {
     "dev": "gulp clean:dist && rollup -c --environment NODE_ENV:development",
@@ -11,9 +11,11 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@stl/httprequest": "^1.0.4"
+  },
   "devDependencies": {
-    "@stl/tool-ts": "^0.6.2",
+    "@stl/tool-ts": "^1.0.3",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -54,6 +56,6 @@
     "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
-    "notice"
+    "wxshare"
   ]
 }
