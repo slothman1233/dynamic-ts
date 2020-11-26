@@ -99,6 +99,9 @@ ts:
         BlVideo.hooks.completecreateVideo = function (el) {
             console.log(el);
         }
+        BlVideo.hooks.videoEnded = function(){
+            console.log("videoEnded")
+        }
         BlVideo.hooks.videoCanplaythrough = function () {
             console.log('videoCanplaythrough');
         }
@@ -141,6 +144,10 @@ ts:
 
         function fullScreen() {
             BlVideo.operation.fullScreenVideo()
+        }
+
+        function exitFullScreen() {
+            BlVideo.operation.exitFullScreenVideo()
         }
 
         function muteVideo() {

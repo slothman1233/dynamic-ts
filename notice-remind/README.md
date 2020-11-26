@@ -15,7 +15,7 @@ ts:
     let obj:any = {
         contentStr:"内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容",
         headStr:"标题标题标题标题标题标题标题标题标题标题",
-        bottomStr:"",
+        footStr:"",
     };
     stlNoticeRemind.addNewNotice(obj);
 ```
@@ -45,19 +45,19 @@ addNewNotice
     参数说明：{
         contentStr:string 内容部分显示的innerhtml
         headStr:string 头部显示的innerhtml
-        bottomStr?:string 底部显示的innerhtml 没有可不传
+        footStr?:string 底部显示的innerhtml 没有可不传
         id?:string|number 此条消息的标识
     }或者[
         {
             contentStr:string 内容部分显示的innerhtml
             headStr:string 头部显示的innerhtml
-            bottomStr?:string 底部显示的innerhtml 没有可不传
+            footStr?:string 底部显示的innerhtml 没有可不传
             id?:string|number 此条消息的标识
         },
         {
             contentStr:string 内容部分显示的innerhtml
             headStr:string 头部显示的innerhtml
-            bottomStr?:string 底部显示的innerhtml 没有可不传
+            footStr?:string 底部显示的innerhtml 没有可不传
             id?:string|number 此条消息的标识
         }
     ]

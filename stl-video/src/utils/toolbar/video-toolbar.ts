@@ -7,6 +7,7 @@ class videoToolBar extends Component {
     frontWidth: any;
     playEl: any;
     pauseEl: any;
+    playBtn:any;
     reLoadEl: any;
     fullScreenEl: any;
     volumeEl: any;
@@ -90,9 +91,22 @@ class videoToolBar extends Component {
             id: "video_danmu_box",
             innerHTML: ""
         })
+        const endDom = this.createEl('div', {
+            className: "video_end_box",
+            id: "video_end_box",
+            innerHTML: ""
+        })
+        let playStr = Component.options_.playBtnSrc?`<img src="${Component.options_.playBtnSrc}" />`:`<i class="iconfont_video">${palyIconfont}</i>`;
+        this.playBtn = this.createEl('div',{
+            className:"video_play_btn",
+            id:"video_play_btn",
+            innerHTML:playStr,
+        })
         this.livePlayerEl = document.getElementsByClassName('live-player')[0];
         this.insertBeforeEl(dom, this.livePlayerEl)
         this.insertBeforeEl(dmDom, this.livePlayerEl)
+        this.insertBeforeEl(endDom, this.livePlayerEl)
+        this.insertBeforeEl(this.playBtn, this.livePlayerEl)
         this.getVideiBarEls();
         this.addtVideiBarListener();
         this.renderPlayerProgress()
@@ -225,7 +239,8 @@ class videoToolBar extends Component {
                 this.volumeEl.click();
                 if (!Component.options_.play.paused) {
                     this.show(this.pauseEl);
-                    this.hide(this.playEl)
+                    this.hide(this.playEl);
+                    this.hide(this.playBtn)
                     clearTimeout(timeOut);
                 }
             }, 1000);
@@ -294,7 +309,9 @@ class videoToolBar extends Component {
                     break;
             }
         })
-     
+        document.getElementById("video_play_btn").addEventListener("click",(e:any) => {
+            this.changeVideoPlayOrPause();
+        })
         if (this.isPc) {
             this.pointEl.onmousedown = ((ev: any) => {
                 // this.poinMousedownCallBack.call(that, ev, backCha, ev.clientX);
@@ -404,10 +421,12 @@ class videoToolBar extends Component {
             Component.options_.play.play();
             this.show(this.pauseEl);
             this.hide(this.playEl);
+            this.hide(this.playBtn);
         } else {
             Component.options_.play.pause();
             this.show(this.playEl);
             this.hide(this.pauseEl);
+            this.show(this.playBtn);
         }
     }
 
@@ -626,7 +645,6 @@ class videoToolBar extends Component {
             }
         })
     }
-
     /**
      * 判断鼠标位置是否是在video的位置范围内  此方法使用于mp4模式下
      */
@@ -901,6 +919,7 @@ class videoToolBar extends Component {
                 Component.options_.play.play();
                 this.show(this.pauseEl);
                 this.hide(this.playEl);
+                this.hide(this.playBtn);
                 percent = 0;
                 // return false
             })
@@ -918,6 +937,7 @@ class videoToolBar extends Component {
         if (this.allTime === this.currentTime) {
             this.hide(this.pauseEl);
             this.show(this.playEl);
+            this.show(this.playBtn);
         }
         const percent = 100 * (Component.options_.play.currentTime / Component.options_.play.duration);
         //缓冲的时间
@@ -1007,15 +1027,22 @@ class videoToolBar extends Component {
             Component.options_.play.play();
             that.hide(that.playEl);
             that.show(that.pauseEl);
+            that.hide(that.playBtn);
         }
         Component.videoForegin.operation.pauseVideo = function () {
             Component.options_.play.pause();
             that.hide(that.pauseEl);
             that.show(that.playEl);
+            that.show(that.playBtn);
         }
         Component.videoForegin.operation.fullScreenVideo = function () {
+            that.fullScreenKey = true;
             that.fullScreen(that.livePlayerEl)
         }
+        Component.videoForegin.operation.exitFullScreenVideo = function(){
+            that.fullScreenKey = true;
+            that.exitFullscreen();
+        }  
         Component.videoForegin.operation.muteVideo = function () {
             Component.options_.play.muted = true;
             that.hide(that.volumeEl);
@@ -1057,6 +1084,7 @@ class videoToolBar extends Component {
                 Component.options_.play.play();
                 that.hide(that.playEl);
                 that.show(that.pauseEl);
+                that.hide(that.playBtn);
             }
         }
     }

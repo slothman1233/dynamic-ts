@@ -130,6 +130,11 @@ class Play extends Component {
             Component.videoForegin.hooks.videoLoadedmetadata()
          }
       });
+      Component.options_.play.addEventListener("ended", function (e: any) {
+        if (Component.videoForegin.hooks.videoEnded) {
+           Component.videoForegin.hooks.videoEnded()
+        }
+     });
       Component.options_.play.addEventListener("progress", function (e: any) {
          if (Component.videoEmit.progress) {
             Component.videoEmit.progress()

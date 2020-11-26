@@ -105,7 +105,7 @@ export class NoticeRemind {
   }
   private getNewNotice(obj:htmlStr){//生成模板字符串
     let closeStr:string = this.option.close?`<i class="notice_close_box" type="${this.index}">×</i>`:"";
-    let cancelStr:string = this.option.cancel?`<div class="notice_cancel_box"><i class="notice_cancel"></i><span>不再弹窗</span></div>`:"";
+    let cancelStr:string = this.option.cancel?`<div class="notice_cancel_box"><i class="notice_cancel"></i><span>不再弹出</span></div>`:"";
     let str:string = `${closeStr}${cancelStr}
       <div class="notice_head_box ${this.option.cancel?'notice_head_cancel':''}">${obj.headStr?obj.headStr:""}</div>
       <div class="notice_content_box">${obj.contentStr}</div>

@@ -1,0 +1,48 @@
+ /*
+*transition定制动画
+     className 需要添加的className 用于js触发动画用（js中将此className添加到元素上将触发动画）
+     property  规定设置过渡效果的 CSS 属性的名称 如果有多个用","隔开
+     duration  规定完成过渡效果需要多少秒或毫秒。 数量需要与property参数的值对应
+     timing    规定速度效果的速度曲线。 数量需要与property参数的值对应 
+               默认值：linear (只在"property"属性值为一个时有用)
+               可选值：linear|ease|ease-in|ease-out|ease-in-out|cubic-bezier(n,n,n,n)
+     delay     定义过渡效果何时开始。 数量需要与property参数的值对应
+               默认值：0 (只在"property"属性值为一个时有用)
+     例子：
+        .transition(animate_box;width;400px;2s)
+        .transition(animate_box;width;400px;2s;ease;1s)
+        .transition(animate_box;width,height,background;400px,300px,red;2s,2s,2s;linear,linear,linear;0,0,0)
+ */
+
+
+
+.transition(@className,@property,@val,@duration,@timing:linear,@delay:0){
+    transition-property:@property;
+    -moz-transition-property: @property; /* Firefox 4 */
+    -webkit-transition-property:@property; /* Safari 和 Chrome */
+    -o-transition-property:@property; /* Opera */
+
+    transition-duration: @duration;
+    -moz-transition-duration: @duration;
+    -webkit-transition-duration: @duration;
+    -o-transition-duration: @duration;
+    
+    transition-timing-function: @timing;
+    -moz-transition-timing-function: @timing;
+    -webkit-transition-timing-function: @timing;
+    -o-transition-timing-function: @timing;
+    
+    transition-delay:@delay;
+    -moz-transition-delay:@delay;
+    -webkit-transition-delay:@delay;
+    -o-transition-delay:@delay;  
+    &.@{className} {
+        .loop(@i) when (@i<length(@property)+1){
+            @name:extract(@property,@i);
+            @data:extract(@val,@i);
+            @{name}:@data;
+            .loop(@i+1);
+        }
+        .loop(1);
+    }
+}

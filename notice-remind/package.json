@@ -1,6 +1,6 @@
 {
   "name": "@stl/notice-remind",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "通知弹窗组件",
   "main": "dist/index.js",
   "scripts": {
