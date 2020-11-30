@@ -1,7 +1,7 @@
 {
-    "name": "@stl/barrager",
-    "version": "1.1.19",
-    "description": "弹幕插件框架",
+    "name": "rollups",
+    "version": "1.2.0",
+    "description": "开发插件的框架",
     "main": "dist/index.js",
     "scripts": {
         "dev": "gulp clean:dist && rollup -c --environment NODE_ENV:development",
