@@ -1,0 +1,6 @@
+--reporter html
+--recursive
+--ui bdd
+--require babel-register
+--growl
+

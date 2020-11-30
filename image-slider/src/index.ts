@@ -42,7 +42,8 @@ export class imageSlider {
     this.getExerciseValue();
     this.addDom();
     if(this.option.switchType === "out"){
-      hide(this.$prevDom)
+      addClass(this.$prevDom,"slider_btn_hide")
+      this.totalDistance<=0&&addClass(this.$nextDom,"slider_btn_hide")
     }else{
       this.cloneFn(0);      
     }
@@ -110,8 +111,8 @@ export class imageSlider {
   }
   private addDom(){//添加切换元素
     let itemString:string = "",listStr="",
-        leftRight:string = this.option.switch?`<div class="slider_left_btn ${this.option.switchType==="auto"?"":"slider_btn_hide"}"></div>
-                                              <div class="slider_right_btn ${this.option.switchType==="auto"?"":"slider_btn_hide"}"></div>`:"";//左右切换按钮
+        leftRight:string = this.option.switch?`<div class="slider_left_btn ${this.option.switchType==="hover"?"slider_btn_hide":""}"></div>
+                                              <div class="slider_right_btn ${this.option.switchType==="hover"?"slider_btn_hide":""}"></div>`:"";//左右切换按钮
     if(this.option.item){//下标元素
       for(let i=0;i<this.sliderLength;i++){
         listStr +=`<li class="slider_item_btn ${i===this.index?this.nowClass:""}" index="${i}"></li>`;
