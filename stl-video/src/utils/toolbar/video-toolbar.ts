@@ -499,8 +499,6 @@ class videoToolBar extends Component {
             // if (!this.isPc) {
 
             // }
-
-
             try {
                 rfs.call(el)
             } catch (e) {
@@ -511,19 +509,6 @@ class videoToolBar extends Component {
             this.fullScreenChange();
             this.fullScreenKey = false;
           }, 200);
-
-            // var isFull = rfs.call(el)
-            // if (isFull) {
-            //     isFull.then(() => {
-            //         this.changeFullScreenOrExit();
-
-            //     }).catch((e: any) => {
-            //         console.log(e);
-            //         this.changeFullScreenOrExit();
-            //     })
-            // } else {
-            //     console.log(192929, isFull, this.getFullscreenElement())
-            // }
         }
 
     }
@@ -556,21 +541,25 @@ class videoToolBar extends Component {
     }
 
     changeFullScreenOrExit() {
-        let key: any = this.getFullscreenElement();
+        let key: any = this.getFullscreenElement(),type:string;
         if (!key) {
             //  this.isFullScreen = false;
             if (this.livePlayerEl.offsetWidth == document.body.offsetWidth) {
                 this.show(this.exitFullScreenEl);
                 this.hide(this.fullScreenEl);
+                type="fullScreen";
             } else {
                 this.show(this.fullScreenEl);
                 this.hide(this.exitFullScreenEl);
+                type="unFullScreen";
             }
         } else {
             // this.isFullScreen = true;
             this.show(this.exitFullScreenEl);
             this.hide(this.fullScreenEl);
+            type="fullScreen";
         }
+        Component.videoForegin.hooks.changeFullScreen&&Component.videoForegin.hooks.changeFullScreen(type);
     }
     getFullscreenElement() {
         return (
@@ -596,7 +585,6 @@ class videoToolBar extends Component {
         if(this.fullScreenChangeKey)return;
         if ((<any>document).webkitExitFullscreen) {
             this.livePlayerEl.addEventListener("webkitfullscreenchange", (e:any)=>{
-                console.log("webkitfullscreenchange:"+this.fullScreenKey)
                 if(!this.fullScreenKey)
                     this.exitorFullscreen(this.livePlayerEl);
             });
@@ -713,12 +701,14 @@ class videoToolBar extends Component {
             video.ondblclick = ((e: any) => {
                 clearTimeout(this.clickTimeId);
                 // this.isFullScreen == true ? this.exitFullscreen() : this.fullScreen(this.livePlayerEl);
+                this.fullScreenKey = true;
                 this.exitorFullscreen(this.livePlayerEl)
             });
         } else {
             //双击视频
             video.ondblclick = ((e: any) => {
                 //this.isFullScreen == true ? this.exitFullscreen() : this.fullScreen(this.livePlayerEl);
+                this.fullScreenKey = true;
                 this.exitorFullscreen(this.livePlayerEl)
             });
         }
@@ -726,7 +716,9 @@ class videoToolBar extends Component {
             // if (this.isPc) {
 
             // }
-            this.changeFullScreenOrExit();
+            if(!this.fullScreenKey){
+                this.changeFullScreenOrExit();
+            }
         })
 
         // 鼠标在video的范围内敲击空格暂停/播放D

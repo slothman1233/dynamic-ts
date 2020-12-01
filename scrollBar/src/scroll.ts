@@ -1,4 +1,19 @@
-import { mousewheelObj,scaleObj,positionScroll } from "./types"
+interface mousewheelObj {
+    scrollNumber:number,
+    sliderScale:number,
+}
+
+interface scaleObj {
+    scrollRange:number,
+    sliderRange:number,
+    scrollNumber:number,
+    scrollType:string,
+    transformType:string,
+}
+interface positionScroll {
+    left?:number,
+    top?:number,
+}
 
 function addTransformFn(dom:any,val:string){//设置滚动条的transform样式兼容性写法
     dom.style.transform = val;

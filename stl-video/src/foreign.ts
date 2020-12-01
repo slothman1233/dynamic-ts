@@ -33,6 +33,7 @@ class Hooks {
     _completecreateVideo: any;
     _reLoadComplet: any;
     _changeSourceComplet: any;
+    _changeFullScreen:any;
     constructor() {
 
     }
@@ -282,7 +283,16 @@ class Hooks {
     set dataArrival(callback) {
         this._dataArrival = callback;
     }
-
+    /**
+     * 全屏切换的钩子函数
+     * 此钩子函数会返回全屏状态
+     */
+    get changeFullScreen() {
+        return this._changeFullScreen;
+    }
+    set changeFullScreen(callback) {
+        this._changeFullScreen = callback;
+    }
     /**
      * 错误捕获的钩子函数
      * 此钩子函数会返回错误信息 error
