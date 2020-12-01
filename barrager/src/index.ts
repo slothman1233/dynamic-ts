@@ -108,7 +108,7 @@ class barrager {
     }
   }
 
-  barrages(random: number): any {
+  private barrages(random: number): any {
     const index = random
     const that = this
     return function (obj: barragerModel) {
@@ -228,7 +228,7 @@ class barrager {
   }
 
   //滚动动画处理
-  barrager(parentDom: HTMLElement, div_barrager: HTMLElement, div_barrager_box: HTMLElement, barrage: any, id: string, index: number) {
+  private barrager(parentDom: HTMLElement, div_barrager: HTMLElement, div_barrager_box: HTMLElement, barrage: any, id: string, index: number) {
     let that = this
     let looper = setTimeout(interval, barrage.speed);
     let i = parentDom.offsetWidth
@@ -280,7 +280,7 @@ class barrager {
 
 
   //计算宽度 让其可以连续但不重叠添加弹幕
-  calculativeWidthAndaddBarrage(barragerDom: HTMLElement, left: number, parentWidth: number, barrage: barragerModel, rdom: number) {
+  private calculativeWidthAndaddBarrage(barragerDom: HTMLElement, left: number, parentWidth: number, barrage: barragerModel, rdom: number) {
     let that = this
     let domWidth = barragerDom.offsetWidth
 
@@ -300,7 +300,7 @@ class barrager {
   }
 
   //获取不重复的随机数
-  getRandomInt(max: number) {
+  private getRandomInt(max: number) {
     let that = this
 
     if (max <= 0) {
@@ -323,7 +323,7 @@ class barrager {
 
   //是否有空闲的位置
   // false 为没有空闲
-  isLeisure() {
+  private isLeisure() {
     return this.randomCache.length === this.maxBarragerPool && this.randomCache.indexOf(false) >= 0
   }
 
@@ -352,7 +352,7 @@ class barrager {
 
   }
 
-  deepCopy(obj: barragerModel): barragerModel {
+  private deepCopy(obj: barragerModel): barragerModel {
     let result = {};
     for (let key in obj) {
       if (obj.hasOwnProperty(key)) {
