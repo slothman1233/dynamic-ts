@@ -26,6 +26,7 @@ declare class Hooks {
     _completecreateVideo: any;
     _reLoadComplet: any;
     _changeSourceComplet: any;
+    _changeFullScreen: any;
     constructor();
     /**
      * video 播放的钩子函数
@@ -144,6 +145,12 @@ declare class Hooks {
      */
     get dataArrival(): any;
     set dataArrival(callback: any);
+    /**
+     * 全屏切换的钩子函数
+     * 此钩子函数会返回全屏状态
+     */
+    get changeFullScreen(): any;
+    set changeFullScreen(callback: any);
     /**
      * 错误捕获的钩子函数
      * 此钩子函数会返回错误信息 error

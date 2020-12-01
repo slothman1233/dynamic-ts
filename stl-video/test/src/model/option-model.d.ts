@@ -9,6 +9,7 @@ declare class optionModel {
     teachOrder: Array<string>;
     streamTimeoutTime: number;
     play: any;
+    playBtnSrc: string;
     streamLink: any;
     languages: string;
     errorDom: any;

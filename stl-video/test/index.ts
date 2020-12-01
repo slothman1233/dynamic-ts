@@ -23,62 +23,65 @@ BlVideo.operation.load("videojs", option);
 BlVideo.hooks.videoTimeupdate = function(){
     console.log(this,(document.getElementById('videojs_1') as HTMLMediaElement).currentTime);
 }
-BlVideo.hooks.videoPlay = function(){
-    console.log("paly")
+BlVideo.hooks.changeFullScreen = function(type:any){
+    console.log("切换全屏："+type)
 }
-BlVideo.hooks.videoPause = function(){
-    console.log("pause")
-}
-BlVideo.hooks.videoEnded = function(){
-    setTimeout(play,5000)
-}
+// BlVideo.hooks.videoPlay = function(){
+//     console.log("paly")
+// }
+// BlVideo.hooks.videoPause = function(){
+//     console.log("pause")
+// }
+// BlVideo.hooks.videoEnded = function(){
+//     setTimeout(play,5000)
+// }
 
-BlVideo.hooks.videoTimeupdate = function () {
-    console.log('videoTimeupdate');
-}
-BlVideo.hooks.videoLoadedmetadata = function () {
-    console.log('videoLoadedmetadata');
-}
-BlVideo.hooks.videoLoadeddata = function () {
-    console.log('videoLoadeddata');
-}
-BlVideo.hooks.videoLoadstart = function () {
-    console.log('videoLoadstart');
-}
-BlVideo.hooks.completecreateVideo = function (el:any) {
-    console.log(el);
-}
-BlVideo.hooks.videoCanplaythrough = function () {
-    console.log('videoCanplaythrough');
-}
-BlVideo.hooks.videoProgress = function () {
-    console.log('videoProgress');
-}
-BlVideo.hooks.initMediaSoureComplete = function (mediaSoure:any) {
-    console.log('initMediaSoureComplete', mediaSoure);
-}
-BlVideo.hooks.initSourceBuffers = function (mimeType:any, sourceBuffer:any) {
-    console.log('initSourceBuffers', mimeType, sourceBuffer);
-}
-BlVideo.hooks.sourceBufferUpdateend = function () {
-    console.log('sourceBufferUpdateend');
-    //如若需要一开始播放就回到上次播放的位置那么就在这里调用
-    if (option.mode === 2) {
-        that.seek(10);
-    }
-}
-BlVideo.hooks.sendRequestStart = function () {
-    console.log('sendRequestStart');
-}
-BlVideo.hooks.getStreamComplete = function () {
-    console.log('getStreamComplete');
-}
-BlVideo.hooks.dataArrival = function () {
-    console.log('dataArrival');
-}
-BlVideo.hooks.error = function (error:any) {
-    console.log(error);
-}
+// BlVideo.hooks.videoTimeupdate = function () {
+//     console.log('videoTimeupdate');
+// }
+// BlVideo.hooks.videoLoadedmetadata = function () {
+//     console.log('videoLoadedmetadata');
+// }
+// BlVideo.hooks.videoLoadeddata = function () {
+//     console.log('videoLoadeddata');
+// }
+// BlVideo.hooks.videoLoadstart = function () {
+//     console.log('videoLoadstart');
+// }
+// BlVideo.hooks.completecreateVideo = function (el:any) {
+//     console.log(el);
+// }
+// BlVideo.hooks.videoCanplaythrough = function () {
+//     console.log('videoCanplaythrough');
+// }
+// BlVideo.hooks.videoProgress = function () {
+//     console.log('videoProgress');
+// }
+// BlVideo.hooks.initMediaSoureComplete = function (mediaSoure:any) {
+//     console.log('initMediaSoureComplete', mediaSoure);
+// }
+// BlVideo.hooks.initSourceBuffers = function (mimeType:any, sourceBuffer:any) {
+//     console.log('initSourceBuffers', mimeType, sourceBuffer);
+// }
+// BlVideo.hooks.sourceBufferUpdateend = function () {
+//     console.log('sourceBufferUpdateend');
+//     //如若需要一开始播放就回到上次播放的位置那么就在这里调用
+//     if (option.mode === 2) {
+//         that.seek(10);
+//     }
+// }
+// BlVideo.hooks.sendRequestStart = function () {
+//     console.log('sendRequestStart');
+// }
+// BlVideo.hooks.getStreamComplete = function () {
+//     console.log('getStreamComplete');
+// }
+// BlVideo.hooks.dataArrival = function () {
+//     console.log('dataArrival');
+// }
+// BlVideo.hooks.error = function (error:any) {
+//     console.log(error);
+// }
 
 function play() {
     BlVideo.operation.playVideo()

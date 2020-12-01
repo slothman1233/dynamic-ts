@@ -21,6 +21,7 @@ let btn2 = document.getElementById("btn2")
 let btn3 = document.getElementById("btn3")
 let btn4 = document.getElementById("btn4")
 let btn5 = document.getElementById("btn5")
+let btn6 = document.getElementById("btn6")
 
 addEvent(btn,"click",function(){
     layer.msg("不开心。。。",{icon:11,time:3000})
@@ -28,8 +29,10 @@ addEvent(btn,"click",function(){
 
 addEvent(btn1,"click",function(){
     layer.alert({
+        icon:11,
+        className:"abcedf",
         content:"这是一个自定义alert",
-        title:"这是一个标题",
+        //title:"这是一个标题",
         autoClose:true,
         btnStr:"<p data-link='https://www.baidu.com' style='padding:0;margin:0'>查看详情</p>",
         btnCallback:function(e:any){
@@ -76,4 +79,11 @@ addEvent(btn4,"click",function(){
 })
 addEvent(btn5,"click",function(){
     layer.tips(this,"这是一条tips这是一条tips这是一条tips这是一条tips这是一条tips",{position:"left"})
+})
+addEvent(btn6,"click",function(){
+    layer.custom({
+        content:`<p>523423423423423423423423<p><p>523423423423423423423423<p><p>523423423423423423423423<p><p>523423423423423423423423<p><p>523423423423423423423423<p>`,
+        determineBtn:true,
+        cancelBtn:true
+    })
 })
