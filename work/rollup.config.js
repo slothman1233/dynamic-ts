@@ -32,8 +32,6 @@ const config = () => {
     for (let i = 0; i < pages.length; i++) {
         const obj = build.paths[pages[i]];
         if (obj) {
-
-
             ary.push({
                 context: 'window',
                 input: "./" + obj.input, //入口未见
@@ -44,7 +42,6 @@ const config = () => {
                     //external: ['jquery'], 
                     sourcemap: (env === 'production' ? false : true), //代码映射，方便调试
                 },
-                
                 plugins: [
                     json(),
                     rollupTs(),
@@ -53,9 +50,9 @@ const config = () => {
                         browser: true // Default: false
                     }),
                     postcss({
-                        extensions: ['.css','.less','.scss','.sss','.pcss'], //处理以这些扩展名结尾的文件
-                        plugins: [nested(),autoprefixer(),cssnano],
-                        extract: path.resolve(obj.lessfile) // 输出路径
+                        extensions: ['.css', '.less', '.scss', '.sss', '.pcss'], //处理以这些扩展名结尾的文件
+                        plugins: [nested(),autoprefixer(), cssnano],
+                        extract: path.resolve(obj.lessfile)  // 输出路径
                     }),
                     babel({
                         exclude: 'node_modules/**',
