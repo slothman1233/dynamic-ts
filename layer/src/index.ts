@@ -17,6 +17,7 @@ interface alertParameter{
     content:string,
     icon?:number,
     iconColor?:string,
+    className?:string,
     title?:string,
     autoClose?:boolean,
     time?:number,
@@ -32,6 +33,7 @@ interface modalParameter{
     content:string,
     hasClose?:boolean,
     bg?:boolean,
+    bgClose?:boolean,
     determineBtn?:boolean,
     determineText?:string,
     determineFn?:()=>void,
@@ -60,6 +62,22 @@ interface tipsParameter{
     position?:"top"|"bottom"|"left"|"right"
     maxWidth?:number
 }
+interface customParameter{
+    content:string|HTMLElement
+    hasClose?:boolean
+    determineBtn?:boolean
+    determineText?:string
+    determineClickFn?:()=>void
+    cancelBtn?:boolean
+    cancelText?:string
+    cancelClickFn?:()=>void
+    // autoClose?:boolean
+    // closeTime?:number
+    bg?:boolean
+    bgClose?:boolean
+    showCallback?:()=>void
+    endCallback?:()=>void
+}
 class stlLayer{
     times:number = 1
     iconfontSrc:string = "https://js.wbp5.com/iconfont/build/layer/iconfont.css?v=888"
@@ -78,7 +96,7 @@ class stlLayer{
         1110:"rgba(0, 0, 0, 0.75)",
     }
     msgObj:any = {
-        className:"stl-layer-msg stl-layer-shadow stl-layer-centered",
+        className:"stl-layer-msg stl-layer-shadow stl-layer-centered stl-layer-transition",
         iconClassName:"stl-layer-msg-icon",
         paddingClassName:"stl-layer-msg-padding",
         iconPaddingClassName:"stl-layer-icon-msg-padding",
@@ -98,14 +116,14 @@ class stlLayer{
     alertObj:any = {
         time:3000,
         closeClassName:"stl-layer-alert-close",
-        className:"stl-layer-alert stl-layer-centered",
+        className:"stl-layer-alert stl-layer-centered stl-layer-transition",
         paddingClassName:"stl-layer-alert-padding",
         iconPaddingClassName:"stl-layer-icon-alert-padding",
         contentClassName:"stl-layer-content  stl-layer-border stl-layer-alert",
     }
     openObj:any = {
-        className:"stl-layer-shadow stl-layer-centered stl-layer-open",
-        bgClassName:"stl-layer-open-bg",
+        className:"stl-layer-shadow stl-layer-centered stl-layer-open stl-layer-transition",
+        bgClassName:"stl-layer-open-bg stl-layer-transition",
         classNameTwo:"stl-layer-open-two",
         contentPadding:"stl-layer-open-padding stl-layer-open-content",
         iconContentPadding:"stl-layer-icon-open-padding stl-layer-open-content",
@@ -121,12 +139,12 @@ class stlLayer{
         cancelClassName:"stl-layer-open-btn-cancel",
         textNoBtnClassName:"stl-layer-open-text-nobtn",
         parameter:{
-            type:1,autoClose:false,hasClose:true,determineBtn:false,determineText:"确定",cancelBtn:false,cancelText:"取消",bg:true,
+            type:1,autoClose:false,hasClose:true,determineBtn:false,determineText:"确定",cancelBtn:false,cancelText:"取消",bg:true,bgClose:true,
         }
     }
     modalObj:any = {
-        className:"stl-layer-shadow stl-layer-centered stl-layer-modal",
-        bgClassName:"stl-layer-modal-bg",
+        className:"stl-layer-shadow stl-layer-centered stl-layer-modal stl-layer-transition",
+        bgClassName:"stl-layer-modal-bg stl-layer-transition",
         headClassName:"stl-layer-modal-head",
         titleClassName:"stl-layer-modal-title",
         contentClassName:"stl-layer-modal-content",
@@ -137,7 +155,7 @@ class stlLayer{
         cancelClassName:"stl-layer-open-btn-cancel",
         closeClassName:"stl-layer-modal-close",
         parameter:{
-            hasClose:true,determineBtn:true,determineText:"确定",cancelBtn:true,cancelText:"取消",bg:true,
+            hasClose:true,determineBtn:true,determineText:"确定",cancelBtn:true,cancelText:"取消",bg:true,bgClose:true,
         }
     }
     loadObj:any = {
@@ -151,7 +169,18 @@ class stlLayer{
         parameter:{position:"top",time:3000,},
         hideClassName:"stl-layer-tip-hide",
         className:"stl-layer-tip",
+        transitionClassName:"stl-layer-transition",
         ContentClassName:"stl-layer-tip-content",
+    }
+    customObj:any = {
+        parameter:{hasClose:true,determineBtn:false,determineText:"确定",cancelBtn:false,cancelText:"取消",bg:true,bgClose:true},
+        className:"stl-layer-shadow stl-layer-centered stl-layer-custom stl-layer-transition",
+        bgClassName:"stl-layer-custom-bg stl-layer-transition",
+        contentClassName:"stl-layer-custom-content",
+        closeClassName:"stl-layer-custom-close",
+        determineClassName:"stl-layer-custom-btn-determine",
+        cancelClassName:"stl-layer-custom-btn-cancel",
+        footClassName:"stl-layer-custom-foot"
     }
     bgDom:HTMLElement = null
     timeoutList:any = {
@@ -171,12 +200,16 @@ class stlLayer{
         dom.setAttribute("times",""+this.times);
         return dom;
     }
-    private getDomStr(content:string,className:string){
+    private getDomStr(content:string|HTMLElement,className:string){
         let dom:HTMLElement = document.createElement("div");
         dom.className = `stl-layer stl-layer${this.times} ${className}`;
         dom.id = `stl-layer${this.times}`;
         // dom.setAttribute("times",""+this.times);
-        dom.innerHTML = content;
+        if(typeof content === "string"){
+            dom.innerHTML = (<string>content);
+        }else{
+            dom.appendChild((<HTMLElement>content));
+        }
         return dom;
     }
     private getIconStr(className:string,icon?:number,iconColor?:string){
@@ -193,6 +226,21 @@ class stlLayer{
             clearTimeout(this.timeoutList[type]);
             this.timeoutList[type] = null;
         }
+    }
+    private removeHide(dom:HTMLElement){
+        setTimeout(function(){dom.style.opacity = "1";},0)
+    }
+    private closeBoxFn(dom:HTMLElement|Element,parent?:HTMLElement){
+        let par = parent?parent:document.body;
+        (<any>dom).style.opacity = "0";
+        setTimeout(function(){
+            par.removeChild(dom);
+        },300)
+    }
+    private addBgDom(end:any,bgClose:boolean){
+        this.appendDom(this.bgDom);
+        this.removeHide(this.bgDom);
+        bgClose&&this.addBgEvent(this.bgDom,end)
     }
     private msgStr(content:string,icon?:number,iconColor?:string){
         let iconStr = "",className = this.msgObj.paddingClassName;
@@ -211,6 +259,7 @@ class stlLayer{
         let contentStr:string =this.msgStr(content,icon,iconColor);
         let dom:HTMLElement = this.getDomStr(contentStr,this.msgObj.className);
         this.appendDom(dom);
+        this.removeHide(dom);
         this.times++;
         this.autoClose("msg",dom,time,end);
     }
@@ -252,15 +301,19 @@ class stlLayer{
     }
     alert(obj:alertParameter){
         this.deduplication("stl-layer-alert","alert");
-        let contentStr:string = "",className:string = "",hasTitle:boolean = false;
+        let contentStr:string = "",className:string = this.alertObj.className,hasTitle:boolean = false;
         if(obj.title){
-            contentStr = this.hasTitleAlertStr(obj),className = this.alertObj.className,hasTitle = true;
+            contentStr = this.hasTitleAlertStr(obj),
+            //className = this.alertObj.className,
+            hasTitle = true;
         }else{
             contentStr = this.noTitleAlertStr(obj);
         }
+        if(obj.className)className+=(" "+obj.className);
         let dom:HTMLElement = this.getDomStr(contentStr,className);
         let end:any = obj.endCallback?obj.endCallback:null;
         this.appendDom(dom);
+        this.removeHide(dom);
         try{
             obj.showCallback&&obj.showCallback.call(this);
         }catch(e){}
@@ -298,8 +351,9 @@ class stlLayer{
         let contentStr:string = this.getOpenStr(obj,iconStr);
         let openTypeClassName = obj.type === 2?this.openObj.classNameTwo:"";
         let dom:HTMLElement = this.getDomStr(contentStr+iconStr+closeStr,this.openObj.className+" "+openTypeClassName);
-        if(obj.bg)this.bgDom = this.getBgDom(this.openObj.bgClassName),this.appendDom(this.bgDom),this.addBgEvent(this.bgDom,end);
+        if(obj.bg)this.bgDom = this.getBgDom(this.openObj.bgClassName),this.addBgDom(end,obj.bgClose);
         this.appendDom(dom);
+        this.removeHide(dom);
         this.times++;
         try{obj.showCallback&&obj.showCallback.call(this)}catch(e){};
         if(closeStr !== ""){
@@ -332,8 +386,9 @@ class stlLayer{
         let obj = mergeOptions({},this.modalObj.parameter,data),end = obj.end?obj.end:null;
         let contentStr:string = this.getModalFn(obj);
         let dom:HTMLElement = this.getDomStr(contentStr,this.modalObj.className);
-        if(obj.bg)this.bgDom = this.getBgDom(this.modalObj.bgClassName),this.appendDom(this.bgDom),this.addBgEvent(this.bgDom,end);
+        if(obj.bg)this.bgDom = this.getBgDom(this.modalObj.bgClassName),this.addBgDom(end,obj.bgClose);
         this.appendDom(dom);
+        this.removeHide(dom);
         this.times++;
         try{obj.showCallback&&obj.showCallback.call(this)}catch(e){};
         if(obj.hasClose){
@@ -354,8 +409,10 @@ class stlLayer{
       addEvent(dom,"click",function(){
         let id:string = dom.getAttribute("times");
         let box:Element = document.getElementsByClassName("stl-layer"+id)[0];
-        document.body.removeChild(dom);
-        document.body.removeChild(box);
+        that.closeBoxFn(dom);
+        that.closeBoxFn(box);
+        // document.body.removeChild(dom);
+        // document.body.removeChild(box);
         that.bgDom = null;
         try{end&&end()}catch(e){};
       })
@@ -382,8 +439,11 @@ class stlLayer{
     private closeFn(dom:any){
         // removeEvent(dom,"click",this.closeCallback);
         // this.closeCallback = null;
-        document.body.removeChild(parent(dom,".stl-layer"));
-        if(this.bgDom)document.body.removeChild(this.bgDom),this.bgDom = null;
+        //document.body.removeChild(parent(dom,".stl-layer"));
+        
+        let box = parent(dom,".stl-layer");
+        this.closeBoxFn(box);
+        if(this.bgDom)this.closeBoxFn(this.bgDom),this.bgDom = null;
         // let that:any = this;
         // if(type){
         //     each(this.btnDom,function(value:any,key:any){
@@ -398,8 +458,10 @@ class stlLayer{
     private autoClose(type:string,dom:HTMLElement,time:number,end?:()=>void){
         let that = this;
         this.timeoutList[type] = setTimeout(function(){
-            document.body.removeChild(dom);
-            if(that.bgDom)document.body.removeChild(that.bgDom),that.bgDom = null;
+            //document.body.removeChild(dom);
+            //if(that.bgDom)document.body.removeChild(that.bgDom),that.bgDom = null;
+            that.closeBoxFn(dom);
+            if(that.bgDom)that.closeBoxFn(that.bgDom),that.bgDom = null;
             that.timeoutList[type] = null;
             try{end&&end()}catch(e){};
         },time)
@@ -455,7 +517,7 @@ class stlLayer{
                 <p class="${this.tipObj.className}-p" style="${styleStr}">${content}</p>
                 <em class="${this.tipObj.className}-em ${this.tipObj.className}-em-${obj.position}"></em>
             </div>`;
-        let dom:HTMLElement = this.getDomStr(str,this.tipObj.className+" "+this.tipObj.hideClassName);
+        let dom:HTMLElement = this.getDomStr(str,this.tipObj.className+" "+this.tipObj.hideClassName+" "+this.tipObj.transitionClassName);
         this.getTipPosition(dom,that,obj);
         this.times++;
         this.autoClose("tips",dom,obj.time,end)
@@ -469,6 +531,7 @@ class stlLayer{
         let width:number = that.offsetWidth;
         let height:number = that.offsetHeight;
         document.body.appendChild(dom);
+        this.removeHide(dom);
         let domWidth:number = dom.offsetWidth;
         let domHeight:number = dom.offsetHeight;
         let leftNum:number = left+width/2-domWidth/2
@@ -514,6 +577,51 @@ class stlLayer{
                 else dom.style.left = positionRight+"px";
         } 
         removeClass(dom,"stl-layer-tip-hide");
+    }
+    custom(data:customParameter){
+        let obj = mergeOptions({},this.customObj.parameter,data),end = obj.endCallback?obj.endCallback:null;
+        let closeStr = obj.hasClose?this.getCloseStr(this.customObj.closeClassName):"";
+        let dom:HTMLElement = this.getDomStr(closeStr,this.customObj.className);
+        let content = this.getCustomFn(obj);
+        dom.appendChild(content);
+        if(obj.bg)this.bgDom = this.getBgDom(this.customObj.bgClassName),this.addBgDom(end,obj.bgClose);
+        this.appendDom(dom);
+        this.removeHide(dom);
+        this.times++;
+        try{obj.showCallback&&obj.showCallback.call(this)}catch(e){};
+        if(obj.hasClose){
+            let closeDom:Element = dom.getElementsByClassName(this.customObj.closeClassName)[0];
+            this.addCloseEventFn(closeDom,end);
+        }
+        if(obj.determineBtn){
+            let determineBox:Element = dom.getElementsByClassName(this.customObj.determineClassName)[0];
+            this.addOpenBtnFn(determineBox,obj.determineFn,end);
+        };
+        if(obj.cancelBtn){
+            let cancelBox:Element = dom.getElementsByClassName(this.customObj.cancelClassName)[0];
+            this.addOpenBtnFn(cancelBox,obj.cancelFn,end);
+        }
+    }
+    private getCustomFn(obj:customParameter){
+        let dom = document.createElement("div");
+        dom.className = this.customObj.contentClassName;
+        if(typeof obj.content === "string"){
+            dom.innerHTML = (<string>obj.content);
+        }else{
+            dom.appendChild((<HTMLElement>obj.content));
+        }
+        this.getCustomBtnFn(dom,obj)
+        return dom;
+    }
+    private getCustomBtnFn(dom:HTMLElement,obj:customParameter){
+        if(obj.determineBtn||obj.cancelBtn){
+            let box:any = document.createElement("div");
+            box.className = this.customObj.footClassName;
+            let str:string = `${obj.determineBtn?`<div class="stl-layer-custom-btn ${this.customObj.determineClassName}">${obj.determineText}</div>`:""}
+                        ${obj.cancelBtn?`<div class="stl-layer-custom-btn ${this.customObj.cancelClassName}">${obj.cancelText}</div>`:""}`   
+            box.innerHTML = str;
+            dom.appendChild(box);
+        }
     }
 }
 

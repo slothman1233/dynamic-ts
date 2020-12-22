@@ -14,7 +14,7 @@ let option = {
     poster: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3893146502,314297687&fm=27&gp=0.jpg',
     // autoplay: 'autoplay',
     // preload: "none",
-    loop:true,
+    loop:false,
     //iconfont:{play:"&#xE001;",pause:"&#xE002;",volume:"&#xE001;",volumeSilent:"&#xE001;",fullScreen:"&#xC001;",exitFullScreen:"&#xC003;"},
     fullScreenDom:document.getElementById("fullDom"),
     //loadWaitingDom:`<div class='loader-content' style="width:90px;height:27px;"><img src="https://img.wbp5.com/upload/files/master/2020/11/11/135946429.gif" /></div>`
@@ -23,12 +23,18 @@ BlVideo.operation.load("videojs", option);
 BlVideo.hooks.videoTimeupdate = function(){
     console.log(this,(document.getElementById('videojs_1') as HTMLMediaElement).currentTime);
 }
-BlVideo.hooks.videoPlay = function(){
-    console.log("paly")
+BlVideo.hooks.changeFullScreen = function(type:any){
+    console.log("切换全屏："+type)
 }
-BlVideo.hooks.videoPause = function(){
-    console.log("pause")
-}
+// BlVideo.hooks.videoPlay = function(){
+//     console.log("paly")
+// }
+// BlVideo.hooks.videoPause = function(){
+//     console.log("pause")
+// }
+// BlVideo.hooks.videoEnded = function(){
+//     setTimeout(play,5000)
+// }
 
 // BlVideo.hooks.videoTimeupdate = function () {
 //     console.log('videoTimeupdate');
@@ -77,38 +83,38 @@ BlVideo.hooks.videoPause = function(){
 //     console.log(error);
 // }
 
-// function play() {
-//     BlVideo.operation.playVideo()
-// }
+function play() {
+    BlVideo.operation.playVideo()
+}
 
-// function pause() {
-//     BlVideo.operation.pauseVideo()
-// }
+function pause() {
+    BlVideo.operation.pauseVideo()
+}
 
-// function fullScreen() {
-//     BlVideo.operation.fullScreenVideo()
-// }
+function fullScreen() {
+    BlVideo.operation.fullScreenVideo()
+}
 
-// function muteVideo() {
-//     BlVideo.operation.muteVideo()
-// }
+function muteVideo() {
+    BlVideo.operation.muteVideo()
+}
 
-// function reLoad() {
-//     BlVideo.operation.reLoadVideo()
-// }
+function reLoad() {
+    BlVideo.operation.reLoadVideo()
+}
 
-// function restoreVoice() {
-//     BlVideo.operation.restoreVoice()
-// }
+function restoreVoice() {
+    BlVideo.operation.restoreVoice()
+}
 
-// function seek(seekpoint) {
-//     const seekPoint = document.getElementsByClassName('seek-point')[0];
-//     seekpoint !== undefined ? BlVideo.operation.seekTo(seekpoint) : BlVideo.operation.seekTo(seekPoint.value);
-// }
+function seek(seekpoint:any) {
+    // const seekPoint = document.getElementsByClassName('seek-point')[0];
+    // seekpoint !== undefined ? BlVideo.operation.seekTo(seekpoint) : BlVideo.operation.seekTo(seekPoint.value);
+}
 
-// function changeSource() {
-//     BlVideo.operation.changeSource(
-//         `http://flv60ff766a.live.126.net/live/63666a6da1db4ba1b2e9e05c838f5cdc.flv?netease=flv60ff766a.live.126.net`,
-//         'flv'
-//     )
-// }
+function changeSource() {
+    BlVideo.operation.changeSource(
+        `https://file.wbp5.com/upload/files/video/master/2020/11/07/110224117.mp4`,
+        'mp4'
+    )
+}

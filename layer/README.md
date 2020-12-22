@@ -54,6 +54,7 @@ ts:
     参数：   
         obj:{} 包含9个属性     
             content:string 显示的内容（必传）     
+            className:string 自定义类名（非必传）
             title:string 显示的标题（非必传）   
             icon:number 图标类型（非必传）   
             iconColor:string 自定义图标颜色（非必传） 
@@ -67,14 +68,15 @@ ts:
 3.layer.open(obj)   
     方法说明：通知提示框    
     参数：   
-        obj:{} 包含14个属性     
+        obj:{} 包含16个属性     
             content:string 显示的内容（必传）     
             title:string 显示的标题（必传）   
             icon:number 图标类型（非必传）
             iconColor:string 自定义图标颜色（非必传）
             type:1|2 提示框风格 1为正常大小，2为modal框大小 默认为1（非必传） 
             hasClose:boolean 是否有关闭按钮 默认为true（非必传）   
-            bg:boolean 是否有背景遮罩 默认为true（非必传）   
+            bg:boolean 是否有背景遮罩 默认为true（非必传）  
+             bgClose?:boolean 点击背景遮罩是否关闭弹窗 默认true （非必传） 
             determineBtn:boolean 是否有确定按钮 默认为false（非必传）  
             determineText:string 确定按钮文案 默认为“确定”（非必传） 
             determineFn:()=>void 确定按钮点击的方法（非必传）
@@ -87,11 +89,12 @@ ts:
 3.layer.modal(obj)   
     方法说明：通知提示框    
     参数：   
-        obj:{} 包含12个属性     
+        obj:{} 包含13个属性     
             content:string 显示的内容（必传）     
             title:string 显示的标题（必传）   
             hasClose:boolean 是否有关闭按钮 默认为true（非必传）   
-            bg:boolean 是否有背景遮罩 默认为true（非必传）   
+            bg:boolean 是否有背景遮罩 默认为true（非必传）  
+            bgClose?:boolean 点击背景遮罩是否关闭弹窗 默认true （非必传）
             determineBtn:boolean 是否有确定按钮 默认为false（非必传）  
             determineText:string 确定按钮文案 默认为“确定”（非必传） 
             determineFn:()=>void 确定按钮点击的方法（非必传）
@@ -106,10 +109,10 @@ ts:
     参数：
         obj:{} 包含5个属性
             img:string loading图片地址
-            bg?:boolean 是否显示背景遮罩 默认true
-            width?:number loading图片显示的宽度 默认60
-            height?:number loading图片显示的高度 默认60
-            parent?:HTMLElement loading框显示的父元素，如果传入了此参数 "bg"参数将无效
+            bg?:boolean 是否显示背景遮罩 默认true（非必传）
+            width?:number loading图片显示的宽度 默认60（非必传）
+            height?:number loading图片显示的高度 默认60（非必传）
+            parent?:HTMLElement loading框显示的父元素，如果传入了此参数 "bg"参数将无效（非必传）
 
     关闭方法：layer.closeLoad()
     参数：parent?:HTMLElement 如果调用layer.loading方法时传入了“parent”参数，则关闭此load框时也需要传入“parent”参数
@@ -123,6 +126,22 @@ ts:
             time?:number 关闭的时间 默认3000
             position?:"top"|"bottom"|"left"|"right" 显示在定位元素的位置 默认"top"
             maxWidth?:number tip层的最大宽度
+5.layer.custom(data)
+    方法说明：自定义弹出层
+    参数：
+        data:{} 包含12个属性
+            content:string|HTMLElement 自定义弹出层的内容 可以传元素也可以传模板字符串（必传）
+            hasClose?:boolean 是否有关闭按钮 默认为true(非必传)
+            determineBtn?:boolean 是否有确定按钮 默认为false（非必传）
+            determineText?:string 确定按钮文案 默认为“确定”（非必传）
+            determineClickFn?:()=>void 确定按钮点击事件的回调（非必传）
+            cancelBtn?:boolean 是否有取消按钮 默认为false（非必传）
+            cancelText?:string 取消按钮文案 默认为“取消”（非必传）
+            cancelClickFn?:()=>void 取消按钮点击事件的回调（非必传）
+            bg?:boolean 是否有背景遮罩 默认为true（非必传）
+            bgClose?:boolean 点击背景遮罩是否关闭弹窗 默认为true（非必传）
+            showCallback?:()=>void 弹窗显示后的回调（非必传）
+            endCallback?:()=>void 弹窗关闭后的回调（非必传）
 ```
 ### 图标说明
 ```

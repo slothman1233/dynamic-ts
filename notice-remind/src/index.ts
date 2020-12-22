@@ -6,6 +6,7 @@ import { getDataType } from "@stl/tool-ts/src/common/obj/getDataType"
 interface parameter {
   close?:boolean//是否有关闭按钮
   cancel?:boolean//是否有不再显示弹窗按钮
+  cancelCloseAll?:boolean//点击不再显示弹窗按钮是否关闭所有当前已显示的弹窗
   autoClose?:boolean//是否自动关闭
   closeTime?:number//自动关闭时间
   number?:number//每次允许显示的最大数量
@@ -32,7 +33,7 @@ export class NoticeRemind {
   showIndex:number = 0;
   cancelKey:boolean = true;
   noticeList:Array<any> = [];
-  initOption:parameter = {close:false,cancel:true,autoClose:true,closeTime:3000,number:1,top:195,right:23,}
+  initOption:parameter = {close:false,cancel:true,autoClose:true,closeTime:3000,number:1,top:195,right:23,cancelCloseAll:true}
   constructor(option:parameter){
     this.option = mergeOptions({},this.initOption,option);
     this.getParent();
@@ -53,9 +54,12 @@ export class NoticeRemind {
         events:"click",
         ele:".notice_cancel",
         fn:function(){
-          that.closeAll.call(that);
-          that.cancelKey = false;
-          that.option.cancelCallback&&that.option.cancelCallback();
+          if(that.option.cancelCloseAll)that.closeAll.call(that);
+          if(that.option.cancelCallback){
+            that.option.cancelCallback();
+          }else{
+            that.cancelKey = false;
+          }
         }
       })
     }
@@ -105,7 +109,7 @@ export class NoticeRemind {
   }
   private getNewNotice(obj:htmlStr){//生成模板字符串
     let closeStr:string = this.option.close?`<i class="notice_close_box" type="${this.index}">×</i>`:"";
-    let cancelStr:string = this.option.cancel?`<div class="notice_cancel_box"><i class="notice_cancel"></i><span>不再弹窗</span></div>`:"";
+    let cancelStr:string = this.option.cancel?`<div class="notice_cancel_box"><i class="notice_cancel"></i><span>不再弹出</span></div>`:"";
     let str:string = `${closeStr}${cancelStr}
       <div class="notice_head_box ${this.option.cancel?'notice_head_cancel':''}">${obj.headStr?obj.headStr:""}</div>
       <div class="notice_content_box">${obj.contentStr}</div>

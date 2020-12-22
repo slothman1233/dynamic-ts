@@ -6,6 +6,7 @@ declare class videoToolBar extends Component {
     frontWidth: any;
     playEl: any;
     pauseEl: any;
+    playBtn: any;
     reLoadEl: any;
     fullScreenEl: any;
     volumeEl: any;
@@ -29,6 +30,8 @@ declare class videoToolBar extends Component {
     exitFullScreenEl: any;
     moveTime: any;
     isClickFlag: boolean;
+    fullScreenChangeKey: boolean;
+    fullScreenKey: boolean;
     iconfontList: any;
     clickTimeId: any;
     isInVideoContainer: boolean;
@@ -108,6 +111,7 @@ declare class videoToolBar extends Component {
     changeFullScreenOrExit(): void;
     getFullscreenElement(): any;
     exitorFullscreen(el: any): void;
+    fullScreenChange(): void;
     /**
      * 判断鼠标位置是否在范围内 如果是的 就显示控制条 如果不是则隐藏   默认为显示三秒,三秒后隐藏如果鼠标移动到可操作范围内就自动取消三秒后隐藏事件
      */

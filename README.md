@@ -86,3 +86,45 @@
 # 弹幕插件
 ### 文件说明请移步到npm私服插件
 ### 链接地址 [@stl/barrager](http://47.113.105.208:8088/-/web/detail/@stl/barrager)
+
+***
+
+# 分享插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/share](http://47.113.105.208:8088/-/web/detail/@stl/share)
+
+***
+
+# 二维码生成插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/qrcode](http://47.113.105.208:8088/-/web/detail/@stl/qrcode)
+
+***
+
+# 播放器插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/stl-video](http://47.113.105.208:8088/-/web/detail/@stl/stl-video)
+
+***
+
+# layer插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/layer](http://47.113.105.208:8088/-/web/detail/@stl/layer)
+
+***
+
+# 消息通知插件
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/notice-remind](http://47.113.105.208:8088/-/web/detail/@stl/notice-remind)
+
+***
+
+# 自定义微信分享
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/wxShare](http://47.113.105.208:8088/-/web/detail/@stl/wxShare)
+
+***
+
+# 简易swiper（lable切换h5轮播图）
+### 文件说明请移步到npm私服插件
+### 链接地址 [@stl/stl-swiper](http://47.113.105.208:8088/-/web/detail/@stl/stl-swiper)

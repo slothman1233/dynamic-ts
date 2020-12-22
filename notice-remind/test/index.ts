@@ -1,7 +1,7 @@
 import { NoticeRemind } from "../src/index"
 import { addEvent } from "@stl/tool-ts/src/common/compatible"
 
-let stlNoticeRemind:any = new NoticeRemind({number:3,closeTime:5000,left:50,bottom:50,showCallback:(obj:any)=>{console.log(obj)}});
+let stlNoticeRemind:any = new NoticeRemind({number:3,autoClose:false,left:50,bottom:50,showCallback:(obj:any)=>{console.log(obj)}});
 
 let dom:any = document.getElementById("btn");
 let doms:any = document.getElementById("btns");

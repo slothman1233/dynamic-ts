@@ -23,6 +23,8 @@ class optionModel {
   streamTimeoutTime: number = 30 * 1000;
   //播放器元素
   play: any;
+  //播放按钮图片
+  playBtnSrc:string;
   //流的链接地址
   streamLink: any = { hls: null, flv: null, trmp: null, mp4: null }
   //语言类型
