@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-11-03 08:52:35
+ * @LastEditTime: 2020-12-22 15:08:46
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -102,15 +102,26 @@ export default class PowerPlugin {
         }
     }
     get userInfo(): any {
-        const res = getCacheCheckTime(this.authUserInfoKey)
-        if (res === null) {
-            // 过期 重新登录
+        const key = isInMFE ? MFE_USER_INFO_KEY : this.authUserInfoKey
+        const res = getCacheCheckTime(key)
+        if (!res) {
+            // 过期 重新登录 因为一定会拿用户信息
             this.logout()
+            return null
         }
-        return res
+        return isInMFE ? res[this.authUserInfoKey] : res
     }
     set userInfo(val) {
-        setCacheAddTime(this.authUserInfoKey, val)
+        isInMFE
+            ? this.mfeUserInfoSet(val)
+            : setCacheAddTime(this.authUserInfoKey, val)
+    }
+    mfeUserInfoSet(val) {
+        let res: any = getCacheCheckTime(MFE_USER_INFO_KEY)
+        res = !res
+            ? { [this.authUserInfoKey]: val }
+            : { ...res, [this.authUserInfoKey]: val }
+        setCacheAddTime(MFE_USER_INFO_KEY, res)
     }
     // 用户信息
     get authUserInfoKey() {
@@ -127,7 +138,8 @@ export default class PowerPlugin {
             this.token = token
             // 获取到token之后 对url进行重置
             const search = location.search
-            search && history.replaceState({}, document.title, location.pathname)
+            search &&
+                history.replaceState({}, document.title, location.pathname)
             return await this.getUserInfo()
         } else if (this.userInfo) {
             // 先使用缓存 #正常
@@ -251,9 +263,14 @@ export default class PowerPlugin {
     }
 
     HasBtn(key: string) {
-        return (target: any, propName: string) => {
+        return (target: any, propName: string, descriptor) => {
             if (!this.userInfo) return
-            target[propName] = this.userInfo?.permissionList.includes(key)
+            if (descriptor) {
+                descriptor.get = () =>
+                    this.userInfo?.permissionList.includes(key)
+            } else {
+                target[propName] = this.userInfo?.permissionList.includes(key)
+            }
         }
     }
 }
