@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-07-07 11:04:01
- * @LastEditTime: 2020-12-22 15:08:46
+ * @LastEditTime: 2020-12-22 16:18:32
  */
 import VueRouter, { RouteConfig } from 'vue-router'
 import HttpService from '@stl/request'
@@ -103,7 +103,7 @@ export default class PowerPlugin {
     }
     get userInfo(): any {
         const key = isInMFE ? MFE_USER_INFO_KEY : this.authUserInfoKey
-        const res = getCacheCheckTime(key)
+        const res: any = getCacheCheckTime(key)
         if (!res) {
             // 过期 重新登录 因为一定会拿用户信息
             this.logout()
@@ -111,12 +111,12 @@ export default class PowerPlugin {
         }
         return isInMFE ? res[this.authUserInfoKey] : res
     }
-    set userInfo(val) {
+    set userInfo(val: any) {
         isInMFE
             ? this.mfeUserInfoSet(val)
             : setCacheAddTime(this.authUserInfoKey, val)
     }
-    mfeUserInfoSet(val) {
+    mfeUserInfoSet(val: any) {
         let res: any = getCacheCheckTime(MFE_USER_INFO_KEY)
         res = !res
             ? { [this.authUserInfoKey]: val }
@@ -263,7 +263,7 @@ export default class PowerPlugin {
     }
 
     HasBtn(key: string) {
-        return (target: any, propName: string, descriptor) => {
+        return (target: any, propName: string, descriptor?: any) => {
             if (!this.userInfo) return
             if (descriptor) {
                 descriptor.get = () =>
