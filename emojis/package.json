@@ -1,6 +1,6 @@
 {
     "name": "@stl/emojis",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "内部表情解析插件",
     "main": "dist/index.js",
     "scripts": {
@@ -11,10 +11,8 @@
     },
     "author": "EveChee",
     "license": "ISC",
-    "dependencies": {
-        
-    },
-    "devDependencies":{
+    "dependencies": {},
+    "devDependencies": {
         "mocha": "^8.0.1",
         "expect.js": "^0.3.1",
         "chai": "^4.2.0",
