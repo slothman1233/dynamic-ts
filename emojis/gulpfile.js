@@ -1,3 +1,10 @@
+/*
+ * @Author: EveChee
+ * @Date: 2020-12-24 13:53:55
+ * @LastEditors: EveChee
+ * @LastEditTime: 2020-12-25 09:34:53
+ * @Description: file content
+ */
 var gulp = require("gulp");
 var karmaServer = require('karma').Server;
 // const rollup = require('rollup');
@@ -29,6 +36,10 @@ gulp.task('clean:dist', function(cb) {
     return del([
         'dist/**/*'
     ], cb);
+});
+gulp.task('copy:dist', function(cb) {
+    return gulp.src('src/**/*.json')
+    .pipe(gulp.dest('dist'))
 });
 
 gulp.task('clean:test', function(cb) {

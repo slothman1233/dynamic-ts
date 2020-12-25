@@ -1,11 +1,11 @@
 {
     "name": "@stl/emojis",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "内部表情解析插件",
     "main": "dist/index.js",
     "scripts": {
-        "dev": "gulp clean:dist && rollup -c --environment NODE_ENV:development",
-        "build": "gulp clean:dist && rollup -c --environment NODE_ENV:production",
+        "dev": "gulp clean:dist && rollup -c --environment NODE_ENV:development && gulp copy:dist",
+        "build": "gulp clean:dist && rollup -c --environment NODE_ENV:production && gulp copy:dist",
         "watch": "rollup -c --watch --environment NODE_ENV:development",
         "test": "gulp clean:test && karma start"
     },
