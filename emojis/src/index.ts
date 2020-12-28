@@ -2,10 +2,11 @@
  * @Author: EveChee
  * @Date: 2020-12-24 13:53:55
  * @LastEditors: EveChee
- * @LastEditTime: 2020-12-28 15:34:10
+ * @LastEditTime: 2020-12-28 16:12:15
  * @Description: file content
  */
 import HttpService from '@stl/request'
+// import HttpService from '../test/src'
 const EMOJI_CONFIG = require('./emojis.json')
 const BASE_URL = 'http://testfxchatapi.wbp5.com'
 
@@ -26,7 +27,7 @@ export default class Emojis {
     public BASE_URL = ''
     public all = EMOJI_CONFIG
     public oldAll = EMOJI_CONFIG
-    public http:HttpService
+    public http: HttpService
     constructor(otps?: EmojiOptions) {
         this.BASE_URL = otps?.BASE_URL || BASE_URL
         this.http = new HttpService(this.BASE_URL)
@@ -34,12 +35,17 @@ export default class Emojis {
     // 替换含有内部表情的标签为图片展示
     public replaceEmojisIntoImgs(content: string) {
         return content.replace(/\[(.*?)\]/g, (tag, name) => {
-            const matched = Array.isArray(this.all)
-                ? this.all.find(
-                      (_: { ExpressionName: string }) =>
-                          _?.ExpressionName === name
-                  )
-                : this.oldAll[tag]
+            let matched:any
+            if (Array.isArray(this.all)) {
+                matched =
+                    this.all.find(
+                        (_: { ExpressionName: string }) =>
+                            _?.ExpressionName === name
+                    ) || this.oldAll[tag]
+            } else {
+                matched = this.oldAll[tag]
+            }
+          
             return matched
                 ? `<img src="${matched.ExpressionUrl || matched.Url}"/>`
                 : tag

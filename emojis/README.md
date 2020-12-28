@@ -2,12 +2,12 @@
  * @Author: EveChee
  * @Date: 2020-12-24 13:53:55
  * @LastEditors: EveChee
- * @LastEditTime: 2020-12-28 16:00:25
+ * @LastEditTime: 2020-12-28 16:13:11
  * @Description: file content
 -->
 
 # Emojis 表情处理插件
-
+(兼容fx110老表情以及汇聊表情)
 ## 内置导出 Emojis 类
 
 实例化参数(\*为必传) 两个参数
