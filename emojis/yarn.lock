@@ -691,6 +691,14 @@
     "@babel/helper-create-regexp-features-plugin" "^7.12.1"
     "@babel/helper-plugin-utils" "^7.10.4"
 
+"@babel/polyfill@^7.10.4":
+  version "7.12.1"
+  resolved "http://47.113.105.208:8088/@babel%2fpolyfill/-/polyfill-7.12.1.tgz#1f2d6371d1261bbd961f3c5d5909150e12d0bd96"
+  integrity sha1-Hy1jcdEmG72WHzxdWQkVDhLQvZY=
+  dependencies:
+    core-js "^2.6.5"
+    regenerator-runtime "^0.13.4"
+
 "@babel/preset-env@^7.11.0":
   version "7.12.11"
   resolved "http://47.113.105.208:8088/@babel%2fpreset-env/-/preset-env-7.12.11.tgz#55d5f7981487365c93dbbc84507b1c7215e857f9"
@@ -849,6 +857,16 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
+"@stl/request@1.2.7":
+  version "1.2.7"
+  resolved "http://47.113.105.208:8088/@stl%2frequest/-/request-1.2.7.tgz#d4b316d745c7a7748dd5e2042df84eb2d50e7019"
+  integrity sha512-SdH92+7OK02Kq99+UHJ2OJX/xgvxYPe9IXTUS8mGIR+I1XNk4adp5sG6gdWjyLBqPKTvtF1Mpu20zVq3eLWOiA==
+  dependencies:
+    "@babel/polyfill" "^7.10.4"
+    "@types/qs" "^6.9.4"
+    axios "^0.19.2"
+    qs "^6.9.4"
+
 "@stl/tool-ts@^0.2.4":
   version "0.2.5"
   resolved "http://47.113.105.208:8088/@stl%2ftool-ts/-/tool-ts-0.2.5.tgz#48e1f20e7b8ad96f4649ac2af2e2ba2877ff738b"
@@ -916,6 +934,11 @@
   version "1.5.4"
   resolved "http://47.113.105.208:8088/@types%2fq/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
+
+"@types/qs@^6.9.4":
+  version "6.9.5"
+  resolved "http://47.113.105.208:8088/@types%2fqs/-/qs-6.9.5.tgz#434711bdd49eb5ee69d90c1d67c354a9a8ecb18b"
+  integrity sha1-Q0cRvdSete5p2QwdZ8NUqajssYs=
 
 "@types/resolve@0.0.8":
   version "0.0.8"
@@ -1316,6 +1339,13 @@ aws4@^1.8.0:
   version "1.11.0"
   resolved "http://47.113.105.208:8088/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha1-1h9G2DslGSUOJ4Ta9bCUeai0HFk=
+
+axios@^0.19.2:
+  version "0.19.2"
+  resolved "http://47.113.105.208:8088/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  integrity sha1-PqNsXYgY0NX4qKl6bTa4bNwAyyc=
+  dependencies:
+    follow-redirects "1.5.10"
 
 babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -2222,7 +2252,7 @@ core-js-compat@^3.8.0:
     browserslist "^4.15.0"
     semver "7.0.0"
 
-core-js@^2.4.0, core-js@^2.5.0:
+core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.5:
   version "2.6.12"
   resolved "http://47.113.105.208:8088/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha1-2TM9+nsGXjR8xWgiGdb2kIWcwuw=
@@ -2515,19 +2545,19 @@ debug@4.2.0:
   dependencies:
     ms "2.1.2"
 
+debug@=3.1.0, debug@~3.1.0:
+  version "3.1.0"
+  resolved "http://47.113.105.208:8088/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
+  dependencies:
+    ms "2.0.0"
+
 debug@^4.1.0, debug@^4.1.1:
   version "4.3.1"
   resolved "http://47.113.105.208:8088/debug/-/debug-4.3.1.tgz#f0d229c505e0c6d8c49ac553d1b13dc183f6b2ee"
   integrity sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=
   dependencies:
     ms "2.1.2"
-
-debug@~3.1.0:
-  version "3.1.0"
-  resolved "http://47.113.105.208:8088/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
-  dependencies:
-    ms "2.0.0"
 
 debug@~4.1.0:
   version "4.1.1"
@@ -3279,6 +3309,13 @@ flush-write-stream@^1.0.2:
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
+
+follow-redirects@1.5.10:
+  version "1.5.10"
+  resolved "http://47.113.105.208:8088/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
+  dependencies:
+    debug "=3.1.0"
 
 follow-redirects@^1.0.0:
   version "1.13.1"
@@ -6137,6 +6174,11 @@ qs@6.7.0:
   version "6.7.0"
   resolved "http://47.113.105.208:8088/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha1-QdwaAV49WB8WIXdr4xr7KHapsbw=
+
+qs@^6.9.4:
+  version "6.9.4"
+  resolved "http://47.113.105.208:8088/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
+  integrity sha1-kJCykNH5FyjTwi5UhDykSupatoc=
 
 qs@~6.5.2:
   version "6.5.2"

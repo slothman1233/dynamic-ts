@@ -4,6 +4,7 @@ const paths = {
         jsfile: "./dist/index.js", //js输出文件
         lessfile: "./dist/index.css", //样式输出的文件 默认是在dist文件下
         format: "umd", //输出格式：立即执行函数表达式   which can be one of 'amd', 'cjs', 'system', 'esm', 'iife' or 'umd'
+        externals: ['@stl/request'],
         name: "Emojis", //umd or iife 下的方法的命名 
     }
 }
