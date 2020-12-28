@@ -25,6 +25,7 @@ interface EmojiOptions {
 export default class Emojis {
     public BASE_URL = ''
     public all = EMOJI_CONFIG
+    public oldAll = EMOJI_CONFIG
     public http:HttpService
     constructor(otps?: EmojiOptions) {
         this.BASE_URL = otps?.BASE_URL || BASE_URL
@@ -38,7 +39,7 @@ export default class Emojis {
                       (_: { ExpressionName: string }) =>
                           _?.ExpressionName === name
                   )
-                : this.all[tag]
+                : this.oldAll[tag]
             return matched
                 ? `<img src="${matched.ExpressionUrl || matched.Url}"/>`
                 : tag
