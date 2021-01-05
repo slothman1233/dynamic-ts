@@ -1,0 +1,38 @@
+{
+  "name": "@stl/iconfont",
+  "version": "1.0.4",
+  "description": "SVG生成字体包，并生成css 样式引用",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/w3cui/iconfont.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-consolidate": "^0.2.0",
+    "gulp-iconfont": "^3.1.2",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-task-listing": "^1.0.1",
+    "gulp-template": "^3.1.0",
+    "gulp-watch": "^5.0.1",
+    "svgtofont": "^1.1.19"
+  },
+  "dependencies": {
+    "consolidate": "^0.15.1",
+    "natives": "^1.1.6"
+  },
+  "bugs": {
+    "url": "https://github.com/w3cui/iconfont/issues"
+  },
+  "homepage": "https://github.com/w3cui/iconfont#readme",
+  "keywords": [
+    "iconfont"
+  ]
+}

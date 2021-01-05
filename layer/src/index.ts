@@ -7,6 +7,8 @@ import { removeClass } from "@stl/tool-ts/src/common/dom/removeClass"
 import { addClass } from "@stl/tool-ts/src/common/dom/addClass"
 import { parent } from "@stl/tool-ts/src/common/dom/parent"
 import { each } from "@stl/tool-ts/src/common/obj/each"
+
+declare let layerIconfontUrl:any;
 interface msgOption{
     icon?:number,
     iconColor?:string,
@@ -80,7 +82,7 @@ interface customParameter{
 }
 class stlLayer{
     times:number = 1
-    iconfontSrc:string = "https://js.wbp5.com/iconfont/build/layer/iconfont.css?v=888"
+    iconfontSrc: string = "https://js.wx168e.com/iconfont/build/layer/iconfont.css?v=888";
     iconList:any = {
         11:"&#xA001;",12:"&#xA002;",//1开头为‘✔’的图标
         21:"&#xA003;",22:"&#xA004;",//2开头为‘×’的图标
@@ -190,6 +192,9 @@ class stlLayer{
     closeCallback:(e:any)=>void
     alertBtnCallback:(e:any)=>void
     constructor(){
+        try{
+            this.iconfontSrc = layerIconfontUrl+"/iconfont/build/layer/iconfont.css?v=888";
+        }catch(e){}
         let arr:Array<string> = [this.iconfontSrc];
         addLinkLoad(arr);
     }

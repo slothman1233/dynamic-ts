@@ -109,14 +109,16 @@ export function clickScrollX(event:any,that:any){//点击横向滚动条
     addTransformFn(that.sliderDom["x"],"translateX("+clickOffset*100/that.sliderDomSize["x"]+"%)");
 }
 export function scrollSpecifiedPosition(obj:positionScroll){
-    if(obj.left){
-        this.scrollBox.scrollLeft = obj.left;
-        let clickOffset = obj.left*(this.scrollDomSize["x"]-this.sliderDomSize["x"])/(this.contentDomScrollSize["x"] - this.contentDomSize["x"]);
+    if(obj.hasOwnProperty("left")){
+        let maxLeft = this.contentDomScrollSize.x - this.contentDomSize.x;
+        this.scrollBox.scrollLeft = obj.left>maxLeft?maxLeft:obj.left;
+        let clickOffset = this.scrollBox.scrollLeft*(this.scrollDomSize["x"]-this.sliderDomSize["x"])/(this.contentDomScrollSize["x"] - this.contentDomSize["x"]);
         addTransformFn(this.sliderDom["x"],"translateX("+clickOffset*100/this.sliderDomSize["x"]+"%)");
     }
-    if(obj.top){
-        this.scrollBox.scrollTop = obj.top;
-        let clickOffset = obj.top*(this.scrollDomSize["y"]-this.sliderDomSize["y"])/(this.contentDomScrollSize["y"] - this.contentDomSize["y"]);
+    if(obj.hasOwnProperty("top")){
+        let maxTop = this.contentDomScrollSize.y - this.contentDomSize.y;
+        this.scrollBox.scrollTop = obj.top>maxTop?maxTop:obj.top;
+        let clickOffset = this.scrollBox.scrollTop*(this.scrollDomSize["y"]-this.sliderDomSize["y"])/(this.contentDomScrollSize["y"] - this.contentDomSize["y"]);
         addTransformFn(this.sliderDom["y"],"translateY("+clickOffset*100/this.sliderDomSize["y"]+"%)");
     }
 }

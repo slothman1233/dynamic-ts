@@ -87,11 +87,11 @@ export class share {
         if(obj.pop){
             if(!this.popQrcodeObj){
                 this.getQrcodeDom();
-                this.popQrcodeUrl = obj.url;
+                this.popQrcodeUrl = obj.url?obj.url:window.location.href;
                 let data = {text:this.popQrcodeUrl,width:200,height:200};
                 this.popQrcodeObj = new qrcode(this.popQrcodeBox,data)
             }else{
-                if(this.popQrcodeUrl!=obj.url)this.popQrcodeObj.makeCode(obj.url), this.popQrcodeUrl = obj.url;
+                if(obj.url&&obj.url!=""&&this.popQrcodeUrl!=obj.url)this.popQrcodeObj.makeCode(obj.url), this.popQrcodeUrl = obj.url;
             }
             if(this.qrcodeKey&&this.qrcodeParent)show(this.qrcodeParent);
         }

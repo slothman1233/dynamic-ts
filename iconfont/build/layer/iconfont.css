@@ -1,0 +1,57 @@
+@font-face {
+	font-family: "iconfontlayer";
+	src: url('iconfont.eot');
+	src: url('iconfont.eot?#iefix') format('eot'),
+		url('iconfont.woff') format('woff'),
+		url('iconfont.ttf') format('truetype');
+}
+
+.iconfont_layer {
+    font-family: "iconfontlayer" !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 16px;
+    font-weight: normal;
+    /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+    text-decoration: none;
+    text-transform: none;
+}
+
+
+.icon-check-circle-def:before {
+	content: "\A001";
+}
+
+.icon-check-circle-fill-def:before {
+	content: "\A002";
+}
+
+.icon-close-circle-def:before {
+	content: "\A003";
+}
+
+.icon-close-circle-fill-def:before {
+	content: "\A004";
+}
+
+.icon-close-def:before {
+	content: "\A005";
+}
+
+.icon-info-circle-def:before {
+	content: "\A006";
+}
+
+.icon-info-circle-fill-def:before {
+	content: "\A007";
+}
+
+.icon-warning-circle-def:before {
+	content: "\A008";
+}
+
+.icon-warning-circle-fill-def:before {
+	content: "\A009";
+}
