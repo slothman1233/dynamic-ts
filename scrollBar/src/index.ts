@@ -67,7 +67,7 @@ export class scrollBar{
     }
 
     refresh(){//手动刷新滚动条的方法
-        refreshScrollDom.call(this)
+        refreshScrollDom.call(this,true)
     }
     fixedPointScroll(obj:positionScroll){
         scrollSpecifiedPosition.call(this,obj)

@@ -15,7 +15,7 @@ function refreshAddScrollJudgment(type:string,domAttr:string,scrollAttr:string):
             this.scrollDom[type].style.display = "none";
         return;
     }
-    if(this.contentDomSize[type]){//已有滚动条则刷新滚动条高度
+    if(this.scrollDom[type]){//已有滚动条则刷新滚动条高度
         if(this.scrollDom[type].style.display === "none")this.scrollDom[type].style.display = "block";
         getScrollDomSize.call(this,type,domAttr);
     }else{//没有滚动条则添加滚动条
@@ -24,7 +24,7 @@ function refreshAddScrollJudgment(type:string,domAttr:string,scrollAttr:string):
     }
 }
 
-function getScrollContentHeight(type:string,domAttr:string,scrollAttr:string):void{//获取滚动框的高度/宽度 及滚动内容的高度/宽度
+export function getScrollContentHeight(type:string,domAttr:string,scrollAttr:string):void{//获取滚动框的高度/宽度 及滚动内容的高度/宽度
     this.contentDomSize[type] = this.scrollBox[domAttr];
     this.contentDomScrollSize[type] = this.scrollBox[scrollAttr];
 }
@@ -84,24 +84,29 @@ export function initScrollDom(){//初始化添加滚动条元素
     }
 }
 
-export function refreshScrollDom(){//触发刷新滚动条
+export function refreshScrollDom(type?:boolean){//触发刷新滚动条
     switch(this.options.direction){
         case "x":
-            this.contentDomScrollSize["x"] = this.scrollBox.scrollWidth;//重新获取滚动内容的高度
+            // this.contentDomScrollSize["x"] = this.scrollBox.scrollWidth;//重新获取滚动内容的高度
+            getScrollContentHeight.call(this,"x","clientWidth","scrollWidth");
             refreshAddScrollJudgment.call(this,"x","clientWidth","scrollWidth");
             break;
         case "y":
-            this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+            // this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+            getScrollContentHeight.call(this,"y","clientHeight","scrollHeight");            
             refreshAddScrollJudgment.call(this,"y","clientHeight","scrollHeight");
             break;
         case "xy":
-            this.contentDomScrollSize["x"] = this.scrollBox.scrollWidth;
-            this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+            // this.contentDomScrollSize["x"] = this.scrollBox.scrollWidth;
+            // this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+            getScrollContentHeight.call(this,"x","clientWidth","scrollWidth");
+            getScrollContentHeight.call(this,"y","clientHeight","scrollHeight");           
             refreshAddScrollJudgment.call(this,"x","clientWidth","scrollWidth");
             refreshAddScrollJudgment.call(this,"y","clientHeight","scrollHeight");
             break;
         default:
-            this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+            // this.contentDomScrollSize["y"] = this.scrollBox.scrollHeight;
+            getScrollContentHeight.call(this,"y","clientHeight","scrollHeight"); 
             refreshAddScrollJudgment.call(this,"y","clientHeight","scrollHeight");
     }
 }

@@ -58,16 +58,17 @@ addEvent(btn2,"click",function(){
     })
 })
 addEvent(btn3,"click",function(){
-    layer.modal({
-        title:"这是一个标题",
-        content:"这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容",
-        determineFn:()=>{
-            console.log("点击了确定")
-        },
-        cancelFn:()=>{
-            console.log("点击了取消")
-        }
-    })
+    layer.msg("msg...",{icon:11})
+    // layer.modal({
+    //     title:"这是一个标题",
+    //     content:"这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容",
+    //     determineFn:()=>{
+    //         console.log("点击了确定")
+    //     },
+    //     cancelFn:()=>{
+    //         console.log("点击了取消")
+    //     }
+    // })
 })
 addEvent(btn4,"click",function(){
     layer.loading({

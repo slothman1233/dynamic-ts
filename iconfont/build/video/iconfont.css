@@ -1,0 +1,45 @@
+@font-face {
+	font-family: "videoiconfont";
+	src: url('iconfont.eot');
+	src: url('iconfont.eot?#iefix') format('eot'),
+		url('iconfont.woff') format('woff'),
+		url('iconfont.ttf') format('truetype');
+}
+
+.iconfont_video {
+    font-family: "videoiconfont" !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 16px;
+    font-weight: normal;
+    /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+    text-decoration: none;
+    text-transform: none;
+}
+
+
+.icon-big:before {
+	content: "\C001";
+}
+
+.icon-play:before {
+	content: "\C002";
+}
+
+.icon-small:before {
+	content: "\C003";
+}
+
+.icon-yinliang:before {
+	content: "\C004";
+}
+
+.icon-yinliangwu:before {
+	content: "\C005";
+}
+
+.icon-zanting:before {
+	content: "\C006";
+}

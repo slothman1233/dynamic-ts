@@ -1,0 +1,37 @@
+@font-face {
+	font-family: "iconfonteditor";
+	src: url('iconfont.eot');
+	src: url('iconfont.eot?#iefix') format('eot'),
+		url('iconfont.woff') format('woff'),
+		url('iconfont.ttf') format('truetype');
+}
+
+.iconfont_editor {
+    font-family: "iconfonteditor" !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 16px;
+    font-weight: normal;
+    /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+    text-decoration: none;
+    text-transform: none;
+}
+
+
+.icon-b:before {
+	content: "\B001";
+}
+
+.icon-qingchu:before {
+	content: "\B002";
+}
+
+.icon-qingxie:before {
+	content: "\B003";
+}
+
+.icon-tupian:before {
+	content: "\B004";
+}

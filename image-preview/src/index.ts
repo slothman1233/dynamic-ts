@@ -11,12 +11,14 @@ interface imgMagnificationModel{
     closeBgImg?:string;//关闭按钮图片 默认有图片
     bigBgImg?:string;//放大按钮图片  默认有图片
     smallBgImg?:string;//缩小按钮图片 默认有图片
+    titleUpImg?:string;//收起标题按钮图片 默认有图片
     IsBox?:boolean;//是否需要显示背景 默认true
     isPaging?:boolean;//是否需要翻页 默认true
     titleUp?:boolean;//是否需要收起标题按钮  默认false
     titlePosition?:number;//标题层的位置   1表示在图片底部，2表示在页面底部   默认是1
     videoWdith?:number;//视频预览的宽度
     clickCallback?:(dom:any,ev:any)=>boolean;//点击小图显示预览框前的回调
+    showBox?:string;//控制显示图片预览框的元素（非图片元素）此元素必须为parentEle的子元素
 }
 let prevClick:any = "prevClick";
 let nextClick:any = "nextClick";
@@ -56,11 +58,12 @@ let SET_IMAGE_PREVIEW_OBG:any = {
     imgPreviewHeight:window.innerHeight,//窗口高度
     previewEvents:installEvents(),
 }
-function createPreviewDom(key:string,titleUp:boolean,closeBgImg?:string):any{//生成预览框
+function createPreviewDom(keys:string,titleUp:boolean,closeBgImg?:string,titleUpImg?:string):any{//生成预览框
+    let key = keys?keys:"img";
     let imgHtml:HTMLElement = null;let imgBoxBg:HTMLElement = null;
     let titleBtn = titleUp?`<div id="${key==="simg"?"sImgTitleBtn":"imgTitleBtn"}" 
                                 data-type="1" style="height:52px;position:absolute;margin:0;cursor:pointer;line-height:70px;padding:0 10px;z-index:2;">
-                                <img style="width:30px;transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);-o-transform:rotate(180deg)" src="https://imgs.wbp5.com/api/secrecymaster/html_up/2018/10/20181029154606401.png"/>
+                                <img style="width:30px;transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);-o-transform:rotate(180deg)" src="${titleUpImg}"/>
                             </div>`:"";
     if(key==="simg"&&SET_IMAGE_PREVIEW_OBG.sinpleImgPreviewKey){
         imgHtml = <HTMLElement>createEl("div",{
@@ -192,77 +195,100 @@ class imgMagnificationFn{
     sImgInit(){
         let that:any = this;
         that.getSImgDomList();
+        let clickFn = function (dom:any, ev:any) {
+            let bindKey:boolean = true;
+            if(that.settings.clickCallback)bindKey = that.settings.clickCallback.call(that,dom,ev);
+            if(!bindKey)return;
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(prevClick);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(nextClick);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(closeClick);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(sImgResize);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(prevClick, function () {
+                that.prevClick.call(that)
+            })
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(nextClick, function () {
+                that.nextClick.call(that)
+            })
+
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(closeClick, function () {
+                that.closeClick.call(that)
+            })
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(sImgResize, function () {
+                that.onresize.call(that)
+            })
+            that.getImgFn(dom,ev);
+        };
         on({
             agent: that.parentEle,
             events: "click",
             ele: "[data-viewer]",
-            fn: function (dom:any, ev:any) {
-                let bindKey:boolean = true;
-                if(that.settings.clickCallback)bindKey = that.settings.clickCallback.call(that,dom,ev);
-                if(!bindKey)return;
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(prevClick);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(nextClick);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(closeClick);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(sImgResize);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(prevClick, function () {
-                    that.prevClick.call(that)
-                })
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(nextClick, function () {
-                    that.nextClick.call(that)
-                })
-
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(closeClick, function () {
-                    that.closeClick.call(that)
-                })
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(sImgResize, function () {
-                    that.onresize.call(that)
-                })
-                that.getImgFn(dom,ev);
-            }
+            fn: clickFn
         })
+        try{
+            if(that.settings.showBox){
+                on({
+                    agent: document.body,
+                    events: "click",
+                    ele: that.settings.showBox,
+                    fn: clickFn
+                })
+            }
+        }catch(e){}
+       
     }
     imgInit(){
         let that:any = this;
         that.getImgDomList();
+        let clickFn = function(dom:any,ev:any){
+            let bindKey:boolean = true;
+            if(that.settings.clickCallback)bindKey = that.settings.clickCallback.call(that,dom,ev);
+            if(!bindKey)return;
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(prevClick);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(nextClick);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(closeClick);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(imgResize);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(imgZoomFn);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.remove(mouseDown);
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(prevClick, function () {
+                that.prevClick.call(that)
+            })
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(nextClick, function () {
+                that.nextClick.call(that)
+            })
+
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(closeClick, function () {
+                that.closeClick.call(that)
+            })
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(imgResize, function () {
+                that.onresize.call(that)
+            })
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(imgZoomFn, function (e:any,type?:any) {
+                that.imgZoomFn.call(that,e,type)
+            })
+            // SET_IMAGE_PREVIEW_OBG.previewEvents.listen(imgZoomFn, function (e:any) {
+            //     that.imgZoomFn.call(that,e)
+            // })
+            SET_IMAGE_PREVIEW_OBG.previewEvents.listen(mouseDown, function (e:any) {
+                that.mouseDown.call(that,e)
+            })
+            that.getImgFn(dom,ev);
+        }
         on({
             agent:that.parentEle,
             events:"click",
             ele:"[data-viewer]",
-            fn:function(dom:any,ev:any){
-                let bindKey:boolean = true;
-                if(that.settings.clickCallback)bindKey = that.settings.clickCallback.call(that,dom,ev);
-                if(!bindKey)return;
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(prevClick);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(nextClick);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(closeClick);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(imgResize);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(imgZoomFn);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.remove(mouseDown);
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(prevClick, function () {
-                    that.prevClick.call(that)
-                })
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(nextClick, function () {
-                    that.nextClick.call(that)
-                })
-
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(closeClick, function () {
-                    that.closeClick.call(that)
-                })
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(imgResize, function () {
-                    that.onresize.call(that)
-                })
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(imgZoomFn, function (e:any,type?:any) {
-                    that.imgZoomFn.call(that,e,type)
-                })
-                // SET_IMAGE_PREVIEW_OBG.previewEvents.listen(imgZoomFn, function (e:any) {
-                //     that.imgZoomFn.call(that,e)
-                // })
-                SET_IMAGE_PREVIEW_OBG.previewEvents.listen(mouseDown, function (e:any) {
-                    that.mouseDown.call(that,e)
-                })
-                that.getImgFn(dom,ev);
-            }
+            fn:clickFn,
         })
+        try{
+            if(that.settings.showBox){
+                on({
+                    agent: document.body,
+                    events: "click",
+                    ele: that.settings.showBox,
+                    fn: clickFn
+                })
+            }
+        }catch(e){}
     }
     videoInit(){
         let that:any = this;
@@ -279,7 +305,9 @@ class imgMagnificationFn{
                     that.videoResize.call(that)
                 })
                 let src:string = null;
-                if(ev.target.getAttribute("data-viewer")){
+                if(that.parentEle.getAttribute("data-viewer")){
+                    src = that.parentEle.getAttribute("data-viewer");
+                }else if(ev.target.getAttribute("data-viewer")){
                     src = ev.target.getAttribute("data-viewer");
                 }else{
                     var domList:any = siblings(ev.target)
@@ -321,7 +349,7 @@ class imgMagnificationFn{
         SET_IMAGE_PREVIEW_OBG.imgPreviewWidth = that.$win.innerWidth;
         SET_IMAGE_PREVIEW_OBG.imgPreviewHeight = that.$win.innerHeight;
         that.getImgOrTitle(eleItem);
-        that.index = that.ImgIndex[ele.getAttribute('data-imgindex')];
+        that.index = that.ImgIndex[ele.getAttribute('data-imgindex')]?that.ImgIndex[ele.getAttribute('data-imgindex')]:0;
         that.imgClick(imgMaxUrl);
     }
     getImgOrTitle(item:any) {// 获取图片大图地址及图片标题，并提前缓存图片
@@ -998,18 +1026,19 @@ export const imgPreview = function(options:imgMagnificationModel){
     let optionObj:imgMagnificationModel = mergeOptions({}, {
         isPaging: true,//是否需要翻页
         key:"img",//生成预览框的类型  "simg":简单图片预览框，"img":带缩放功能的图片预览框（默认），"video":视频预览框
-        prevBgImg: "https://imgs.wbp5.com/api/secrecymaster/html_up/2018/10/20181009152904076.png", // 上一张按钮图片
-        nextBgImg: "https://imgs.wbp5.com/api/secrecymaster/html_up/2018/10/20181009152928779.png", // 下一张按钮图片
-        closeBgImg: "https://imgs.wbp5.com/api/secrecymaster/html_up/2019/11/20191112190957661.png", // 关闭按钮图片
-        bigBgImg:"https://imgs.wbp5.com/api/secrecymaster/html_up/2019/11/20191112192601224.png",
-        smallBgImg:"https://imgs.wbp5.com/api/secrecymaster/html_up/2019/11/20191112192603317.png",
+        prevBgImg: "https://imgs.wx168e.com/api/secrecymaster/html_up/2018/10/20181009152904076.png", // 上一张按钮图片
+        nextBgImg: "https://imgs.wx168e.com/api/secrecymaster/html_up/2018/10/20181009152928779.png", // 下一张按钮图片
+        closeBgImg: "https://imgs.wx168e.com/api/secrecymaster/html_up/2019/11/20191112190957661.png", // 关闭按钮图片
+        bigBgImg:"https://imgs.wx168e.com/api/secrecymaster/html_up/2019/11/20191112192601224.png",
+        smallBgImg:"https://imgs.wx168e.com/api/secrecymaster/html_up/2019/11/20191112192603317.png",
+        titleUpImg:"https://imgs.wx168e.com/api/secrecymaster/html_up/2018/10/20181029154606401.png",
         parentEle: "",
         IsBox: true, //是否需要显示背景
         titleUp:false,//是否需要收起标题按钮
         titlePosition:1,//标题层的位置
         videoWidth:1170,
     }, options);
-    createPreviewDom(options.key,optionObj.titleUp,optionObj.closeBgImg);//生成预览框dom，注册事件
+    createPreviewDom(options.key,optionObj.titleUp,optionObj.closeBgImg,optionObj.titleUpImg);//生成预览框dom，注册事件
     let eleAry:Array<HTMLElement> = Object.prototype.toString.call(options.parentEle) === "[object Array]"?options.parentEle:[options.parentEle];//判断传入的是不是数组如果不是则转为数组
     for(let i=0;i<eleAry.length;i++){
         let ele:any = eleAry[i];

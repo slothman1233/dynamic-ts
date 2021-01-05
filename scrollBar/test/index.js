@@ -393,14 +393,16 @@
 	    addTransformFn(that.sliderDom["x"], "translateX(" + clickOffset * 100 / that.sliderDomSize["x"] + "%)");
 	}
 	function scrollSpecifiedPosition(obj) {
-	    if (obj.left) {
-	        this.scrollBox.scrollLeft = obj.left;
-	        var clickOffset = obj.left * (this.scrollDomSize["x"] - this.sliderDomSize["x"]) / (this.contentDomScrollSize["x"] - this.contentDomSize["x"]);
+	    if (obj.hasOwnProperty("left")) {
+	        var maxLeft = this.contentDomScrollSize.x - this.contentDomSize.x;
+	        this.scrollBox.scrollLeft = obj.left > maxLeft ? maxLeft : obj.left;
+	        var clickOffset = this.scrollBox.scrollLeft * (this.scrollDomSize["x"] - this.sliderDomSize["x"]) / (this.contentDomScrollSize["x"] - this.contentDomSize["x"]);
 	        addTransformFn(this.sliderDom["x"], "translateX(" + clickOffset * 100 / this.sliderDomSize["x"] + "%)");
 	    }
-	    if (obj.top) {
-	        this.scrollBox.scrollTop = obj.top;
-	        var _clickOffset = obj.top * (this.scrollDomSize["y"] - this.sliderDomSize["y"]) / (this.contentDomScrollSize["y"] - this.contentDomSize["y"]);
+	    if (obj.hasOwnProperty("top")) {
+	        var maxTop = this.contentDomScrollSize.y - this.contentDomSize.y;
+	        this.scrollBox.scrollTop = obj.top > maxTop ? maxTop : obj.top;
+	        var _clickOffset = this.scrollBox.scrollTop * (this.scrollDomSize["y"] - this.sliderDomSize["y"]) / (this.contentDomScrollSize["y"] - this.contentDomSize["y"]);
 	        addTransformFn(this.sliderDom["y"], "translateY(" + _clickOffset * 100 / this.sliderDomSize["y"] + "%)");
 	    }
 	}
@@ -489,10 +491,8 @@
 	    // getScrollContentHeight.call(this,type,domAttr,scrollAttr);//获取滚动框的高度/宽度 及滚动内容的高度/宽度
 	    if (this.contentDomScrollSize[type] <= this.contentDomSize[type]) {
 	        //内容未超出
-	        if (this.scrollDom[type]) {
-	            //已有滚动条则隐藏
+	        if (this.scrollDom[type]) //已有滚动条则隐藏
 	            this.scrollDom[type].style.display = "none";
-	        }
 	        return;
 	    }
 	    if (this.contentDomSize[type]) {
@@ -700,20 +700,30 @@
 	//   let ScrollBar1:any = new scrollBar({id:"box4",direction:"x",size:10,xMousewheel:false})
 	//  let ScrollBar2:any = new scrollBar({id:"box6",direction:"xy",className:"scroll_class"})
 
-	var ScrollBar2;
+	var scrollBar1 = new scrollBar({ id: "box2" });
+	console.log(scrollBar1);
 	var btn = document.getElementById("btn");
-	btn.addEventListener("click", function () {
-	    // ScrollBar2.fixedPointScroll({top:1000})
-	    document.getElementById("box6").style.display = "block";
-	    if (!ScrollBar2) {
-	        ScrollBar2 = new scrollBar({ id: "box6", direction: "y", className: "scroll_class" });
-	    }
-	});
 	var btn1 = document.getElementById("btn1");
-	btn1.addEventListener("click", function () {
-	    // ScrollBar2.fixedPointScroll({top:1000})
-	    document.getElementById("box6").style.display = "none";
+	btn.addEventListener("click", function () {
+	    scrollBar1.fixedPointScroll({ top: 3000 });
 	});
+	btn1.addEventListener("click", function () {
+	    scrollBar1.fixedPointScroll({ top: 0 });
+	});
+	// var ScrollBar2:any;
+	// let btn = document.getElementById("btn");
+	// document.getElementById("box6").style.display = "block"
+	// ScrollBar2 = new scrollBar({id:"box6",direction:"x",className:"scroll_class"})
+	// btn.addEventListener("click",function(){
+	//     // ScrollBar2.fixedPointScroll({top:1000})
+	//     if(!ScrollBar2){
+	//     }
+	// })
+	// let btn1 = document.getElementById("btn1")
+	// btn1.addEventListener("click",function(){
+	//     // ScrollBar2.fixedPointScroll({top:1000})
+	//     document.getElementById("box6").style.display = "none"
+	// })
 
 }));
 //# sourceMappingURL=index.js.map

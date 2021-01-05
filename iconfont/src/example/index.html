@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>icon font test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./iconfont.css">
+    <style>
+        .icon_lists { width: 100% !important; box-sizing: border-box; padding: 0 20px; }
+
+            .icon_lists li { float: left; box-sizing: border-box; width: 7%; margin: 0 .5%; text-align: center; list-style: none !important; font-size: 12px; margin-right: 15px; }
+                .icon_lists li div { font-size: 14px; }
+            .icon_lists .icon { display: block; text-align: center; font-size: 42px; line-height: 100px; margin: 10px 0; color: #333; -webkit-transition: font-size 0.25s ease-out 0s; -moz-transition: font-size 0.25s ease-out 0s; transition: font-size 0.25s ease-out 0s; }
+        .fontclass { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .icon_lists .icon:hover { font-size: 100px; }
+        .markdown { color: #666; font-size: 14px; line-height: 1.8; }
+
+        .highlight { line-height: 1.5; }
+
+        .markdown img { vertical-align: middle; max-width: 100%; }
+
+        .markdown h1 { color: #404040; font-weight: 500; line-height: 40px; margin-bottom: 24px; }
+        .name { font-size: 16px; }
+        .clear:after { content: '\20'; display: block; height: 0; clear: both; }
+
+        .helps { margin-top: 40px; }
+            .helps pre { padding: 20px; margin: 10px 0; border: solid 1px #e7e1cd; background-color: #fffdef; overflow: auto; font-size: 16px; }
+                .helps pre a { line-height: 25px; }
+    </style>
+</head>
+
+<body><div class="Imgms" data-cursor="pointer" style="cursor: pointer;">
+    <img src="http://upload.fx110.com/files/thumbnail/201702/529CFE3C42BC3F613FCCE51B8D0F4B94.png" data-viewer="http://upload.fx110.com/files/thumbnail/201702/529CFE3C42BC3F613FCCE51B8D0F4B94.png">
+</div>
+
+    <div style="clear: both;">
+    </div>
+    <div class="helps">
+        字体下载
+        <pre>
+        <a href="../<%=icons.name%>/iconfont.ttf">下载字体（ttf）</a>
+        <a href="../<%=icons.name%>/iconfont.eot">下载字体（eot）</a>
+        <a href="../<%=icons.name%>/iconfont.woff">下载字体（woff）</a>
+        <a href="../<%=icons.name%>/iconfont.woff2">下载字体（woff2）</a>
+    </pre>
+        第一步：调用地址
+        <pre>页面调用： &lt;link rel="stylesheet" href="https://js.wx168e.com/iconfont/build/<%=icons.name%>/iconfont.css"&gt;
+        </pre>
+        第二步：挑选相应图标并获取字体编码，应用于页面
+        <pre>
+           内容形式：  &lt;i class="iconfont_<%= icons.name %>"&gt;&amp;#x33;&lt;/i&gt;
+           before伪类形式（icon-名称）：  &lt;i class="iconfont_<%= icons.name %> icon-1"&gt;&lt;/i&gt;
+    </pre>
+    </div>
+    <h2>Icon Font</h2>
+    <ul class="icon_lists clear">
+        <% _.each(icons.icon, function(icon) { %>
+        <li>
+            <i class="icon iconfont_<%= icons.name %>"><%= icon.codePoint%> </i>
+            <div class="fontclass">名称:<%= icon.fileName%></div>
+            <div>字体代码：<%= icon.codePointext%></div>
+        </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

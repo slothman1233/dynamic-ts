@@ -1,8 +1,9 @@
 import { imgPreview } from "../src/index"
 imgPreview({
     parentEle:document.getElementById("img_list"),
-    key:"img",
+    //key:"img",
     titleUp:true,
+    showBox:".show_box",
     clickCallback:function(dom,ev){
         if(ev.target.parentNode.tagName === "A"){
             return false;

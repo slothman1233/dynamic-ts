@@ -145,12 +145,15 @@ ts:
 ```
 ### 图标说明
 ```
+iconfont.css默认地址为https://js.wx168e.com/iconfont/build/layer.css    
+如果此域名不可访问 则需在引用此组件前声明一个“layerIconfontUrl”变量定义字体图标域名。
+
 icon参数的值可传值：
 11:"&#xA001;",12:"&#xA002;",//1开头为‘✔’的图标
 21:"&#xA003;",22:"&#xA004;",//2开头为‘×’的图标
 31:"&#xA006;",32:"&#xA007;",//3开头为‘i’的图标
 41:"&#xA008;",42:"&#xA009;",//4开头为‘！’的图标
 
-对应的图标样式： https://js.wbp5.com/iconfont/build/layer/index.html
+对应的图标样式： https://js.wx168e.com/iconfont/build/layer/index.html
 
 ```
