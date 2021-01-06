@@ -6,6 +6,7 @@ import './index.less'
 import { appendContent, createEl, remove } from '@stl/tool-ts/src/common/dom'
 import { mergeOptions } from '@stl/tool-ts/src/common/compatible'
 import '@stl/tool-ts/src/common/es6'
+import { NodeListToArray } from '@stl/tool-ts/src/common/obj'
 type barragerModel = {
   //width?: number, //弹幕总宽度 默认 500
   img?: string, //图片 
@@ -336,8 +337,8 @@ class barrager {
    * 删除所有弹幕
    */
   removeAll() {
-    const parentDom: NodeListOf<HTMLElement> = document.querySelectorAll(`#${this.parentId} .barrage`)
-
+    const parentDom: Array<HTMLElement> = NodeListToArray(document.querySelectorAll(`#${this.parentId} .barrage`))
+    
     parentDom.forEach(child => {
       try {
         remove(child)
