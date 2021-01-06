@@ -6,6 +6,7 @@ declare class videoToolBar extends Component {
     frontWidth: any;
     playEl: any;
     pauseEl: any;
+    playBtn: any;
     reLoadEl: any;
     fullScreenEl: any;
     volumeEl: any;

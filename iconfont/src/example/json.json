@@ -1,0 +1,7 @@
+{
+    "":""
+    <% _.each(icons.icon, function(icon) { %>
+        ,"<%= icon.codePoint%>":"<%= icon.fileName%>"
+    <% }); %>
+    
+}

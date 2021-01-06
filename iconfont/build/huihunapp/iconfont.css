@@ -1,0 +1,313 @@
+@font-face {
+	font-family: "iconfont";
+	src: url('iconfont.eot');
+	src: url('iconfont.eot?#iefix') format('eot'),
+		url('iconfont.woff') format('woff'),
+		url('iconfont.ttf') format('truetype');
+}
+
+.iconfont,.iconfont_huihunapp {
+    font-family: "iconfont" !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 16px;
+    font-weight: normal;
+    /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+    text-decoration: none;
+    text-transform: none;
+}
+
+
+.icon-about:before {
+	content: "\E001";
+}
+
+.icon-account:before {
+	content: "\E002";
+}
+
+.icon-addresssvg:before {
+	content: "\E030";
+}
+
+.icon-appleid:before {
+	content: "\E047";
+}
+
+.icon-arrowright:before {
+	content: "\E003";
+}
+
+.icon-back:before {
+	content: "\E004";
+}
+
+.icon-bookcase:before {
+	content: "\E03A";
+}
+
+.icon-browse:before {
+	content: "\E005";
+}
+
+.icon-choose-def:before {
+	content: "\E031";
+}
+
+.icon-choose:before {
+	content: "\E032";
+}
+
+.icon-clean:before {
+	content: "\E006";
+}
+
+.icon-close:before {
+	content: "\E007";
+}
+
+.icon-collect:before {
+	content: "\E008";
+}
+
+.icon-collectdef:before {
+	content: "\E009";
+}
+
+.icon-collectsel:before {
+	content: "\E00A";
+}
+
+.icon-comment:before {
+	content: "\E00B";
+}
+
+.icon-comment1:before {
+	content: "\E045";
+}
+
+.icon-comment_1:before {
+	content: "\E00C";
+}
+
+.icon-contribute:before {
+	content: "\E00D";
+}
+
+.icon-day:before {
+	content: "\E00E";
+}
+
+.icon-day_1:before {
+	content: "\E00F";
+}
+
+.icon-def:before {
+	content: "\E010";
+}
+
+.icon-def_1:before {
+	content: "\E011";
+}
+
+.icon-def_2:before {
+	content: "\E012";
+}
+
+.icon-delete:before {
+	content: "\E013";
+}
+
+.icon-down:before {
+	content: "\E014";
+}
+
+.icon-dropdown_def:before {
+	content: "\E037";
+}
+
+.icon-dropdown_sel:before {
+	content: "\E038";
+}
+
+.icon-editor:before {
+	content: "\E015";
+}
+
+.icon-feedback:before {
+	content: "\E016";
+}
+
+.icon-female:before {
+	content: "\E017";
+}
+
+.icon-huiliao:before {
+	content: "\E033";
+}
+
+.icon-icon_44_narrow:before {
+	content: "\E046";
+}
+
+.icon-icon_personal_40_feedback:before {
+	content: "\E049";
+}
+
+.icon-language:before {
+	content: "\E018";
+}
+
+.icon-last:before {
+	content: "\E019";
+}
+
+.icon-male:before {
+	content: "\E01A";
+}
+
+.icon-next:before {
+	content: "\E01B";
+}
+
+.icon-night:before {
+	content: "\E01C";
+}
+
+.icon-notice:before {
+	content: "\E01D";
+}
+
+.icon-pause:before {
+	content: "\E01E";
+}
+
+.icon-phone:before {
+	content: "\E01F";
+}
+
+.icon-photo:before {
+	content: "\E020";
+}
+
+.icon-placeholder:before {
+	content: "\E048";
+}
+
+.icon-playing:before {
+	content: "\E039";
+}
+
+.icon-playing1:before {
+	content: "\E043";
+}
+
+.icon-positive:before {
+	content: "\E021";
+}
+
+.icon-qq:before {
+	content: "\E022";
+}
+
+.icon-qq2:before {
+	content: "\E034";
+}
+
+.icon-rank:before {
+	content: "\E03B";
+}
+
+.icon-reverse:before {
+	content: "\E023";
+}
+
+.icon-rightarrow:before {
+	content: "\E024";
+}
+
+.icon-save:before {
+	content: "\E025";
+}
+
+.icon-search:before {
+	content: "\E035";
+}
+
+.icon-sel:before {
+	content: "\E026";
+}
+
+.icon-sel_1:before {
+	content: "\E027";
+}
+
+.icon-sel_2:before {
+	content: "\E028";
+}
+
+.icon-setting:before {
+	content: "\E03C";
+}
+
+.icon-share:before {
+	content: "\E029";
+}
+
+.icon-start:before {
+	content: "\E02A";
+}
+
+.icon-tab_all_def:before {
+	content: "\E03D";
+}
+
+.icon-tab_all_sel:before {
+	content: "\E03E";
+}
+
+.icon-tab_my_def:before {
+	content: "\E03F";
+}
+
+.icon-tab_my_sel:before {
+	content: "\E040";
+}
+
+.icon-tab_new_def:before {
+	content: "\E041";
+}
+
+.icon-tab_new_sel:before {
+	content: "\E042";
+}
+
+.icon-text:before {
+	content: "\E02B";
+}
+
+.icon-up:before {
+	content: "\E02C";
+}
+
+.icon-view:before {
+	content: "\E044";
+}
+
+.icon-webo:before {
+	content: "\E036";
+}
+
+.icon-wechat:before {
+	content: "\E02D";
+}
+
+.icon-wechat_1:before {
+	content: "\E02E";
+}
+
+.icon-weibo:before {
+	content: "\E02F";
+}

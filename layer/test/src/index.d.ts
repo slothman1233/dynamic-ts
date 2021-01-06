@@ -8,6 +8,7 @@ interface alertParameter {
     content: string;
     icon?: number;
     iconColor?: string;
+    className?: string;
     title?: string;
     autoClose?: boolean;
     time?: number;
@@ -21,6 +22,7 @@ interface modalParameter {
     content: string;
     hasClose?: boolean;
     bg?: boolean;
+    bgClose?: boolean;
     determineBtn?: boolean;
     determineText?: string;
     determineFn?: () => void;
@@ -47,6 +49,20 @@ interface tipsParameter {
     position?: "top" | "bottom" | "left" | "right";
     maxWidth?: number;
 }
+interface customParameter {
+    content: string | HTMLElement;
+    hasClose?: boolean;
+    determineBtn?: boolean;
+    determineText?: string;
+    determineClickFn?: () => void;
+    cancelBtn?: boolean;
+    cancelText?: string;
+    cancelClickFn?: () => void;
+    bg?: boolean;
+    bgClose?: boolean;
+    showCallback?: () => void;
+    endCallback?: () => void;
+}
 declare class stlLayer {
     times: number;
     iconfontSrc: string;
@@ -60,6 +76,7 @@ declare class stlLayer {
     modalObj: any;
     loadObj: any;
     tipObj: any;
+    customObj: any;
     bgDom: HTMLElement;
     timeoutList: any;
     closeCallback: (e: any) => void;
@@ -70,6 +87,9 @@ declare class stlLayer {
     private getIconStr;
     private getCloseStr;
     private deduplication;
+    private removeHide;
+    private closeBoxFn;
+    private addBgDom;
     private msgStr;
     msg(content: string, options?: msgOption, end?: () => void): void;
     private hasTitleAlertStr;
@@ -93,6 +113,9 @@ declare class stlLayer {
     closeLoad(parent?: HTMLElement): void;
     tips(that: any, content: string, data?: tipsParameter, end?: () => void): void;
     private getTipPosition;
+    custom(data: customParameter): void;
+    private getCustomFn;
+    private getCustomBtnFn;
 }
 export declare let layer: stlLayer;
 export {};

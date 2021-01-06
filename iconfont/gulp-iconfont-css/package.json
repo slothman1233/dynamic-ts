@@ -1,0 +1,85 @@
+{
+  "_from": "gulp-iconfont-css@0.0.9",
+  "_id": "gulp-iconfont-css@0.0.9",
+  "_inBundle": false,
+  "_integrity": "sha1-s/Xhl/IptpWdvwypzZQC37Ov848=",
+  "_location": "/gulp-iconfont-css",
+  "_phantomChildren": {
+    "clone-stats": "0.0.1",
+    "core-util-is": "1.0.2",
+    "escape-string-regexp": "1.0.5",
+    "get-stdin": "4.0.1",
+    "inherits": "2.0.3",
+    "isarray": "0.0.1",
+    "lodash._escapehtmlchar": "2.4.1",
+    "lodash._escapestringchar": "2.4.1",
+    "lodash._isnative": "2.4.1",
+    "lodash._reunescapedhtml": "2.4.1",
+    "lodash._shimkeys": "2.4.1",
+    "lodash.defaults": "2.4.1",
+    "lodash.isobject": "2.4.1",
+    "lodash.values": "2.4.1",
+    "meow": "3.7.0",
+    "multipipe": "0.1.2",
+    "string_decoder": "0.10.31"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "gulp-iconfont-css@0.0.9",
+    "name": "gulp-iconfont-css",
+    "escapedName": "gulp-iconfont-css",
+    "rawSpec": "0.0.9",
+    "saveSpec": null,
+    "fetchSpec": "0.0.9"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/gulp-iconfont-css/-/gulp-iconfont-css-0.0.9.tgz",
+  "_shasum": "b3f5e197f229b6959dbf0ca9cd9402dfb3aff38f",
+  "_spec": "gulp-iconfont-css@0.0.9",
+  "_where": "D:\\work\\test\\svgToIconfint\\iconfont-master",
+  "author": {
+    "name": "Thomas Jaggi, Nicolas Froidure"
+  },
+  "bugs": {
+    "url": "https://github.com/backflip/gulp-iconfont-css/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "consolidate": "~0.10.0",
+    "gulp-util": "~2.2.0",
+    "lodash": "~2.4.1"
+  },
+  "deprecated": false,
+  "description": "Generate (S)CSS file for icon font created with Gulp",
+  "devDependencies": {
+    "event-stream": "~3.1.0",
+    "gulp": "~3.5.2",
+    "mocha": "*"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "homepage": "https://github.com/backflip/gulp-iconfont-css#readme",
+  "keywords": [
+    "gulpplugin",
+    "gulp",
+    "icon",
+    "font",
+    "scss",
+    "css"
+  ],
+  "license": "MIT",
+  "main": "./index.js",
+  "name": "gulp-iconfont-css",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/backflip/gulp-iconfont-css.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "version": "0.0.9"
+}

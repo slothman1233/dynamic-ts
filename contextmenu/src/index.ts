@@ -1,9 +1,19 @@
-import { contextmenuData,contentData } from "./type";
 import { createEl } from "@stl/tool-ts/src/common/dom";
 import { on, eventsPath } from "@stl/tool-ts/src/common/event";
 import { NodeListToArray } from "@stl/tool-ts/src/common/obj";
 
+interface contentData {
+    id?: string  //唯一标识
+    content: string  //内容元素
+    children: Array<contentData> //子项
+    callback?: Function //点击后的回调
+}
 
+interface contextmenuData {
+    ele: any//右键的元素
+    data: Array<contentData>
+    callback?: Function //右键后的回调
+}
 
 let AllData: Array<contextmenuData> = []; //缓存数据
 let thatEleDom: contextmenuData; //当前右键元素的数据

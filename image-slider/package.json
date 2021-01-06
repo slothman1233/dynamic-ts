@@ -1,6 +1,6 @@
 {
   "name": "@stl/image-slider",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "轮播图（无缝滚动）插件",
   "main": "dist/index.js",
   "scripts": {

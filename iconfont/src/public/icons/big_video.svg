@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	   viewBox="0 0 18 18" enable-background="new 0 0 18 18" xml:space="preserve">
+<g>
+	<g>
+		<rect x="15" y="1" fill="#FFFFFF"  />
+		<rect x="15" y="11" fill="#FFFFFF"  />
+		<rect x="1" y="1" fill="#FFFFFF"  />
+		<rect x="1" y="11" fill="#FFFFFF"  />
+		<rect x="11" y="1" fill="#FFFFFF"  />
+		<rect x="1" y="1" fill="#FFFFFF"  />
+		<rect x="1" y="15" fill="#FFFFFF"  />
+		<rect x="11" y="15" fill="#FFFFFF"  />
+	</g>
+	<polygon fill="#FFFFFF" points="2.415,1 1.001,1 1.001,2.415 6.587,8 8,8 8,6.585 	"/>
+	<polygon fill="#FFFFFF" points="11.414,10 10,10 10,11.415 15.586,17 16.999,17 16.999,15.585 	"/>
+	<polygon fill="#FFFFFF" points="2.416,17 1.002,17 1.002,15.585 6.588,10 8.001,10 8.001,11.415 	"/>
+	<polygon fill="#FFFFFF" points="11.415,8 10.001,8 10.001,6.585 15.587,1 17,1 17,2.415 	"/>
+</g>
+</svg>

@@ -6,12 +6,12 @@ import { addStyleFn,IE_VERSION,getImageSize,getTransform } from "./util"
 import { IMG_CROPPER_INPUT_TEMPLATE,IMG_CROPPER_BOX_TEMPLATE } from "./template"
 
 
-export interface domSize{//元素的尺寸
+interface domSize{//元素的尺寸
     width:number
     height:number
 }
 
-export interface option{
+interface option{
     ele:Element//需要裁剪的图片元素
     src?:string//初始化裁剪框内显示的图片地址
     inputBox?:HTMLElement//上传图片的input框 （必须设置type="file"）
@@ -35,7 +35,7 @@ export interface option{
     getImgCallback?:(src:string|object)=>void//获取裁剪后图片成功的回调
 }
 
-export interface dragValue {//拖拽值对象
+interface dragValue {//拖拽值对象
     x:number,
     y:number,
 }

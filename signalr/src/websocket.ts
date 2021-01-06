@@ -101,7 +101,7 @@ export function signalrWebsocket(data:paramets):object{
         };
     };
     if(!isLoad){
-        loadScript("https://gajsapi.fx110.com/script/public/signalr/signalrjs/2.2.2/jquery.signalR-2.2.2.min.js",function(){
+        loadScript("//js.wbp5.com/script/public/signalr/signalrjs/2.2.2/jquery.signalR-2.2.2.min.js",function(){
             loadScript(data.hubjs || data.hubConnection + "/signalr/hubs" || "https//fxchatnews.fx110.com/signalr/hubs", function () {
                 signalrFn = new linkSignalr(data);
                 console.log("js加载完成")
