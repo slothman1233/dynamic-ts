@@ -1,6 +1,7 @@
 import { mergeOptions } from "@stl/tool-ts/src/common/compatible";
 import { log } from "@stl/tool-ts/src/common/log";
 import { each } from '@stl/tool-ts/src/common/obj';
+import ES6Promise from "es6-promise";
 import fxLanguage from "@stl/tool-ts/src/languages/cn";
 
 //-----------------单元测试使用  测试完成换成上面的引入方式  放开所有的log打印----------------------------
@@ -9,6 +10,10 @@ import fxLanguage from "@stl/tool-ts/src/languages/cn";
 // import { obj } from '@stl/tool-ts';
 // import fxLanguage from "@stl/tool-ts";
  declare var Function: any;
+
+if(!(<any>window).Promise){
+    ES6Promise.polyfill();
+}
 
 interface ErrBodyMessage {
     bodyMessage:any,
@@ -73,7 +78,11 @@ const https = {
             if ((status >= 200 && status <= 300) || status === 304) {
                 let result;
                 if (xhr.responseType === "text") {
-                    result = xhr.responseText
+                    try{
+                        result = xhr.responseText
+                    }catch(e){
+                        result = null
+                    }
                 } else if (xhr.responseType === "document") {
                     result = xhr.responseXML;
                 } else {
@@ -89,7 +98,11 @@ const https = {
                         try {
                             result = Object.prototype.toString.call(xhr.responseText) === "[object String]" ? JSON.parse(xhr.responseText) : xhr.responseText;
                         } catch (e) {
-                            result = xhr.responseText;
+                            try{
+                                result = xhr.responseText
+                            }catch(e){
+                                result = null
+                            }
                         }
                     }
                 }
@@ -312,42 +325,41 @@ class dataModel {
         this.isFromdata = data.isFromdata || false;
     }
 }
-
 export const http = {
-    get: (data: any) => {
+    get<T>(data: any): Promise<T> {
         let d:any = mergeOptions(new dataModel({ headers: {}, type: 'GET' }), data)
         return new Promise(function(resolve,reject){
             https.ajax(d,resolve,reject)
         });
     },
-    delete: (data: any) => {
+    delete<T>(data: any): Promise<T>{
         let d = mergeOptions(new dataModel({ headers: {}, type: 'DELETE' }), data)
         return new Promise(function(resolve,reject){
             https.ajax(d,resolve,reject)
         });
     },
     // 调用此方法,参数data应为查询字符串或普通对象
-    post: (data: any) => {
+    post<T>(data: any): Promise<T>{
         let d = mergeOptions(new dataModel({ headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, type: 'POST' }), data)
         return new Promise(function(resolve,reject){
             https.ajax(d,resolve,reject)
         });
     },
 
-    put: (data: any) => {
+    put<T>(data: any): Promise<T>{
         let d = mergeOptions(new dataModel({ headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','X-HTTP-Method-Override':'put' }, type: 'POST' }), data)
         return new Promise(function(resolve,reject){
             https.ajax(d,resolve,reject)
         });
     },
     // 调用此方法,参数data应为json字符串
-    postbody: (data: any) => {
+    postbody<T>(data: any): Promise<T>{
         let d = mergeOptions(new dataModel({ headers: { 'Content-Type': 'application/json; charset=UTF-8' }, type: 'POST' }), data)
         return new Promise(function(resolve,reject){
             https.ajax(d,resolve,reject)
         });
     },
-    fromData: (data: any) => {
+    fromData<T>(data: any): Promise<T>{
         let d = mergeOptions(new dataModel({ headers: {}, type: 'POST', isFromdata: true }), data)
         return new Promise(function(resolve,reject){
             https.ajax(d,resolve,reject)

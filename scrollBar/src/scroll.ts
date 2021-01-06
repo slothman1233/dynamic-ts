@@ -1,4 +1,19 @@
-import { mousewheelObj,scaleObj } from "./types"
+interface mousewheelObj {
+    scrollNumber:number,
+    sliderScale:number,
+}
+
+interface scaleObj {
+    scrollRange:number,
+    sliderRange:number,
+    scrollNumber:number,
+    scrollType:string,
+    transformType:string,
+}
+interface positionScroll {
+    left?:number,
+    top?:number,
+}
 
 function addTransformFn(dom:any,val:string){//设置滚动条的transform样式兼容性写法
     dom.style.transform = val;
@@ -92,4 +107,18 @@ export function clickScrollX(event:any,that:any){//点击横向滚动条
     let clickScroll:number = (that.contentDomScrollSize["x"] - that.contentDomSize["x"])*clickOffset/(that.scrollDomSize["x"]-that.sliderDomSize["x"]);
     that.scrollBox.scrollLeft = clickScroll;
     addTransformFn(that.sliderDom["x"],"translateX("+clickOffset*100/that.sliderDomSize["x"]+"%)");
+}
+export function scrollSpecifiedPosition(obj:positionScroll){
+    if(obj.hasOwnProperty("left")){
+        let maxLeft = this.contentDomScrollSize.x - this.contentDomSize.x;
+        this.scrollBox.scrollLeft = obj.left>maxLeft?maxLeft:obj.left;
+        let clickOffset = this.scrollBox.scrollLeft*(this.scrollDomSize["x"]-this.sliderDomSize["x"])/(this.contentDomScrollSize["x"] - this.contentDomSize["x"]);
+        addTransformFn(this.sliderDom["x"],"translateX("+clickOffset*100/this.sliderDomSize["x"]+"%)");
+    }
+    if(obj.hasOwnProperty("top")){
+        let maxTop = this.contentDomScrollSize.y - this.contentDomSize.y;
+        this.scrollBox.scrollTop = obj.top>maxTop?maxTop:obj.top;
+        let clickOffset = this.scrollBox.scrollTop*(this.scrollDomSize["y"]-this.sliderDomSize["y"])/(this.contentDomScrollSize["y"] - this.contentDomSize["y"]);
+        addTransformFn(this.sliderDom["y"],"translateY("+clickOffset*100/this.sliderDomSize["y"]+"%)");
+    }
 }

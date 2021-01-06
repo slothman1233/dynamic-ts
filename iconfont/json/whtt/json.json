@@ -1,0 +1,83 @@
+{
+    "":""
+    
+        ,"E002":"WHTT_web_AfterThePeriodOfDistance"
+    
+        ,"E003":"WHTT_web_AlignCenter"
+    
+        ,"E004":"WHTT_web_AlignRight"
+    
+        ,"E005":"WHTT_web_back"
+    
+        ,"E006":"WHTT_web_BackgroundColor"
+    
+        ,"E007":"WHTT_web_BeforeParagraphDistance"
+    
+        ,"E008":"WHTT_web_bold"
+    
+        ,"E009":"WHTT_web_BrushFormat"
+    
+        ,"E00A":"WHTT_web_ClearFormat"
+    
+        ,"E00B":"WHTT_web_DeleteTheLine"
+    
+        ,"E00C":"WHTT_web_divider"
+    
+        ,"E00D":"WHTT_web_expression"
+    
+        ,"E00E":"WHTT_web_FullJustified"
+    
+        ,"E00F":"WHTT_web_hyperlink"
+    
+        ,"E010":"WHTT_web_InOrderToArrange"
+    
+        ,"E011":"WHTT_web_italics"
+    
+        ,"E012":"WHTT_web_LineSpacing"
+    
+        ,"E013":"WHTT_web_music"
+    
+        ,"E014":"WHTT_web_picture"
+    
+        ,"E015":"WHTT_web_Random order"
+    
+        ,"E016":"WHTT_web_redo"
+    
+        ,"E017":"WHTT_web_reference"
+    
+        ,"E018":"WHTT_web_SpaceBetweenWords"
+    
+        ,"E019":"WHTT_web_TextColor"
+    
+        ,"E01A":"WHTT_web_TheDropDown"
+    
+        ,"E01B":"WHTT_web_TheFirstLineIndentation"
+    
+        ,"E01C":"WHTT_web_TheLeft"
+    
+        ,"E01D":"WHTT_web_TheUnderline"
+    
+        ,"E01E":"WHTT_web_TightenOnBoth ends"
+    
+        ,"E01F":"WHTT_web_unlink"
+    
+        ,"E020":"WHTT_web_video"
+    
+        ,"E021":"WHTT_web_Shut_down"
+    
+        ,"E022":"WHTT_web_bell"
+    
+        ,"E023":"WHTT_web_calendar"
+    
+        ,"E024":"WHTT_web_comments"
+    
+        ,"E025":"WHTT_web_delete"
+    
+        ,"E026":"WHTT_web_notice"
+    
+        ,"E027":"WHTT_web_search"
+    
+        ,"E028":"WHTT_web_The_title"
+    
+    
+}

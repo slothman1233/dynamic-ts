@@ -44,6 +44,7 @@ const config = () => {
                     //external: ['jquery'], 
                     sourcemap: (env === 'production' ? false : true), //代码映射，方便调试
                 },
+                
                 plugins: [
                     json(),
                     rollupTs(),

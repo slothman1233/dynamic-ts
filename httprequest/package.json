@@ -1,6 +1,6 @@
 {
   "name": "@stl/httprequest",
-  "version": "1.0.3",
+  "version": "1.0.9",
   "description": "兼容性较高的简易http请求封装",
   "main": "dist/index.js",
   "scripts": {
@@ -25,6 +25,7 @@
     "chai": "^4.2.0",
     "cssnano": "^4.1.10",
     "del": "^5.1.0",
+    "es6-promise": "^4.2.8",
     "expect.js": "^0.3.1",
     "gulp": "^4.0.2",
     "karma": "^5.1.1",
@@ -57,5 +58,9 @@
   },
   "directories": {
     "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   }
 }

@@ -35,11 +35,16 @@ let scrollBar = new scrollBar({id:"box"});
 |  className    |  string   |     ""      |  滚动条需要添加的类名(添加自定义样式时使用)                                                        |
 |  xMousewheel  |  boolean  |     true    |  横向滚动条是否允许滚动鼠标滚轮滚动  只有在direction值为"x"时此参数才有效                            |
 
-### 暴露方法
+### 方法说明
 ```
 方法名：      refresh
 描述：        刷新滚动条的方法
 调用方式：    scrollBar.refresh();
+
+方法名：      fixedPointScroll
+描述：        滚动到指定位置
+调用方式：    scrollBar.fixedPointScroll(obj);
+参数说明：    {left?:number,top?:number}  left:横向滚动条时使用  滚动元素需要滚动到的left值   top:竖向滚动条时使用 滚动元素需要滚动到的top值
 ```
 
 

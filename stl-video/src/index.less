@@ -1,0 +1,173 @@
+* {padding: 0px; margin:0px;text-decoration: none;}
+
+.main {width: 100%;height: 100%;
+    .live-player { position: relative;background: black;overflow: hidden;width: 100%;height: 100%;display: flex;place-content: center;
+        .blLive-play-video {position: absolute;width: 100px;height: 50px;left: calc(50% -50px);top: calc(50% - 50px);
+            display: none;text-align: center;line-height: 40px;
+        }
+        video {width: 100%;height: 100%;}
+        .video_toolbar_content {position: absolute;bottom: 0px;left: 0px;padding:0 12px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;
+            /*height: 50px;background: #23272b;*/
+           // height:56px;
+            height:58px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+            width: 100%; z-index: 2;transition: transform .5s ease-out, opacity .5s ease-out;
+            flex-direction: column; box-sizing: border-box;display: flex;place-content: stretch flex-start;align-items: stretch;
+            
+            .player_progress {width: 100%;height: 4px;background-color: rgba(255,255,255,0.5);position: relative;cursor: pointer;
+                margin:1px 0;
+                /*height: 8px;background: rgba(133, 133, 133, 0.3);opacity: .85;*/
+                .move-time{position: absolute;height:20px;background:rgba(0,0,0,0.7);top:-25px;padding:0 6px;-webkit-transform:translateX(-50%);transform:translateX(-50%);
+                    border-radius:2px;color:#fff;font-size:12px;line-height:20px;display: none;}
+                .range-container {position: absolute;height: 100%;}
+                .progress-played {position: absolute;z-index: 100;height: 100%;background: #26d1e0;
+                    /*background: linear-gradient(-90deg, #05E4FC 4%, #148AFF 100%);*/
+                }
+                .range-thumb {z-index: 111;position: absolute;top: -3px;left: 0;margin-left: -6px;border-radius: 6px;cursor: pointer;display: none;
+                    box-shadow:0 0 8px 4px #26d1e0;width:12px;height:12px;background:#fff;
+                    //border: 6px solid #fff;
+                    
+                }
+                .progress-hightlights { z-index: 12;position: absolute;
+                    /*top: 1px;width: 6px;height: 6px;border-radius: 6px;*/
+                    top: 0;width: 4px;height: 4px;border-radius: 4px;transform: translateX(-50%);background-color: #fff;z-index: 1001;
+                }
+                .progress-hightlights:hover {
+                    .progress-hightlights-tips {display: block;}
+                }
+                .progress-hightlights-tips {position: absolute;display: none;left: 50%;bottom: 11px;padding: 5px 8px;max-width: 145px;
+                    min-width: 100px;background-color: slateblue;opacity: .8; color: #fff;text-align: center;border-radius: 2px;
+                    transform: translateX(-50%);height: 40px;width: 128px;font-size: 12px;letter-spacing: 0;line-height: 21px;
+                    text-overflow: ellipsis;overflow: hidden;-webkit-line-clamp: 2;-webkit-box-orient: vertical;
+                }
+
+                &:hover{
+                    height:6px;margin:0;
+                    .range-thumb{display: block;}
+                }
+                &.player_progress_hover{
+                    height:6px;margin:0;
+                    .range-thumb{display: block;}
+                }
+            }
+            .toolbar-container {/*height: 35px;margin-top: calc((50px - 35px - 8px)/2);*/
+                display: flex;height:52px;padding:8px 12px;flex-wrap: nowrap;width: 100%;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;
+                font-size:20px;line-height:36px;color:#fff;text-align:center;
+                .left {display: flex;flex: 1;height: 100%;
+
+                    .play {float: left;width: 36px;height: 100%;cursor: pointer;
+                        // background-image: url(https://sta-op.douyucdn.cn/front-publish/home-h5-master/_/dist/css/sprite/sprite.561f5_7dd55c.png);
+                        // background-position: -36px 0;margin-left: 4px;
+                    }
+                    .play:hover { background-position: -36px -72px;}
+                    .pause {float: left;width: 36px;height: 100%;cursor: pointer;display: none;
+                        // background-image: url(https://sta-op.douyucdn.cn/front-publish/home-h5-master/_/dist/css/sprite/sprite.561f5_7dd55c.png);
+                        // background-position: 0 -36px;margin-left: 4px;
+                    }
+                    .pause:hover {background-position: -36px -36px;}
+                    .reload {float: left;width: 36px;height: 100%;margin-left: 4px;display: none;cursor: pointer;
+                        background-image: url(https://sta-op.douyucdn.cn/front-publish/home-h5-master/_/dist/css/sprite/sprite.561f5_7dd55c.png);
+                        background-position: -72px 0;
+                    }
+                    .reload:hover {background-position: -72px -36px;}
+                    .control-time {display: inline-block;padding: 0 5px;white-space: nowrap;font-family: arial;height: 36px;line-height: 36px;
+                        /*margin-left: 16px;font-size: 80%;*/margin-left:8px;font-size:14px;
+
+                        .control-time-current {color: #ffffff;float: left;}
+                        .control-time-split {color: rgba(255, 255, 255, 0.7);display: none;float: left;margin: 0px 5px;}
+                        .control-time-duration {color: rgba(255, 255, 255, 0.7);display: none;}
+                    }
+
+                    .room-number-content,.visitors-number-content { height: 100%;color: #fff;display: flex;
+                        align-items: center;margin-left: 15px;font-size: 13px;font-weight: 400;
+                    }
+                }
+                .right { height: 100%;position:relative;
+                    .volume-box{float: left;width: 20px;height: 100%; margin-right: 6px;cursor: pointer;
+                        .volume {width: 20px;height: 100%;
+                            //background: url(https://sta-op.douyucdn.cn/front-publish/live_player-master/assets/images/volume1_73b235.png) no-repeat 0;
+                            //float: left; margin-right: 6px;cursor: pointer;
+                        }
+                        .volume-silent {width: 20px;height: 100%;display: none;
+                            //background: url(https://sta-op.douyucdn.cn/front-publish/live_player-master/assets/images/volume2_36c8ee.png) no-repeat 0;  
+                            //float: left; margin-right: 6px;cursor: pointer;
+                        }
+                    }
+                    .volume-bar {width: 32px; height: 80px;padding: 8px 0;position: absolute;top: -100px;left: -10px;visibility: hidden;
+                        background-color: rgba(0, 0, 0, 0.85);box-sizing: border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;
+                        //float: left;height: 100%;margin-right: 6px;position: absolute;top:-50px;left:0;
+                                
+                        .volume-bar-container {position: relative;height: 100%;width:2px;margin:auto;background-color:rgba(255, 255, 255, 0.25);
+                            //float: left;width: 100px;
+                            .back {position: absolute;z-index: 2;cursor: pointer;width:2px;height:100%;
+                                // pointer-events: none;width: 100%;height: 8px;border-radius: 4px;background: #15191c;
+                            }
+                            .front {background: #26d1e0;position: absolute; width: 2px;border-radius: 2px;cursor: pointer; z-index: 2;bottom: 0;
+                                //background: #fc831a;position: absolute;width: 100%;height: 8px;border-radius: 4px;cursor: pointer;z-index: 2;
+                            }
+                            .point {position: absolute;z-index: 2; cursor: pointer;width: 8px;height: 8px;border-radius: 8px;background-color: #fff;
+                                &:hover{box-shadow: 0 0 6px 0 #26d1e0;}
+                                //position: absolute;left: 50px;width: 13px;height: 12px;z-index: 2;cursor: pointer;
+                                //background: url(https://sta-op.douyucdn.cn/front-publish/live_player-master/assets/images/volume_point_bc3f73.png) no-repeat 50%;
+                                // pointer-events: none; 
+                            }
+                            .tips {margin-top: -20px;width: 60px;text-align: center;background: #fff;}
+                            .tips2 { margin-left: 0;text-align: center;}
+                            .vcenter {/*top: 50%;transform: translateY(-50%);*/left: 50%;transform: translateX(-50%);}
+                        }
+                    }
+                    .fullScreen {float: left;width: 36px;height: 100%;cursor: pointer;margin-left:10px;
+                        // background: url(https://sta-op.douyucdn.cn/front-publish/home-h5-master/_/dist/css/sprite/sprite.561f5_7dd55c.png) no-repeat 50%;
+                        // background-position: -108px -36px;margin-right: 14px;
+                    }
+                    .fullScreen:hover {background-position: -108px -72px;}
+                    .exit-fullScreen {float: left;width: 36px;height: 100%;cursor: pointer;margin-left:10px;display: none;
+                        // background-image: url(https://sta-op.douyucdn.cn/front-publish/home-h5-master/_/dist/css/sprite/sprite.561f5_7dd55c.png);
+                        // background-position: 0 -108px;margin-right: 14px;
+                    }
+                    .exit-fullScreen:hover {background-position: -36px -108px;}
+                }
+            }
+        }
+        .video_toolbar_content_hide {transform: translateY(42px);opacity: 0;}
+        .news_info_content {position: absolute;z-index: 2;top: 0px;left: 0px;height: 50px;width: 100%;color: red;font-size: 60px;text-align: center;}
+        .video_play_btn{position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);
+            width:56px;height:56px;border-radius: 50%;background-color: rgba(0, 0, 0, 0.5);text-align: center;line-height:56px;cursor:pointer;
+            i{color:#fff;font-size:20px;margin-left:-2px;}
+        }
+    }
+}
+
+.load-waiting {position: absolute;text-align: center;display: none;
+    top: 50%;left: 50%;transform: translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);
+    height: 50px;width: 8px;line-height: 50px;color: #fff;
+    //top: calc(50% - 50px);left: calc(50% - 8px);
+    //.loader-content img{width:100%;height:100%;display: block;}
+    .loader-content {background: currentcolor;position: relative;-webkit-animation: loader-content 1s ease-in-out infinite;animation: loader-content 1s ease-in-out infinite;
+        -webkit-animation-delay: 0.4s;animation-delay: 0.4s;width: 8px;height: 20px;color: #d60b52;border-width: 3px;line-height: 40px;font-size: 40px;
+    }
+    .loader-content:after,.loader-content:before {
+        content: '';position: absolute;width: inherit;height: inherit;background: inherit;-webkit-animation: inherit;animation: inherit;
+    }
+    .loader-content:before {right: .5em;-webkit-animation-delay: 0.2s;animation-delay: 0.2s;}
+    .loader-content:after {left: .5em;-webkit-animation-delay: 0.6s;animation-delay: 0.6s;}
+}
+
+.error-bar {width: 200px;height: 30px;text-align: center;line-height: 30px;position: absolute;top: calc((100% - 30px)/2);left: calc((100% - 200px)/2);
+    color: #fff;font-size: 16px;display: none;
+}
+.center-control {position: absolute;float: left;top: calc(100% -10px);}
+
+.test-button-box {height: 30px;border: 1px solid red;position: absolute;top: 5px;left: calc(50% - 350px);display: flex;place-items: center;
+
+    button { width: 80px; height: 30px;border: none;outline: none;margin-right: 4px;}
+    input { width: 120px;height: 28px; border: none;margin-right: 4px; outline: none;}
+}
+@-webkit-keyframes loader-content {
+    0%,100% {box-shadow: 0 0 0 currentcolor, 0 0 0 currentcolor;}
+    50% {box-shadow: 0 -.25em 0 currentcolor, 0 .25em 0 currentcolor;}
+}
+@keyframes loader-content {
+    0%,100% {box-shadow: 0 0 0 currentcolor, 0 0 0 currentcolor;}
+    50% {box-shadow: 0 -.25em 0 currentcolor, 0 .25em 0 currentcolor;}
+}

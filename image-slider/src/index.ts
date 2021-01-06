@@ -1,8 +1,25 @@
 import "./index.less"
-import { option } from "./type"
 import { mergeOptions,addEvent,removeEvent } from "@stl/tool-ts/src/common/compatible";
 import { removeClass,addClass,show,hide } from "@stl/tool-ts/src/common/dom";
+interface option {
+  sliderWindowId:string//轮播框元素id
+  sliderDomId?:string//需要轮播的元素id 如果不传则默认找轮播框元素的第一个子元素
+  sliderListName?:string//轮播元素列表 "li"、".list" 如果不传则默认找需要轮播元素的所有子元素
+  direction?:string//移动方向。"left"：默认值  向左，"right":向右，"top":向上，"bottom":向下
+  intervals?:number//间隔时间 不传则为无缝滚动
 
+  step?:number//每次移动的步长 决定移动的速度(无缝滚动时有用) 默认为5
+
+  distance?:string|number//轮播一张图片运动的距离（intervals不为0时有用）"auto":默认值 每次移动距离为轮播框父元素的宽度，当传入数字时移动距离为传入的数字      
+  time?:number//轮播单张图片需要的时间 （轮播时有用） 默认500ms
+  item?:boolean//是否显示下标 （轮播时有用）  默认为true
+  switch?:boolean//是都显示左右切换按钮 （轮播时有用） 默认为true
+  auto?:boolean//是否自动移动 （轮播时有用）  默认为true
+  hover?:boolean//hover时是否停止运动 （auto值为true时有用）默认为true
+  switchType?:string//左右切换按钮显示方式  "auto" ：一直显示（默认值），"hover":鼠标移入时显示
+  switchCallback?:(type:any,distance:any,clickDom:HTMLElement,showDom:HTMLElement)=>void//点击切换后的回调
+  initCallback?:()=>void//初始化完成后的回调
+}
 export class imageSlider {
   private option:option
   private sliderLength:number//轮播列表的长度
@@ -30,24 +47,26 @@ export class imageSlider {
   private distanceNumber:number//轮播一张图片需要的帧数
   private nowDistanceNumber:number = 0//当前已执行的帧数
   //需要使用的dom
-  private $parent:HTMLElement
-  private $sliderDom:any
-  private $sliderList:any
-  private $itemList:any
-  private $prevDom:any
-  private $nextDom:any
+  $parent:HTMLElement
+  $sliderDom:any
+  $sliderList:any
+  $itemList:any
+  $prevDom:any
+  $nextDom:any
   constructor(option:option){
     this.initOption(option);
     this.getDom();
     this.getExerciseValue();
     this.addDom();
     if(this.option.switchType === "out"){
-      hide(this.$prevDom)
+      addClass(this.$prevDom,"slider_btn_hide")
+      this.totalDistance<=0&&addClass(this.$nextDom,"slider_btn_hide")
     }else{
       this.cloneFn(0);      
     }
     this.option.auto&&this.startSportFn();
     this.addEventFn();
+    option.initCallback&&option.initCallback.call(this);
   }
   private initOption(option:option){//初始化参数
     let optionObj:any = {distance:"auto",step:2,time:300,auto:true,item:true,switch:true,direction:"left",hover:true,switchType:"auto"};
@@ -110,8 +129,8 @@ export class imageSlider {
   }
   private addDom(){//添加切换元素
     let itemString:string = "",listStr="",
-        leftRight:string = this.option.switch?`<div class="slider_left_btn ${this.option.switchType==="auto"?"":"slider_btn_hide"}"></div>
-                                              <div class="slider_right_btn ${this.option.switchType==="auto"?"":"slider_btn_hide"}"></div>`:"";//左右切换按钮
+        leftRight:string = this.option.switch?`<div class="slider_left_btn ${this.option.switchType==="hover"?"slider_btn_hide":""}"></div>
+                                              <div class="slider_right_btn ${this.option.switchType==="hover"?"slider_btn_hide":""}"></div>`:"";//左右切换按钮
     if(this.option.item){//下标元素
       for(let i=0;i<this.sliderLength;i++){
         listStr +=`<li class="slider_item_btn ${i===this.index?this.nowClass:""}" index="${i}"></li>`;

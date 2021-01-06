@@ -1,3 +1,4 @@
+import "./index.less";
 import { option } from "./type";
 export declare class imageCropper {
     private option;
@@ -45,6 +46,7 @@ export declare class imageCropper {
     constructor(optionObj: option);
     private initOption;
     private initFn;
+    private getBase64;
     changeImg(src: string): void;
     private getContainerStyle;
     private getDom;

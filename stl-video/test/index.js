@@ -1,0 +1,2 @@
+!function(e){"function"==typeof define&&define.amd?define(e):e()}(function(){"use strict";var e={streamLink:{hls:"http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8"},mode:0,poster:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3893146502,314297687&fm=27&gp=0.jpg",loop:!1,fullScreenDom:document.getElementById("fullDom")};BlVideo.operation.load("videojs",e),BlVideo.hooks.videoTimeupdate=function(){},BlVideo.hooks.changeFullScreen=function(e){}});
+//# sourceMappingURL=index.js.map
