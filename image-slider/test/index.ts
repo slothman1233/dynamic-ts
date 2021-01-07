@@ -20,7 +20,6 @@ let imgSlider = new imageSlider({
        }
     }
   })
-
   // let scrollSlider = new imageSlider({
   //   sliderWindowId:"scroll_parent",
   //   sliderDomId:"scroll_dom",

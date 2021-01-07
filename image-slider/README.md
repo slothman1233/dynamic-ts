@@ -60,6 +60,7 @@ ts:
 |  hover         |  boolean     |  true    |  hover时是否停止运动    |
 |  switchType         |  string     |  "auto"    |  左右切换按钮显示方式,"auto":一直显示；"hover":鼠标移入时显示,"out":到达最后一张或第一张隐藏对应切换按钮    |
 |  switchCallback  |  function     |  null    |  点击切换后的回调 此方法将接收四个参数 type:切换方向,"1"表示切换下一张、"-1"表示切换上一张,distance:已移动的总距离,clickDom:点击切换的元素,showDom:另一个切换元素 |
+|  initCallback  |  function     |  null    |  初始化完成的回调，方法中获取左右切换按钮：this.$prevDom,this.$nextDom|
 
 
 ### 备注说明

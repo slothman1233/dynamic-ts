@@ -1,6 +1,6 @@
 {
   "name": "@stl/signalr",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "signalr插件",
   "main": "dist/signalr.js",
   "scripts": {

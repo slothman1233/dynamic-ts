@@ -18,6 +18,7 @@ interface option {
   hover?:boolean//hover时是否停止运动 （auto值为true时有用）默认为true
   switchType?:string//左右切换按钮显示方式  "auto" ：一直显示（默认值），"hover":鼠标移入时显示
   switchCallback?:(type:any,distance:any,clickDom:HTMLElement,showDom:HTMLElement)=>void//点击切换后的回调
+  initCallback?:()=>void//初始化完成后的回调
 }
 export class imageSlider {
   private option:option
@@ -46,12 +47,12 @@ export class imageSlider {
   private distanceNumber:number//轮播一张图片需要的帧数
   private nowDistanceNumber:number = 0//当前已执行的帧数
   //需要使用的dom
-  private $parent:HTMLElement
-  private $sliderDom:any
-  private $sliderList:any
-  private $itemList:any
-  private $prevDom:any
-  private $nextDom:any
+  $parent:HTMLElement
+  $sliderDom:any
+  $sliderList:any
+  $itemList:any
+  $prevDom:any
+  $nextDom:any
   constructor(option:option){
     this.initOption(option);
     this.getDom();
@@ -65,6 +66,7 @@ export class imageSlider {
     }
     this.option.auto&&this.startSportFn();
     this.addEventFn();
+    option.initCallback&&option.initCallback.call(this);
   }
   private initOption(option:option){//初始化参数
     let optionObj:any = {distance:"auto",step:2,time:300,auto:true,item:true,switch:true,direction:"left",hover:true,switchType:"auto"};
