@@ -286,7 +286,7 @@
   ///<reference path="../../indexModel.d.ts" />
   /**
    * NodeList转为数组
-   * @param {NodeList|HTMLCollectionOf<Element>} nodes 对象数组类型
+   * @param {NodeList} nodes 对象数组类型
    * @return {Array} 转化后的数组
    */
   function NodeListToArray(nodes) {
@@ -623,18 +623,18 @@
           this.motionKey = false;
           this.initParameter = { slidesPerView: 1, autoHeight: false, speed: 300, loop: false, };
           this.parent = parent;
-          this.parameter = mergeOptions(this.initParameter, obj);
-          this.parentWidth = this.parent.clientWidth;
-          this.parentScrollWidth = this.parent.scrollWidth;
-          this.wrapperDom = this.parent.getElementsByClassName(this.wrapperClassName)[0];
-          this.sliderList = NodeListToArray(this.parent.getElementsByClassName(this.sliderClassName));
+          this.parameter = mergeOptions(this.initParameter, obj); //初始化参数
+          this.parentWidth = this.parent.clientWidth; //获取父元素的宽度
+          this.parentScrollWidth = this.parent.scrollWidth; //获取父元素内容的宽度
+          this.wrapperDom = this.parent.getElementsByClassName(this.wrapperClassName)[0]; //获取滚动元素
+          this.sliderList = NodeListToArray(this.parent.querySelectorAll("." + this.sliderClassName)); //获取table切换元素列表
           this.length = this.sliderList.length;
           if (this.parameter.loop) {
               this.loopInit();
           }
           else {
               addClass(this.sliderList[0], "stl-switch-slider-active");
-          }
+          } //判断是否允许循环切换
           if (obj) {
               if (obj.autoHeight)
                   addClass(this.parent, "stl-switch-autoheight"), this.wrapperDom.style.height = this.sliderList[this.item].offsetHeight + "px";
@@ -649,6 +649,8 @@
           }
           if (obj.pagination)
               this.getPagination(obj.pagination);
+          if (obj.navigation)
+              this.getNavigation(obj.navigation, this.parameter.loop);
           if (this.parameter.slidesPerView < this.length)
               this.addTouchFn();
       }
@@ -690,7 +692,7 @@
               var len = _this.startLeft - event.changedTouches[0].clientX;
               var top = _this.startTop - event.changedTouches[0].clientY;
               if (!that.moveKey)
-                  that.moveAngle = 180 * Math.atan2(Math.abs(top), Math.abs(len)) / Math.PI, that.moveKey = true;
+                  that.moveAngle = 180 * Math.atan2(Math.abs(top), Math.abs(len)) / Math.PI, that.moveKey = true; //根据拖动的角度是否小于45度判断是否为切换table
               if (that.moveAngle <= 45) {
                   event.preventDefault();
                   setTransformFn(that.wrapperDom, "translate3d(" + (-len + JSON.parse(that.startTransform)) + "px,0px,0px)");
@@ -707,9 +709,9 @@
                   var len = _this.startLeft - event.changedTouches[0].clientX;
                   if (that.parameter.slidesPerView === 1) {
                       that.endTime = new Date().getTime();
-                      var num = len === 0 ? 0 : Math.round(Math.abs(len) / that.parentWidth) * (Math.abs(len) / len);
+                      var num = len === 0 ? 0 : Math.round(Math.abs(len) / that.parentWidth) * (Math.abs(len) / len); //四舍五入取切换值 当切换距离大于一个table的50%时 则切换到上（下）一张
                       if ((that.endTime - that.startTime < 300) && num < 1 && (len > 20 || len < -20))
-                          num = Math.abs(len) / len;
+                          num = Math.abs(len) / len; //时间小于300ms且移动距离大于20px则切换到下（上）一张
                       var item = that.item + num;
                       var number = that.updateItem.call(that, item, true);
                       that.updatePosition.call(that, number);
@@ -729,15 +731,15 @@
           addEvent(that.wrapperDom, "touchstart", function (event) {
               if (that.motionKey)
                   return;
-              that.autoPlayTimeout && (clearTimeout(that.autoPlayTimeout), that.autoPlayTimeout = null);
-              that.parameter.sliderStart && that.parameter.sliderStart();
+              that.autoPlayTimeout && (clearTimeout(that.autoPlayTimeout), that.autoPlayTimeout = null); //如果开启了自动切换则关闭自动切换
+              that.parameter.sliderStart && that.parameter.sliderStart(); //初始化的回调
               that.startTime = new Date().getTime();
               that.moveAngle = 90;
               that.startLeft = event.changedTouches[0].clientX;
               that.startTop = event.changedTouches[0].clientY;
               that.startTransform = getTransformFn(that.wrapperDom).split(",")[4];
               if (that.scrollBox)
-                  that.scrollTransform = getTransformFn(that.scrollNav).split(",")[4];
+                  that.scrollTransform = getTransformFn(that.scrollNav).split(",")[4]; //是否进度条
               addEvent(that.wrapperDom, "touchmove", that.touchmoveFn);
               addEvent(that.wrapperDom, "touchend", that.touchendFn);
           });
@@ -760,7 +762,7 @@
           }, that.parameter.speed);
           if (that.parameter.autoHeight)
               this.wrapperDom.style.height = this.sliderList[this.item].offsetHeight + "px";
-          this.parameter.sliderEnd && this.parameter.sliderEnd();
+          this.parameter.sliderEnd && this.parameter.sliderEnd.call(this);
       };
       stlSwiper.prototype.updateScroll = function () {
           var that = this;
@@ -838,6 +840,7 @@
                   var number = -that.item * that.parentWidth;
                   that.updatePosition(number);
                   that.updateScroll();
+                  obj.clickCallback && obj.clickCallback.call(that);
               }
           });
       };
@@ -902,20 +905,87 @@
           removeClass(this.paginationBox.querySelector(".stl-switch-pagination-active"), "stl-switch-pagination-active");
           addClass(this.paginationList[this.item], "stl-switch-pagination-active");
       };
+      stlSwiper.prototype.getNavigation = function (obj, loop) {
+          this.navigatorLeftDom = obj.prevEl ? obj.prevEl : createEl("div", { className: "stl_swiper_prev_btn stl_swiper_hide_btn", innerHTML: "〈" });
+          this.navigatorRightDom = obj.nextEl ? obj.nextEl : createEl("div", { className: "stl_swiper_next_btn", innerHTML: "〉" });
+          this.parent.appendChild(this.navigatorLeftDom);
+          this.parent.appendChild(this.navigatorRightDom);
+          this.navigationClickFn(obj, loop);
+      };
+      stlSwiper.prototype.navigationClickFn = function (obj, loop) {
+          var that = this;
+          addEvent(that.navigatorLeftDom, "click", function () {
+              var item;
+              if (!loop) {
+                  if (that.item == 0)
+                      return;
+                  item = that.item - 1 < 0 ? 0 : that.item - 1;
+                  if (item == 0) {
+                      if (obj.autoHide)
+                          addClass(that.navigatorLeftDom, "stl_swiper_hide_btn");
+                  }
+              }
+              else {
+                  item = that.item - 1 < 0 ? that.length - 1 : that.item - 1;
+              }
+              that.autoPlayTimeout && (clearTimeout(that.autoPlayTimeout), that.autoPlayTimeout = null); //如果开启了自动切换则关闭自动切换
+              var number = that.updateItem.call(that, item, true);
+              that.updatePosition.call(that, number);
+              that.updateScroll();
+              removeClass(that.navigatorRightDom, "stl_swiper_hide_btn");
+          });
+          addEvent(that.navigatorRightDom, "click", function () {
+              var item;
+              if (!loop) {
+                  if (that.item == that.length - 1)
+                      return;
+                  item = that.item + 1 > that.length - 1 ? that.length - 1 : that.item + 1;
+                  if (item == that.length - 1) {
+                      if (obj.autoHide)
+                          addClass(that.navigatorRightDom, "stl_swiper_hide_btn");
+                  }
+              }
+              else {
+                  item = that.item + 1 > that.length - 1 ? 0 : that.item + 1;
+              }
+              that.autoPlayTimeout && (clearTimeout(that.autoPlayTimeout), that.autoPlayTimeout = null); //如果开启了自动切换则关闭自动切换
+              var number = that.updateItem.call(that, item, true);
+              that.updatePosition.call(that, number);
+              that.updateScroll();
+              removeClass(that.navigatorLeftDom, "stl_swiper_hide_btn");
+          });
+      };
       return stlSwiper;
   }());
 
+  var prevDom = document.getElementById("left_btn");
+  var nextDom = document.getElementById("right_btn");
   new stlSwiper(document.getElementById("page"), {
       //slidesPerView:3,
-      //autoHeight:true,
+      autoHeight: true,
       //autoplay:{},
       thumbs: {
           list: ["第一个", "<a>第二个</a>", "第三个", "第四个", "第五个", "第六个", "第七个"],
-          thumbsPerview: 2
       },
-      loop: true,
-      scrollBar: { dragSize: "50%" },
-      pagination: {}
+      //loop:true,
+      //scrollBar:{dragSize:"50%"},
+      //pagination:{}
+      navigation: {
+          nextEl: nextDom,
+          prevEl: prevDom,
+          autoHide: true
+      },
+      sliderEnd: function () {
+          // if(this.item ==0 ){
+          //     prevDom.className += " hide_btn"
+          // }else if(this.item == this.length-1){
+          //     nextDom.className += " hide_btn"
+          // }else{
+          //     nextDom.className = nextDom.className.replace(" hide_btn","")
+          //     prevDom.className = prevDom.className.replace(" hide_btn","")
+          // }
+          // console.log(this.item,this.length)
+      }
   });
 
 })));

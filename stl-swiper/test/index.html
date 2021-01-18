@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <title>LiveDemo</title>
     <link rel="stylesheet" href="./index.css">
@@ -13,9 +14,17 @@
         .page_item p{width:100%;display: block;}
         .stl-switch-thumbs{height:60px;line-height:60px;}
         .stl-switch-thumbs-active{font-weight: bold;}
+        .left_btn,.right_btn{
+            width:40px;height:40px;font-size:32px;color:#fff;background:rgba(0,0,0,0.15);font-weight: bold;text-align: center;line-height: 40px;position: absolute;
+            top:50%;transform:translateY(-50%);
+        }
+        .right_btn{right:0;}
+        .left_btn{left:0;}
+        .hide_btn{display: none;}
         </style>
 </head>
 <body style="height:100%">
+    
     <div class="page" id="page">
         <div class="stl-switch-thumbs"></div>
         <div class="page_content stl-switch-wrapper">
@@ -93,6 +102,8 @@
         </div>
         
     </div>
+    <div class="left_btn" id="left_btn">〈</div>
+    <div class="right_btn" id="right_btn">〉</div>
     <script src="./index.js?666"></script>
 </body>
 

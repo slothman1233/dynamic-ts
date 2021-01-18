@@ -54,7 +54,9 @@ interface pagination{
 }
 
 interface navigation{
-    
+     nextEl?:HTMLElement|Element
+    prevEl?:HTMLElement|Element
+    autoHide?:boolean
 }
 
 interface parameter{
@@ -78,7 +80,11 @@ interface parameter{
     pagination?:{//分页器（小圆点）如果不需要传ele参数则此参数传"{}"则会添加分页器
         ele?:HTMLElement|Element//分页器父元素 不传则默认生成父元素
     }
-    
+    navigation?:{//左右切换按钮
+        nextEl?:HTMLElement|Element//切换下一张按钮，如果不传则会动态生成
+        prevEl?:HTMLElement|Element//切换上一张按钮，如果不传则会动态生成
+        autoHide?:boolean//切换到第一张、最后一张是否隐藏对应按钮，如果需要自己处理则在sliderEnd的回调函数中处理  函数中this.item表示当前显示的下标，this.length表示长度。
+    }
     sliderStart?:()=>void 切换开始的回调
     sliderEnd?:()=>void 每次切换结束的回调 方法中this.item表示当前显示slider的下标
 }
