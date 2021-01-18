@@ -1,6 +1,6 @@
 {
   "name": "@stl/iconfont",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "SVG生成字体包，并生成css 样式引用",
   "main": "index.js",
   "scripts": {

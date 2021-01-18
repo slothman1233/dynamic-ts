@@ -508,7 +508,7 @@ class videoToolBar extends Component {
             that.changeFullScreenOrExit.call(that);
             this.fullScreenChange();
             this.fullScreenKey = false;
-          }, 200);
+          }, 300);
         }
 
     }
@@ -536,7 +536,7 @@ class videoToolBar extends Component {
         setTimeout(() => {
             that.changeFullScreenOrExit.call(that);
             this.fullScreenKey = false;
-          }, 200);
+          }, 300);
 
     }
 
@@ -590,15 +590,17 @@ class videoToolBar extends Component {
             });
         } else if ((<any>document).msExitFullscreen) {
             this.livePlayerEl.addEventListener("msfullscreenchange", ()=>{
-                this.exitFullscreen()
+                if(!this.fullScreenKey)
+                    this.exitFullscreen()
             });
         } else if ((<any>document).mozCancelFullScreen) {
             this.livePlayerEl.addEventListener("mozfullscreenchange", ()=>{
-                
-                this.exitFullscreen()});
+                if(!this.fullScreenKey)
+                    this.exitFullscreen()});
         }else if((<any>document).exitFullscreen) {
             this.livePlayerEl.addEventListener("fullscreenchange", ()=>{
-                this.exitFullscreen()
+                if(!this.fullScreenKey)
+                    this.exitFullscreen()
             });
         }
         this.fullScreenChangeKey = true;

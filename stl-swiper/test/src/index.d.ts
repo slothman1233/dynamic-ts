@@ -10,9 +10,15 @@ interface autoplay {
 interface thumbs {
     list: Array<string>;
     thumbsPerview?: number;
+    clickCallback?: () => void;
 }
 interface pagination {
     ele?: HTMLElement | Element;
+}
+interface navigation {
+    nextEl?: HTMLElement | Element;
+    prevEl?: HTMLElement | Element;
+    autoHide?: boolean;
 }
 interface parameter {
     watchOverflow?: boolean;
@@ -25,6 +31,7 @@ interface parameter {
     scrollBar?: scrollBar;
     thumbs?: thumbs;
     pagination?: pagination;
+    navigation?: navigation;
     sliderStart?: any;
     sliderEnd?: any;
 }
@@ -72,6 +79,8 @@ export declare class stlSwiper {
     motionKey: boolean;
     paginationBox: any;
     paginationList: any;
+    navigatorLeftDom: any;
+    navigatorRightDom: any;
     initParameter: parameter;
     constructor(parent: HTMLElement, obj?: parameter);
     private loopInit;
@@ -89,5 +98,7 @@ export declare class stlSwiper {
     private addThumbsSwitch;
     private getPagination;
     private updatePagination;
+    private getNavigation;
+    private navigationClickFn;
 }
 export {};
