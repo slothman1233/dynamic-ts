@@ -3,7 +3,7 @@
  * @Version: 0.1
  * @Author: EveChee
  * @Date: 2020-05-08 14:10:12
- * @LastEditTime: 2020-12-28 15:19:08
+ * @LastEditTime: 2021-01-11 17:53:56
  */
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios'
 // 控制跳转中心
@@ -164,6 +164,7 @@ export default class Intercept {
                 return
             }
             Promise.reject(data)
+            return
         }
         // 成功
         try {

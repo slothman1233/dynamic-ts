@@ -6,9 +6,8 @@
  * @Description: file content
  */
 import HttpService from '@stl/request'
-// import HttpService from '../test/src'
 const EMOJI_CONFIG = require('./emojis.json')
-const BASE_URL = 'http://testfxchatapi.wbp5.com'
+const BASE_URL = 'https://gafxchatapi.wx168e.com'
 
 const canFlat = (Array.prototype as any).flat
 function flatDeep(arr: any[], d = 1): any[] {
