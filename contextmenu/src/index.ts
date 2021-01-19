@@ -1,6 +1,7 @@
-import { createEl } from "@stl/tool-ts/src/common/dom";
-import { on, eventsPath } from "@stl/tool-ts/src/common/event";
-import { NodeListToArray } from "@stl/tool-ts/src/common/obj";
+import { createEl } from "@stl/tool-ts/src/common/dom/createEl";
+import { on } from "@stl/tool-ts/src/common/event/on";
+import { eventsPath } from "@stl/tool-ts/src/common/event/eventsPath";
+import { NodeListToArray } from "@stl/tool-ts/src/common/obj/NodeListToArray";
 
 interface contentData {
     id?: string  //唯一标识

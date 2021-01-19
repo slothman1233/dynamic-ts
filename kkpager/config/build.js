@@ -16,7 +16,7 @@ const paths = {
 
 // 需要生成的文件
 const jspages = [
-    "index","src"
+    "index"
     //测试用的配置
     //"src","index"
 ]

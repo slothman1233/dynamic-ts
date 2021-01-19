@@ -1,6 +1,6 @@
 {
   "name": "@stl/notice-remind",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "通知弹窗组件",
   "main": "dist/index.js",
   "scripts": {
@@ -11,9 +11,10 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@stl/tool-ts": "^1.0.10"
+  },
   "devDependencies": {
-    "@stl/tool-ts": "^1.0.3",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
