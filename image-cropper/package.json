@@ -1,6 +1,6 @@
 {
   "name": "@stl/image-cropper",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "图片裁剪插件",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,9 @@
   "author": "denghao",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^0.5.0",
+    "@stl/tool-ts": "^1.0.10"
+  },
+  "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -48,7 +50,6 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {},
   "keywords": [
     "cropper",
     "image",

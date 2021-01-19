@@ -1,6 +1,6 @@
 {
   "name": "@stl/stl-swiper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "简易swiper组件（h5 lable切换和轮播图组件）",
   "main": "dist/index.js",
   "scripts": {
@@ -11,9 +11,10 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@stl/tool-ts": "^1.0.10"
+  },
   "devDependencies": {
-    "@stl/tool-ts": "^1.0.10",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",

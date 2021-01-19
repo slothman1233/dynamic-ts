@@ -1,7 +1,16 @@
-import { mergeOptions, index, addEvent ,removeEvent} from '@stl/tool-ts/src/common/compatible';
-import { createEl, show, parent, hide, remove,siblings } from '@stl/tool-ts/src/common/dom';
-import { on } from "@stl/tool-ts/src/common/event";
-import { NodeListToArray, each } from '@stl/tool-ts/src/common/obj';
+import { mergeOptions } from '@stl/tool-ts/src/common/compatible/mergeOptions';
+import { index } from "@stl/tool-ts/src/common/compatible/index";
+import { addEvent } from "@stl/tool-ts/src/common/compatible/addEvent";
+import { removeEvent } from "@stl/tool-ts/src/common/compatible/removeEvent";
+import { createEl } from '@stl/tool-ts/src/common/dom';
+import { show } from "@stl/tool-ts/src/common/dom/show";
+import { parent } from "@stl/tool-ts/src/common/dom/parent";
+import { hide } from '@stl/tool-ts/src/common/dom/hide';
+import { remove } from "@stl/tool-ts/src/common/dom/remove";
+import { siblings } from '@stl/tool-ts/src/common/dom/siblings';
+import { on } from "@stl/tool-ts/src/common/event/on";
+import { NodeListToArray } from '@stl/tool-ts/src/common/obj/NodeListToArray';
+import { each } from "@stl/tool-ts/src/common/obj/each";
 import { installEvents } from '@stl/tool-ts/src/common/subscrible';
 interface imgMagnificationModel{
     parentEle:any;//图片集合的父元素或者元素字符串

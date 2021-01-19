@@ -1,6 +1,6 @@
 {
   "name": "@stl/signalr",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "signalr插件",
   "main": "dist/signalr.js",
   "scripts": {
@@ -16,7 +16,9 @@
   ],
   "author": "denghao",
   "license": "ISC",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/polyfill": "^7.10.4",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -53,9 +55,6 @@
     "sinon-chai": "^3.5.0",
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
-  },
-  "devDependencies": {
-    "@babel/polyfill": "^7.10.4"
   },
   "directories": {
     "test": "test"

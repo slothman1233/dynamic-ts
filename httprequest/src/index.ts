@@ -1,6 +1,6 @@
-import { mergeOptions } from "@stl/tool-ts/src/common/compatible";
+import { mergeOptions } from "@stl/tool-ts/src/common/compatible/mergeOptions";
 import { log } from "@stl/tool-ts/src/common/log";
-import { each } from '@stl/tool-ts/src/common/obj';
+import { each } from '@stl/tool-ts/src/common/obj/each';
 import ES6Promise from "es6-promise";
 import fxLanguage from "@stl/tool-ts/src/languages/cn";
 

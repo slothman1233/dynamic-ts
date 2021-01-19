@@ -1,7 +1,10 @@
 
 import "./index.less"
 import window from '@stl/tool-ts/src/common/window';
-import { show, addClass, hide, removeClass } from '@stl/tool-ts/src/common/dom';
+import { show } from '@stl/tool-ts/src/common/dom/show';
+import { addClass } from "@stl/tool-ts/src/common/dom/addClass";
+import { hide } from "@stl/tool-ts/src/common/dom/hide";
+import { removeClass } from "@stl/tool-ts/src/common/dom/removeClass";
 /**
  * 分页控件 需要引用默认样式： 样式1： https://gajsapi.fx110.com/script/public/kkpager/kkpager_blue.min.css  或者  https://gajsapi.fx110.com/script/public/kkpager/kkpager.min.css
  * @param {kkpagerNewsModel} fx.kkpager({data:data})

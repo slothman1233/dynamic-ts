@@ -1,6 +1,11 @@
 
-import { createEl, insertAfter, insertBefore, getOffset, swapArray, remove } from '@stl/tool-ts/src/common/dom';
-import { eventsPath } from '@stl/tool-ts/src/common/event';
+import { createEl } from '@stl/tool-ts/src/common/dom/createEl';
+import { eventsPath } from '@stl/tool-ts/src/common/event/eventsPath';
+import { insertAfter } from "@stl/tool-ts/src/common/dom/insertAfter";
+import { insertBefore } from "@stl/tool-ts/src/common/dom/insertBefore";
+import { getOffset } from "@stl/tool-ts/src/common/dom/getOffset";
+import { swapArray } from "@stl/tool-ts/src/common/dom/swapArray";
+import { remove } from "@stl/tool-ts/src/common/dom/remove";
 
 /**
  * 单行拖拽的控件

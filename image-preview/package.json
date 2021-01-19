@@ -1,6 +1,6 @@
 {
   "name": "@stl/image-preview",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "图片，视频预览插件",
   "main": "dist/index.js",
   "scripts": {
@@ -17,7 +17,9 @@
   "author": "denghao",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^0.2.4",
+    "@stl/tool-ts": "^1.0.10"
+  },
+  "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -53,7 +55,6 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
