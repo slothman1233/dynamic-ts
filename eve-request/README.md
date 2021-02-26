@@ -25,6 +25,7 @@
 |  responseSet   | Function |            响应拦截执行的方法(基本用不到)            |      none       |
 | tokenHeaderKey |  String  | token 在请求头的字段 key(只在 getToken 方法有时生效) | 'Authorization' |
 |    errorFn     | function |                       错误回调                       |      none       |
+|    returnErrorFn     | function |                       错误返回模型                      |      none       |
 
 ```js
 import HttpService from '@stl/request'

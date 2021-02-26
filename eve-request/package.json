@@ -1,6 +1,6 @@
 {
   "name": "@stl/request",
-  "version": "1.2.8",
+  "version": "1.2.10",
   "description": "请求封装",
   "main": "dist/index.js",
   "scripts": {
