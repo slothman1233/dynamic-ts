@@ -207,6 +207,8 @@ export type ReqBaseConfig = {
   responseSet?: Function
   // 错误回调
   errorFn?: Function
+  // 错误情形下默认执行的返回方法
+  returnErrorFn?:Function
   // 全局subCode模式 优先级小于指定在接口内的codes
   codes?: Codes
 }

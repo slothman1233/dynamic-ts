@@ -36,13 +36,13 @@ export class WXShare{
       data:that.parameter.data||{pageurl:that.parameter.link},
       dataType:"json",
       async:false
-    }).then(function(data:any){
+    },function(data:any){
       if(data&&data.code=="0"){
         if(data.bodyMessage&&data.bodyMessage!=""){
           that.renderBeshare(data)
         }
       }
-    }).then(function(err:any){
+    },function(err:any){
       that.parameter.ajaxErrorFn(err)
     });
   }

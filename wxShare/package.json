@@ -1,6 +1,6 @@
 {
   "name": "@stl/wxshare",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "自定义微信分享",
   "main": "dist/index.js",
   "scripts": {
@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@stl/httprequest": "^1.0.4"
+    "@stl/httprequest": "^1.1.3",
+    "@stl/tool-ts": "^1.0.3"
   },
   "devDependencies": {
-    "@stl/tool-ts": "^1.0.3",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",

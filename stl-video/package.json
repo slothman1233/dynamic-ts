@@ -1,6 +1,6 @@
 {
   "name": "@stl/stl-video",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "播放器组件",
   "main": "dist/index.js",
   "scripts": {
@@ -11,17 +11,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-latest": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "babel-runtime": "^6.26.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "^8.0.1",
     "expect.js": "^0.3.1",
@@ -54,7 +44,16 @@
     "rollup-plugin-uglify": "^6.0.4",
     "stylus": "^0.54.8",
     "typescript": "^3.9.7",
-    "m3u8-parser": "^4.3.0"
+    "m3u8-parser": "^4.3.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0"
   },
   "directories": {
     "test": "test"

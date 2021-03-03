@@ -1,12 +1,14 @@
 import "./index.less";
-import { mergeOptions,addEvent,removeEvent } from "@stl/tool-ts/src/common/compatible";
+import { mergeOptions } from "@stl/tool-ts/src/common/compatible/mergeOptions";
+import { addEvent } from "@stl/tool-ts/src/common/compatible/addEvent";
+import { removeEvent } from "@stl/tool-ts/src/common/compatible/removeEvent";
 import { show } from "@stl/tool-ts/src/common/dom/show";
 import { hide } from "@stl/tool-ts/src/common/dom/hide";
 import { addStyleFn,IE_VERSION,getImageSize,getTransform } from "./util"
 import { IMG_CROPPER_INPUT_TEMPLATE,IMG_CROPPER_BOX_TEMPLATE } from "./template"
 
 
-interface domSize{//元素的尺寸
+export interface domSize{//元素的尺寸
     width:number
     height:number
 }

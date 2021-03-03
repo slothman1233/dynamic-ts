@@ -11,9 +11,10 @@
     },
     "author": "",
     "license": "ISC",
-    "dependencies": {},
+    "dependencies": {
+        "@stl/tool-ts": "^1.0.10"
+    },
     "devDependencies": {
-        "@stl/tool-ts": "^1.0.2",
         "@types/chai": "^4.2.12",
         "@types/expect.js": "^0.3.29",
         "@types/mocha": "^8.0.0",

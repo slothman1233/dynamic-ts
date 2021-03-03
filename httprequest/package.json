@@ -1,6 +1,6 @@
 {
   "name": "@stl/httprequest",
-  "version": "1.0.9",
+  "version": "1.1.4",
   "description": "兼容性较高的简易http请求封装",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,13 @@
   "author": "denghao",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^0.1.9",
+    "@stl/tool-ts": "^1.0.10"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.10.5",
+    "@types/sinon": "^9.0.4",
+    "karma-sinon": "^1.0.5",
+    "sinon": "^9.0.2",
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -49,12 +55,6 @@
     "rollup-plugin-uglify": "^6.0.4",
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
-  },
-  "devDependencies": {
-    "@babel/register": "^7.10.5",
-    "@types/sinon": "^9.0.4",
-    "karma-sinon": "^1.0.5",
-    "sinon": "^9.0.2"
   },
   "directories": {
     "test": "test"

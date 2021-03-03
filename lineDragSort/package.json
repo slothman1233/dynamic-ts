@@ -1,6 +1,6 @@
 {
   "name": "@stl/line-dragsort",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "单行拖拽控件",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,9 @@
   "author": "dh",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^0.2.4",
+    "@stl/tool-ts": "^1.0.10"
+  },
+  "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -54,6 +56,5 @@
   ],
   "directories": {
     "test": "test"
-  },
-  "devDependencies": {}
+  }
 }

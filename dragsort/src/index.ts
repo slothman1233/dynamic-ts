@@ -1,6 +1,6 @@
 
 import { createEl, insertAfter, insertBefore, getOffset, remove, parent, AllScroll, hasClass, find, hide, show } from '@stl/tool-ts/src/common/dom';
-import { eventsPath } from '@stl/tool-ts/src/common/event';
+import { eventsPath } from '@stl/tool-ts/src/common/event/eventsPath';
 // ///<reference path="../languages/language.d.ts" />
 
 interface dragsortData {

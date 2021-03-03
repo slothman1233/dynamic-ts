@@ -1,6 +1,11 @@
 import "./index.less"
-import { mergeOptions,addEvent,removeEvent } from "@stl/tool-ts/src/common/compatible";
-import { removeClass,addClass,show,hide } from "@stl/tool-ts/src/common/dom";
+import { mergeOptions } from "@stl/tool-ts/src/common/compatible/mergeOptions";
+import { addEvent } from "@stl/tool-ts/src/common/compatible/addEvent";
+import { removeEvent } from "@stl/tool-ts/src/common/compatible/removeEvent";
+import { removeClass } from "@stl/tool-ts/src/common/dom/removeClass";
+import { addClass } from "@stl/tool-ts/src/common/dom/addClass";
+import { show } from "@stl/tool-ts/src/common/dom/show";
+import { hide } from "@stl/tool-ts/src/common/dom/hide";
 interface option {
   sliderWindowId:string//轮播框元素id
   sliderDomId?:string//需要轮播的元素id 如果不传则默认找轮播框元素的第一个子元素

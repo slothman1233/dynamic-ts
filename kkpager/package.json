@@ -1,6 +1,6 @@
 {
   "name": "@stl/kkpager",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "分页器插件",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,12 @@
   "author": "d",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^0.2.4",
+    "@stl/tool-ts": "^1.0.10"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
     "@types/mocha": "^8.0.0",
@@ -45,10 +50,6 @@
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
   },
-  "directories": {
-    "test": "test"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"

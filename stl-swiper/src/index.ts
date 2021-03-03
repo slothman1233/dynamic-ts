@@ -29,14 +29,17 @@ interface pagination{
 }
 
 interface navigation{
-    
+    nextEl?:HTMLElement|Element
+    prevEl?:HTMLElement|Element
+    autoHide?:boolean
+    // outCallback?:(item:number,that:any)=>void
 }
 
 interface parameter{
     watchOverflow?:boolean//未实现
     slidesPerGroup?:number//未实现
 
-    loop?:boolean
+    loop?:boolean//是否循环切换
     slidesPerView?:number|string
     autoHeight?:boolean
     speed?:number
@@ -45,6 +48,7 @@ interface parameter{
     scrollBar?:scrollBar
     thumbs?:thumbs
     pagination?:pagination
+    navigation?:navigation
     
     sliderStart?:any
     sliderEnd?:any
@@ -94,16 +98,19 @@ export class stlSwiper{
     motionKey:boolean = false
     paginationBox:any
     paginationList:any
+    navigatorLeftDom:any
+    navigatorRightDom:any
     initParameter:parameter = {slidesPerView:1,autoHeight:false,speed:300,loop:false,}
+
     constructor(parent:HTMLElement,obj?:parameter){
         this.parent = parent;
-        this.parameter = mergeOptions(this.initParameter,obj);
-        this.parentWidth = this.parent.clientWidth;
-        this.parentScrollWidth = this.parent.scrollWidth;
-        this.wrapperDom = this.parent.getElementsByClassName(this.wrapperClassName)[0];
-        this.sliderList = NodeListToArray(this.parent.getElementsByClassName(this.sliderClassName));
+        this.parameter = mergeOptions(this.initParameter,obj);//初始化参数
+        this.parentWidth = this.parent.clientWidth;//获取父元素的宽度
+        this.parentScrollWidth = this.parent.scrollWidth;//获取父元素内容的宽度
+        this.wrapperDom = this.parent.getElementsByClassName(this.wrapperClassName)[0];//获取滚动元素
+        this.sliderList = NodeListToArray(this.parent.querySelectorAll("."+this.sliderClassName));//获取table切换元素列表
         this.length = this.sliderList.length;
-        if(this.parameter.loop){this.loopInit();}else{addClass(this.sliderList[0],"stl-switch-slider-active");}
+        if(this.parameter.loop){this.loopInit();}else{addClass(this.sliderList[0],"stl-switch-slider-active");}//判断是否允许循环切换
         if(obj){
             if(obj.autoHeight)addClass(this.parent,"stl-switch-autoheight"),this.wrapperDom.style.height = (<any>this.sliderList[this.item]).offsetHeight+"px";
             if(obj.scrollBar)this.getScrollBar(obj.scrollBar);
@@ -114,6 +121,7 @@ export class stlSwiper{
             this.getThumbsFn(obj.thumbs);
         }
         if(obj.pagination)this.getPagination(obj.pagination);
+        if(obj.navigation)this.getNavigation(obj.navigation,this.parameter.loop);
         if(this.parameter.slidesPerView<this.length)this.addTouchFn();
     }
     private loopInit(){
@@ -145,7 +153,7 @@ export class stlSwiper{
         this.touchmoveFn = (event:any)=>{
             let len:any = this.startLeft - event.changedTouches[0].clientX;
             let top:number = this.startTop - event.changedTouches[0].clientY;
-            if(!that.moveKey)that.moveAngle = 180*Math.atan2(Math.abs(top),Math.abs(len))/Math.PI,that.moveKey = true;
+            if(!that.moveKey)that.moveAngle = 180*Math.atan2(Math.abs(top),Math.abs(len))/Math.PI,that.moveKey = true;//根据拖动的角度是否小于45度判断是否为切换table
             if(that.moveAngle<=45){
                 event.preventDefault();
                 setTransformFn(that.wrapperDom,"translate3d("+(-len+JSON.parse(that.startTransform))+"px,0px,0px)");
@@ -163,8 +171,8 @@ export class stlSwiper{
                 let len = this.startLeft - event.changedTouches[0].clientX;
                 if(that.parameter.slidesPerView === 1){
                     that.endTime = new Date().getTime();
-                    let num = len===0?0:Math.round(Math.abs(len)/that.parentWidth)*(Math.abs(len)/len);
-                    if((that.endTime - that.startTime < 300)&&num<1&&(len>20||len<-20))num = Math.abs(len)/len;
+                    let num = len===0?0:Math.round(Math.abs(len)/that.parentWidth)*(Math.abs(len)/len);//四舍五入取切换值 当切换距离大于一个table的50%时 则切换到上（下）一张
+                    if((that.endTime - that.startTime < 300)&&num<1&&(len>20||len<-20))num = Math.abs(len)/len;//时间小于300ms且移动距离大于20px则切换到下（上）一张
                     let item = that.item+num;
                    let number = that.updateItem.call(that,item,true);
                    that.updatePosition.call(that,number);
@@ -181,14 +189,14 @@ export class stlSwiper{
         }
         addEvent(that.wrapperDom,"touchstart",function(event:any){
             if(that.motionKey)return;
-            that.autoPlayTimeout&&(clearTimeout(that.autoPlayTimeout),that.autoPlayTimeout = null);
-            that.parameter.sliderStart&&that.parameter.sliderStart();
+            that.autoPlayTimeout&&(clearTimeout(that.autoPlayTimeout),that.autoPlayTimeout = null);//如果开启了自动切换则关闭自动切换
+            that.parameter.sliderStart&&that.parameter.sliderStart();//初始化的回调
             that.startTime = new Date().getTime();
             that.moveAngle = 90;
             that.startLeft= event.changedTouches[0].clientX;
             that.startTop = event.changedTouches[0].clientY;
             that.startTransform = getTransformFn(that.wrapperDom).split(",")[4];
-            if(that.scrollBox)that.scrollTransform = getTransformFn(that.scrollNav).split(",")[4];
+            if(that.scrollBox)that.scrollTransform = getTransformFn(that.scrollNav).split(",")[4];//是否进度条
             addEvent(that.wrapperDom,"touchmove",that.touchmoveFn);
             addEvent(that.wrapperDom,"touchend",that.touchendFn);
         })
@@ -347,5 +355,51 @@ export class stlSwiper{
     private updatePagination(){
         removeClass(this.paginationBox.querySelector(".stl-switch-pagination-active"),"stl-switch-pagination-active");
         addClass(this.paginationList[this.item],"stl-switch-pagination-active")
+    }
+    private getNavigation(obj:navigation,loop:boolean){
+        let that = this;
+        let leftClassName = obj.autoHide?"stl_swiper_prev_btn stl_swiper_hide_btn":"stl_swiper_prev_btn";
+        this.navigatorLeftDom = obj.prevEl?obj.prevEl:createEl("div",{className:leftClassName,innerHTML:"〈"})
+        this.navigatorRightDom = obj.nextEl?obj.nextEl:createEl("div",{className:"stl_swiper_next_btn",innerHTML:"〉"})
+        this.parent.appendChild(this.navigatorLeftDom)
+        this.parent.appendChild(this.navigatorRightDom)
+        this.navigationClickFn(obj,loop)
+    }
+    private navigationClickFn(obj:navigation,loop:boolean){
+        let that = this;
+        addEvent(that.navigatorLeftDom,"click",()=>{
+            let item:any
+            if(!loop){
+                if(that.item == 0)return;
+                item = that.item-1<0?0:that.item-1;
+                if(item == 0){
+                    if(obj.autoHide)addClass(that.navigatorLeftDom,"stl_swiper_hide_btn")
+                }
+            }else{
+                item = that.item-1;
+            }
+            that.autoPlayTimeout&&(clearTimeout(that.autoPlayTimeout),that.autoPlayTimeout = null);//如果开启了自动切换则关闭自动切换
+            let number = that.updateItem.call(that,item,true);
+            that.updatePosition.call(that,number);
+            that.updateScroll();
+            removeClass(that.navigatorRightDom,"stl_swiper_hide_btn")
+        })
+        addEvent(that.navigatorRightDom,"click",()=>{
+            let item:any
+            if(!loop){
+                if(that.item == that.length-1)return;
+                item = that.item+1>that.length-1?that.length-1:that.item+1;
+                if(item == that.length-1){
+                    if(obj.autoHide)addClass(that.navigatorRightDom,"stl_swiper_hide_btn")
+                }
+            }else{
+                item = that.item+1;
+            }
+            that.autoPlayTimeout&&(clearTimeout(that.autoPlayTimeout),that.autoPlayTimeout = null);//如果开启了自动切换则关闭自动切换
+            let number = that.updateItem.call(that,item,true);
+            that.updatePosition.call(that,number);
+            that.updateScroll();
+            removeClass(that.navigatorLeftDom,"stl_swiper_hide_btn")
+        })
     }
 }

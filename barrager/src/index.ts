@@ -3,10 +3,12 @@
  * @param barrage 
  */
 import './index.less'
-import { appendContent, createEl, remove } from '@stl/tool-ts/src/common/dom'
-import { mergeOptions } from '@stl/tool-ts/src/common/compatible'
+import { appendContent } from '@stl/tool-ts/src/common/dom/appendContent'
+import { createEl } from '@stl/tool-ts/src/common/dom/createEl'
+import { remove } from '@stl/tool-ts/src/common/dom/remove'
+import { mergeOptions } from '@stl/tool-ts/src/common/compatible/mergeOptions'
 import '@stl/tool-ts/src/common/es6'
-import { NodeListToArray } from '@stl/tool-ts/src/common/obj'
+import { NodeListToArray } from '@stl/tool-ts/src/common/obj/NodeListToArray'
 type barragerModel = {
   //width?: number, //弹幕总宽度 默认 500
   img?: string, //图片 

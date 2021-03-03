@@ -1,6 +1,6 @@
-import { mergeOptions } from "@stl/tool-ts/src/common/compatible";
+import { mergeOptions } from "@stl/tool-ts/src/common/compatible/mergeOptions";
 import { log } from "@stl/tool-ts/src/common/log";
-import { each } from '@stl/tool-ts/src/common/obj';
+import { each } from '@stl/tool-ts/src/common/obj/each';
 import ES6Promise from "es6-promise";
 import fxLanguage from "@stl/tool-ts/src/languages/cn";
 
@@ -154,7 +154,9 @@ const https = {
 
 
         //设置返回类型
-        xhr.responseType = _s.dataType;
+        if(_s.async){
+            xhr.responseType = _s.dataType;
+        }
 
         //设置请求头
         if (_s.headers) {
@@ -326,44 +328,68 @@ class dataModel {
     }
 }
 export const http = {
-    get<T>(data: any): Promise<T> {
+    get<T>(data: any,resolve?:any,reject?:any): Promise<T>|any {
         let d:any = mergeOptions(new dataModel({ headers: {}, type: 'GET' }), data)
-        return new Promise(function(resolve,reject){
-            https.ajax(d,resolve,reject)
-        });
+        if(d.async === false){
+            return https.ajax(d,resolve,reject);
+        }else{
+            return new Promise(function(resolve,reject){
+                https.ajax(d,resolve,reject);
+            });
+        }
     },
-    delete<T>(data: any): Promise<T>{
+    delete<T>(data: any,resolve?:any,reject?:any): Promise<T>|any{
         let d = mergeOptions(new dataModel({ headers: {}, type: 'DELETE' }), data)
-        return new Promise(function(resolve,reject){
-            https.ajax(d,resolve,reject)
-        });
+        if(d.async === false){
+            return https.ajax(d,resolve,reject);
+        }else{
+            return new Promise(function(resolve,reject){
+                https.ajax(d,resolve,reject);
+            });
+        }
     },
     // 调用此方法,参数data应为查询字符串或普通对象
-    post<T>(data: any): Promise<T>{
+    post<T>(data: any,resolve?:any,reject?:any): Promise<T>|any{
         let d = mergeOptions(new dataModel({ headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, type: 'POST' }), data)
-        return new Promise(function(resolve,reject){
-            https.ajax(d,resolve,reject)
-        });
+        if(d.async === false){
+            return https.ajax(d,resolve,reject);
+        }else{
+            return new Promise(function(resolve,reject){
+                https.ajax(d,resolve,reject);
+            });
+        }
     },
 
-    put<T>(data: any): Promise<T>{
+    put<T>(data: any,resolve?:any,reject?:any): Promise<T>|any{
         let d = mergeOptions(new dataModel({ headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','X-HTTP-Method-Override':'put' }, type: 'POST' }), data)
-        return new Promise(function(resolve,reject){
-            https.ajax(d,resolve,reject)
-        });
+        if(d.async === false){
+            return https.ajax(d,resolve,reject);
+        }else{
+            return new Promise(function(resolve,reject){
+                https.ajax(d,resolve,reject);
+            });
+        }
     },
     // 调用此方法,参数data应为json字符串
-    postbody<T>(data: any): Promise<T>{
+    postbody<T>(data: any,resolve?:any,reject?:any): Promise<T>|any{
         let d = mergeOptions(new dataModel({ headers: { 'Content-Type': 'application/json; charset=UTF-8' }, type: 'POST' }), data)
-        return new Promise(function(resolve,reject){
-            https.ajax(d,resolve,reject)
-        });
+        if(d.async === false){
+            return https.ajax(d,resolve,reject);
+        }else{
+            return new Promise(function(resolve,reject){
+                https.ajax(d,resolve,reject);
+            });
+        }
     },
-    fromData<T>(data: any): Promise<T>{
+    fromData<T>(data: any,resolve?:any,reject?:any): Promise<T>|any{
         let d = mergeOptions(new dataModel({ headers: {}, type: 'POST', isFromdata: true }), data)
-        return new Promise(function(resolve,reject){
-            https.ajax(d,resolve,reject)
-        });
+        if(d.async === false){
+            return https.ajax(d,resolve,reject);
+        }else{
+            return new Promise(function(resolve,reject){
+                https.ajax(d,resolve,reject);
+            });
+        }
     },
 }
 
