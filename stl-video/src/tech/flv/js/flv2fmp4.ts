@@ -172,7 +172,7 @@ class flv2fmp4 {
      *
      * @param {any} type
      * @param {any} meta
-     *
+     *7
      * @memberof flv2fmp4
      */
     Metadata(type:any, meta:any) {
@@ -363,7 +363,7 @@ class foreign {
     /**
      * 赋值moof接受方法
      *
-     *
+     * 
      * @memberof foreign
      */
     set onMediaSegment(fun:any) {

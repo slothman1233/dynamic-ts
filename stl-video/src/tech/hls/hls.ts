@@ -112,7 +112,7 @@ class hls extends Component {
                 Component.sendError(error)
             }
         }
-    }
+    } 
 
     detachMediaElement() {
         var _mediaElement = Component.options_.play;
@@ -206,6 +206,7 @@ class hls extends Component {
         let hlsSrc: any;
         this.changeSourceUrl !== null ? hlsSrc = this.changeSourceUrl : hlsSrc = this.options_.streamLink.hls
         get(hlsSrc).then((response) => {
+            debugger;
             return response.text()
         })
             .then((data) => {
