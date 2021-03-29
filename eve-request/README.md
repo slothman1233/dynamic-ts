@@ -25,13 +25,13 @@
 |  responseSet   | Function |            响应拦截执行的方法(基本用不到)            |      none       |
 | tokenHeaderKey |  String  | token 在请求头的字段 key(只在 getToken 方法有时生效) | 'Authorization' |
 |    errorFn     | function |                       错误回调                       |      none       |
-|    returnErrorFn     | function |                       错误返回模型                      |      none       |
+| returnErrorFn  | function |                     错误返回模型                     |      none       |
 
 ```js
-import HttpService from '@stl/request'
-const http = new HttpService()
+import HttpService from "@stl/request";
+const http = new HttpService();
 // 如果有基础路径也可以
-const http2 = new HttpService('baseUrl')
+const http2 = new HttpService("baseUrl");
 ```
 
 ## 实例属性与方法说明
@@ -42,7 +42,8 @@ const http2 = new HttpService('baseUrl')
 就是Axios的原始实例化对象
 ```
 
-@Prop: SYMBOL_FILENAME 全局唯一文件名key
+@Prop: SYMBOL_FILENAME 全局唯一文件名 key
+
 ```
 2.0新增字段
 场景在于使用FormData类型的数据
@@ -54,6 +55,7 @@ const http2 = new HttpService('baseUrl')
 需要加上{file:xxx, [SYMBOL_FILENAME]:filename}
 并且不需要手动指定请求头  如有特殊需要可以设置
 ```
+
 @Method: get get 请求
 
 ```
@@ -66,7 +68,7 @@ const http2 = new HttpService('baseUrl')
 ```js
 // GET示例代码
 export function getList(params: Params) {
-  return http.get('url', { params })
+  return http.get("url", { params });
 }
 ```
 
@@ -83,7 +85,7 @@ export function getList(params: Params) {
 ```js
 // POST示例代码
 export function sendPost(data: Params) {
-  return http.post('url', data, options)
+  return http.post("url", data, options);
 }
 ```
 
@@ -100,7 +102,7 @@ export function sendPost(data: Params) {
 ```js
 // PUT示例代码
 export function sendPut(data: Params) {
-  return http.put('url', data, options)
+  return http.put("url", data, options);
 }
 ```
 
@@ -116,7 +118,7 @@ export function sendPut(data: Params) {
 ```js
 // PUT示例代码
 export function sendDelete(params: Params) {
-  return http.delete('url', { params })
+  return http.delete("url", { params });
 }
 ```
 
@@ -141,12 +143,12 @@ Codes 说明
 ```js
 // CODES示例代码
 export function sendPost(data: Params) {
-  return http.post('url', data, {
+  return http.post("url", data, {
     codes: {
-      sures: ['正确的SubCode'],
-      err: ['我是错误且需要报消息的SubCode'],
+      sures: ["正确的SubCode"],
+      err: ["我是错误且需要报消息的SubCode"],
     },
-  })
+  });
 }
 ```
 
@@ -154,9 +156,9 @@ export function sendPost(data: Params) {
 // queryType示例代码
 // queryType:text
 export function sendPost(data: Params) {
-  return http.post('url', data, {
-    queryType: 'text',
-  })
+  return http.post("url", data, {
+    queryType: "text",
+  });
 }
 /*
 会将参数同时赋值在params中
@@ -167,9 +169,9 @@ url?content=qweqw&productType=16
 ```js
 // queryType:json
 export function sendPost(data: Params) {
-  return http.post('url', data, {
-    queryType: 'json',
-  })
+  return http.post("url", data, {
+    queryType: "json",
+  });
 }
 /*
 会将data中的参数序列化一次再返回 以保证正确的JSON传递
@@ -182,9 +184,9 @@ export function sendPost(data: Params) {
 ```js
 // queryType:formd
 export function sendPost(data: Params) {
-  return http.post('url', data, {
-    queryType: 'formd',
-  })
+  return http.post("url", data, {
+    queryType: "formd",
+  });
 }
 /*
 会以FormData的形式传递数据
@@ -196,9 +198,9 @@ export function sendPost(data: Params) {
 ```js
 // queryType:forms
 export function sendPost(data: Params) {
-  return http.post('url', data, {
-    queryType: 'forms',
-  })
+  return http.post("url", data, {
+    queryType: "forms",
+  });
 }
 /*
 会将参数以qs模块进行序列化再进行传递数据
