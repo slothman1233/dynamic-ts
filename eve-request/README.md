@@ -26,6 +26,8 @@
 | tokenHeaderKey |  String  | token 在请求头的字段 key(只在 getToken 方法有时生效) | 'Authorization' |
 |    errorFn     | function |                       错误回调                       |      none       |
 | returnErrorFn  | function |                     错误返回模型                     |      none       |
+| autoSubCode  | boolean |                     是否自带处理subcode                     |      false       |
+| autoLogin  | boolean |                     是否自带处理401                     |      false       |
 
 ```js
 import HttpService from "@stl/request";

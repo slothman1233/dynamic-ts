@@ -35,6 +35,8 @@ export default class Intercept {
   errorFn?: Function;
   returnErrorFn?: Function;
   codes?: Codes;
+  autoSubCode: boolean = false;
+  autoLogin: boolean = false;
   constructor(baseURL: string = "", options?: ReqBaseConfig) {
     try {
       this.supportMsg = new Uint8Array([]);
@@ -48,6 +50,8 @@ export default class Intercept {
     this.requestSet = options?.requestSet;
     this.responseSet = options?.responseSet;
     this.errorFn = options?.errorFn;
+    this.autoSubCode = !!options?.autoSubCode;
+    this.autoLogin = !!options?.autoLogin;
     this.returnErrorFn =
       options?.returnErrorFn ||
       function (err?:any) {
@@ -146,7 +150,7 @@ export default class Intercept {
         const errorFn = this.getConfigOrSlef(error, 'errorFn')
         const returnErrorFn = this.getConfigOrSlef(error, 'returnErrorFn')
         errorFn && errorFn(error);
-        if (response?.status === 401) {
+        if (response?.status === 401 && this.autoLogin) {
           this.logout && this.logout();
           this.MsgUI?.error("未登录或登录过期!");
           Promise.reject(error);
@@ -167,25 +171,28 @@ export default class Intercept {
       return returnErrorFn(res);
     }
     if (!data) return returnErrorFn(res);
-    const { subCode } = data;
-    const codes = config?.codes || this.codes;
-    // 兼容后端code不规范
-    if (data.code) {
-      data.code = +data.code;
-    }
-
-    const isSure =
-      (codes.sures && this.codeEqual(codes.sures, subCode)) ||
-      /00$/.test(subCode);
-    if (data.code !== 0 || !isSure) {
-      // 失败 在自行处理错误subCode里面的
-      const isAutoError = this.codeEqual(codes.err, subCode);
-      if (isAutoError) {
-        this.MsgUI?.error(data.message);
-        return returnErrorFn(res);
+    if(this.autoSubCode){
+      const { subCode } = data;
+      const codes = config?.codes || this.codes;
+      // 兼容后端code不规范
+      if (data.code) {
+        data.code = +data.code;
       }
-      Promise.reject(data);
+  
+      const isSure =
+        (codes.sures && this.codeEqual(codes.sures, subCode)) ||
+        /00$/.test(subCode);
+      if (data.code !== 0 || !isSure) {
+        // 失败 在自行处理错误subCode里面的
+        const isAutoError = this.codeEqual(codes.err, subCode);
+        if (isAutoError) {
+          this.MsgUI?.error(data.message);
+          return returnErrorFn(res);
+        }
+        Promise.reject(data);
+      }
     }
+   
     // 成功
     try {
       const { bodyMessage } = data;
