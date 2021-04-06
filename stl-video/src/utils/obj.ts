@@ -20,7 +20,10 @@ export function isPlain(value: any) {
   // return isObject(value) &&
   //   toString.call(value) === '[object Object]' &&
   //   value.constructor === Object;
-  Object.prototype.toString.call(value)
+  return isObject(value) &&
+      Object.prototype.toString.call(value) === '[object Object]' &&
+      value.constructor === Object;
+  // Object.prototype.toString.call(value)
 }
 
 
