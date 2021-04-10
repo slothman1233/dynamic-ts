@@ -207,6 +207,13 @@ export type ReqBaseConfig = {
   responseSet?: Function
   // 错误回调
   errorFn?: Function
+  // 错误情形下默认执行的返回方法
+  returnErrorFn?:Function
   // 全局subCode模式 优先级小于指定在接口内的codes
   codes?: Codes
+  // 是否需要自动处理subCode
+  autoSubCode?: boolean
+  // 是否需要带登录处理
+  autoLogin?: boolean
+  // 是否打开纯净模式（纯请求，不做任何额外处理）
 }
