@@ -1,0 +1,52 @@
+{
+    "name": "wl-stl-cli",
+    "version": "1.0.3",
+    "description": "",
+    "main": "index.js",
+    "bin": {
+        "stl-cli": "./bin/main.js"
+    },
+    "engines": {
+        "node": ">=10.16"
+    },
+    "dependencies": {
+        "chalk": "^4.1.0",
+        "child_process": "^1.0.2",
+        "commander": "^5.1.0",
+        "download-git-repo": "^3.0.2",
+        "events": "^3.1.0",
+        "fs-extra": "^9.0.1",
+        "inquirer": "^7.2.0",
+        "lru-cache": "^5.1.1",
+        "mem-fs": "^1.2.0",
+        "mem-fs-editor": "^7.0.0",
+        "ora": "^4.0.4",
+        "os": "^0.1.1",
+        "readline": "^1.3.0",
+        "semver": "^7.3.2",
+        "string.prototype.padstart": "^3.1.0"
+    },
+    "devDependencies": {
+        "chalk": "^4.1.0",
+        "child_process": "^1.0.2",
+        "commander": "^5.1.0",
+        "download-git-repo": "^3.0.2",
+        "events": "^3.1.0",
+        "fs-extra": "^9.0.1",
+        "inquirer": "^7.2.0",
+        "lru-cache": "^5.1.1",
+        "mem-fs": "^1.2.0",
+        "mem-fs-editor": "^7.0.0",
+        "ora": "^4.0.4",
+        "os": "^0.1.1",
+        "readline": "^1.3.0",
+        "semver": "^7.3.2",
+        "string.prototype.padstart": "^3.1.0"
+    },
+    "scripts": {
+        "start": "node ./bin/main.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+}
