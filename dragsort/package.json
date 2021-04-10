@@ -1,5 +1,5 @@
 {
-  "name": "@stl/dragsort",
+  "name": "wl-dragsort",
   "version": "1.0.1",
   "description": "元素拖拽的插件",
   "main": "dist/index.js",
@@ -46,10 +46,6 @@
     "rollup-plugin-uglify": "^6.0.4",
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "dragsort"

@@ -1,5 +1,5 @@
 {
-  "name": "@stl/qrcode",
+  "name": "wl-qrcode",
   "version": "1.0.7",
   "description": "生成二维码",
   "main": "dist/index.js",
@@ -11,9 +11,6 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@stl/tool-ts": "^1.0.10"
-  },
   "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
@@ -52,9 +49,5 @@
   },
   "keywords": [
     "qrcode"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
-  }
+  ]
 }

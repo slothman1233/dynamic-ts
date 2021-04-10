@@ -1,5 +1,5 @@
 {
-  "name": "@stl/notice-remind",
+  "name": "wl-notice-remind",
   "version": "1.0.8",
   "description": "通知弹窗组件",
   "main": "dist/index.js",
@@ -11,9 +11,6 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@stl/tool-ts": "^1.0.10"
-  },
   "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
@@ -49,10 +46,6 @@
   },
   "directories": {
     "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "notice"

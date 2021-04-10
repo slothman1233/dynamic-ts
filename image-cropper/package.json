@@ -1,5 +1,5 @@
 {
-  "name": "@stl/image-cropper",
+  "name": "wl-image-cropper",
   "version": "1.0.4",
   "description": "图片裁剪插件",
   "main": "dist/index.js",
@@ -12,7 +12,7 @@
   "author": "denghao",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^1.0.10"
+    "wl-tool-ts": "^1.0.10"
   },
   "devDependencies": {
     "@types/chai": "^4.2.12",
@@ -54,9 +54,5 @@
     "cropper",
     "image",
     "image-cropper"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
-  }
+  ]
 }

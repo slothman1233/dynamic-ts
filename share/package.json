@@ -1,5 +1,5 @@
 {
-  "name": "@stl/share",
+  "name": "wl-share",
   "version": "1.1.4",
   "description": "分享组件",
   "main": "dist/index.js",
@@ -12,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@stl/tool-ts": "^1.0.10",
-    "@stl/qrcode": "^1.0.5"
+    "wl-tool-ts": "^1.0.10",
+    "wl-qrcode": "^1.0.5"
   },
   "devDependencies": {
     "@types/chai": "^4.2.12",
@@ -50,10 +50,6 @@
   },
   "directories": {
     "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "share"

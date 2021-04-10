@@ -1,5 +1,5 @@
 {
-  "name": "@stl/line-dragsort",
+  "name": "wl-line-dragsort",
   "version": "1.0.1",
   "description": "单行拖拽控件",
   "main": "dist/index.js",
@@ -11,9 +11,6 @@
   },
   "author": "dh",
   "license": "ISC",
-  "dependencies": {
-    "@stl/tool-ts": "^1.0.10"
-  },
   "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/expect.js": "^0.3.29",
@@ -46,10 +43,6 @@
     "rollup-plugin-uglify": "^6.0.4",
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "lineDragSort"

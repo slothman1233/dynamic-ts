@@ -1,5 +1,5 @@
 {
-    "name": "@stl/barrager",
+    "name": "wl-barrager",
     "version": "1.2.2",
     "description": "弹幕插件框架",
     "main": "dist/index.js",

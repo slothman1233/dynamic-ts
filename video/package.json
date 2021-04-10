@@ -1,5 +1,5 @@
 {
-  "name": "@stl/stl-video",
+  "name": "wl-stl-video",
   "version": "1.2.5",
   "description": "播放器组件",
   "main": "dist/index.js",
@@ -57,10 +57,6 @@
   },
   "directories": {
     "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "video"

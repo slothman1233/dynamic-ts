@@ -1,14 +1,10 @@
 {
-  "name": "@stl/iconfont",
+  "name": "wl-iconfont",
   "version": "1.0.5",
   "description": "SVG生成字体包，并生成css 样式引用",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/w3cui/iconfont.git"
   },
   "author": "",
   "license": "ISC",

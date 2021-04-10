@@ -1,5 +1,5 @@
 {
-  "name": "@stl/wxshare",
+  "name": "wl-wxshare",
   "version": "1.0.3",
   "description": "自定义微信分享",
   "main": "dist/index.js",
@@ -12,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@stl/httprequest": "^1.1.3",
-    "@stl/tool-ts": "^1.0.3"
+    "wl-httprequest": "^1.1.3",
+    "wl-tool-ts": "^1.0.3"
   },
   "devDependencies": {
     "@types/chai": "^4.2.12",
@@ -50,10 +50,6 @@
   },
   "directories": {
     "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "wxshare"

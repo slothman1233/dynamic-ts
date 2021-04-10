@@ -1,5 +1,5 @@
 {
-  "name": "@stl/httprequest",
+  "name": "wl-httprequest",
   "version": "1.1.4",
   "description": "兼容性较高的简易http请求封装",
   "main": "dist/index.js",
@@ -58,9 +58,5 @@
   },
   "directories": {
     "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   }
 }

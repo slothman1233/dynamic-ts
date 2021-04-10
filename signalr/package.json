@@ -1,5 +1,5 @@
 {
-  "name": "@stl/signalr",
+  "name": "wl-signalr",
   "version": "1.0.5",
   "description": "signalr插件",
   "main": "dist/signalr.js",
@@ -58,9 +58,5 @@
   },
   "directories": {
     "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts.git"
   }
 }
