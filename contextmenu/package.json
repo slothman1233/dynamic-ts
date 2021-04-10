@@ -1,5 +1,5 @@
 {
-  "name": "@stl/contextmenu",
+  "name": "wl-contextmenu",
   "version": "1.0.4",
   "description": "右键操作插件",
   "main": "dist/index.js",
@@ -46,10 +46,6 @@
     "rollup-plugin-uglify": "^6.0.4",
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "contextmenu"

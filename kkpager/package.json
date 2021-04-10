@@ -1,5 +1,5 @@
 {
-  "name": "@stl/kkpager",
+  "name": "wl-kkpager",
   "version": "0.0.7",
   "description": "分页器插件",
   "main": "dist/index.js",
@@ -11,9 +11,6 @@
   },
   "author": "d",
   "license": "ISC",
-  "dependencies": {
-    "@stl/tool-ts": "^1.0.10"
-  },
   "directories": {
     "test": "test"
   },
@@ -49,10 +46,6 @@
     "rollup-plugin-uglify": "^6.0.4",
     "stylus": "^0.54.8",
     "typescript": "^3.9.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitwbp5.wbp5.com/npm/dynamic-ts"
   },
   "keywords": [
     "kkpager",
